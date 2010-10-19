@@ -1,0 +1,4 @@
+file: resources/players/player_1_jumping/jump.png
+width: 11
+run once: yes
+frame time: 0

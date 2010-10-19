@@ -1,0 +1,195 @@
+/*
+ *  menumanager.cpp
+ *  Spel
+ *
+ *  Created by Erik Andersson on 2010-10-03.
+ *  Copyright 2010 Åva gymnasium. All rights reserved.
+ *
+ */
+
+#include <algorithm>
+
+#include <SFML/Graphics.hpp>
+
+#include <guichan/guichan.hpp>
+#include <guichan/sfml.hpp>
+
+#include "Gaem/gaem.h"
+#include "Gaem/exception.h"
+#include "Gaem/menumanager.h"
+
+#include "Menus/alert.h"
+
+#include "Widgets/passwordfield.h"
+
+namespace Gaem
+{
+	//
+	// Gaem::Menu
+	//
+	
+	Menu::Menu(): _manager(NULL), _root(NULL), _inited(false) {}
+	
+	Menu::~Menu()
+	{
+		for ( widget_list::iterator iter = _widgets.begin(); iter != _widgets.end(); iter++ )
+			delete *iter;
+		
+		for ( listener_list::iterator iter = _listeners.begin(); iter != _listeners.end(); iter++ )
+			delete *iter;
+		
+		_widgets.clear();
+		_listeners.clear();
+	}
+	
+	void Menu::setActive()
+	{
+		setRoot(_root);
+	}
+	
+	void Menu::setManager(MenuManager *manager)
+	{
+		_manager = manager;
+		if ( ! _inited )
+		{
+			init();
+			_inited = true;
+		}
+	}
+	
+	void Menu::setRoot(gcn::Container *root)
+	{
+		_manager->getGui()->setTop(root);
+	}
+	
+	gcn::Widget *Menu::getRoot()
+	{
+		return _root;
+	}
+	
+	void Menu::centerRoot()
+	{
+		_root->setX(Gaem::Gaem::getInstance()->getWindow()->GetWidth()/2 - _root->getWidth()/2);
+		_root->setY(Gaem::Gaem::getInstance()->getWindow()->GetHeight()/2 - _root->getHeight()/2);
+	}
+	
+	//
+	// Gaem::MenuManager
+	//
+
+	MenuManager::MenuManager(sf::RenderWindow &app): _gui_graphics(app)
+	{
+		// _sf_input is used by the SFML/guichan event handler
+		_sf_input = &app.GetInput();
+		
+		// Load and apply fonts
+		if ( ! _font.LoadFromFile("unicode_font.ttf", 15) )
+		{
+			throw GAEM_EXCEPTION("Could not load main_font.ttf");
+		}
+		
+		_gui_font = gcn::SFMLFont(_font);
+		gcn::Widget::setGlobalFont(&_gui_font);
+		
+		// Set some global variables
+		_gui.setGraphics(&_gui_graphics);
+		_gui.setInput(&_gui_input);
+	}
+	
+	void MenuManager::add(const std::string &id, Menu *menu)
+	{
+		menu->setManager(this);
+		_menus[id] = menu;
+	}
+	
+	void MenuManager::add(Menu *menu)
+	{
+		menu->setManager(this);
+	}
+	
+	void MenuManager::show(const std::string &id)
+	{
+		Menu* menu = _menus[id];
+		menu->setActive();
+		_menu_queue.push(menu);
+	}
+	
+	void MenuManager::show(Menu *menu)
+	{
+		menu->setActive();
+		_menu_queue.push(menu);
+	}
+	
+	void MenuManager::showLoading()
+	{
+		show("loading");
+	}
+	
+	void MenuManager::hideLoading()
+	{
+		hide();
+	}
+	
+	void MenuManager::alert(const std::string &message)
+	{
+		Menus::Alert *alert = new Menus::Alert(message);
+		_dynamic_menus.push_back(alert);
+		
+		add(alert);
+		show(alert);
+	}
+	
+	void MenuManager::hide()
+	{
+		Menu *menu = _menu_queue.top();
+		_menu_queue.pop();
+		
+		// If this is a dynamically added menu we have to remove it 
+		// The garbage collection is taken care of in ::logic
+		if ( std::count(_dynamic_menus.begin(), _dynamic_menus.end(), menu) > 0 )
+		{
+			_remove_list.push_back(menu);
+			_dynamic_menus.remove(menu);
+		}
+		
+		// Show the next menu in cue (if any)
+		if ( _menu_queue.size() )
+		{
+			Menu *next = _menu_queue.top();
+			next->setActive();
+		}
+	}
+	
+	void MenuManager::handleEvent(sf::Event &event)
+	{
+		if ( _menu_queue.size() == 0 ) return;
+		_gui_input.pushEvent(event, *_sf_input);
+	}
+	
+	void MenuManager::logic()
+	{
+		if ( _menu_queue.size() == 0 ) return;
+		
+		for ( menu_list::iterator iter = _remove_list.begin(); iter != _remove_list.end(); iter++ )
+			delete *iter;
+		_remove_list.clear();
+		
+		_gui.logic();
+	}
+	
+	void MenuManager::draw()
+	{
+		if ( _menu_queue.size() == 0 ) return;
+		_gui.draw();
+	}
+	
+	bool MenuManager::hasMenus()
+	{
+		return _menu_queue.size() > 0;
+	}
+	
+	gcn::Gui *MenuManager::getGui()
+	{
+		return &_gui;
+	}
+}
