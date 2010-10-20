@@ -83,9 +83,9 @@ namespace Gaem
 		_sf_input = &app.GetInput();
 		
 		// Load and apply fonts
-		if ( ! _font.LoadFromFile("unicode_font.ttf", 15) )
+		if ( ! _font.LoadFromFile("resources/main_font.ttf", 15) )
 		{
-			throw GAEM_EXCEPTION("Could not load main_font.ttf");
+			throw GAEM_EXCEPTION("Could not load resources/main_font.ttf");
 		}
 		
 		_gui_font = gcn::SFMLFont(_font);
