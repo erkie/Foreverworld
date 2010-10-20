@@ -89,7 +89,7 @@ namespace Gaem
 		_entity_manager->add(player);
 		_entity_manager->setCurrentPlayer(player);
 		
-		//_menu_manager->show("main");
+		_menu_manager->show("main");
 	}
 	
 	void Gaem::main()
