@@ -13,7 +13,7 @@
 
 namespace Gaem
 {
-	AnimatedSprite::AnimatedSprite()
+	AnimatedSprite::AnimatedSprite(): Sprite()
 	{
 		
 	}

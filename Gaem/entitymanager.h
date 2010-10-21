@@ -13,6 +13,12 @@
 #include <list>
 #include <SFML/Graphics.hpp>
 
+namespace Entities
+{
+	class Player;
+	class World;
+}
+
 namespace Gaem
 {
 	class Entity;
@@ -24,8 +30,12 @@ namespace Gaem
 		entity_list _entities;
 		entity_list _remove_list;
 		
+		Entities::Player *_current_player;
+		Entities::World *_world;
 	public:
 		EntityManager();
+		
+		Entities::Player *you;
 		
 		void add(Entity *);
 		void remove(Entity *);
@@ -33,6 +43,12 @@ namespace Gaem
 		void logic();
 		void draw(sf::RenderWindow &);
 		void handleEvent(const sf::Event &);
+		
+		void setCurrentPlayer(Entities::Player *);
+		Entities::Player *getCurrentPlayer();
+		
+		void setWorld(Entities::World *);
+		Entities::World *getWorld();
 	};
 }
 

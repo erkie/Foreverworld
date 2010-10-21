@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3512492A125C600D00087E71 /* passwordfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35124929125C600D00087E71 /* passwordfield.cpp */; };
-		35124941125C61FB00087E71 /* unicode_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35124940125C61FB00087E71 /* unicode_font.ttf */; };
 		35124B37125C7B5100087E71 /* guichan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35124B36125C7B5100087E71 /* guichan.framework */; };
 		354692CB126AE988004D4FB5 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354692CA126AE988004D4FB5 /* animation.cpp */; };
 		354692D3126AEFAD004D4FB5 /* animatedsprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354692D2126AEFAD004D4FB5 /* animatedsprite.cpp */; };
@@ -17,7 +16,6 @@
 		354CB9C21258DBF2006F919C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354CB9C11258DBF2006F919C /* main.cpp */; };
 		354CBA971258EEAB006F919C /* alert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354CBA961258EEAB006F919C /* alert.cpp */; };
 		354CBA9A1258EEDA006F919C /* loading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354CBA991258EEDA006F919C /* loading.cpp */; };
-		356CCDBD126C984300BC9CD5 /* myentitymanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 356CCDBC126C984300BC9CD5 /* myentitymanager.cpp */; };
 		356CCDE6126C9B2F00BC9CD5 /* myutilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 356CCDE4126C9B2F00BC9CD5 /* myutilities.cpp */; };
 		35810D8D1251DF1900B4ADB3 /* gaem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35810D8C1251DF1900B4ADB3 /* gaem.cpp */; };
 		35810DAE1251E18F00B4ADB3 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35810DAD1251E18F00B4ADB3 /* config.cpp */; };
@@ -31,7 +29,6 @@
 		35B6E958120016D1000FB887 /* sfml-audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E956120016D1000FB887 /* sfml-audio.framework */; };
 		35B6E959120016D1000FB887 /* sfml-network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E957120016D1000FB887 /* sfml-network.framework */; };
 		35E175AC125A17FC00E7CB02 /* exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35E175AB125A17FC00E7CB02 /* exception.cpp */; };
-		35E17637125A28AB00E7CB02 /* main_font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35E17636125A28AB00E7CB02 /* main_font.ttf */; };
 		35F742DE1264C92A00F3F476 /* entitymanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35F742DD1264C92A00F3F476 /* entitymanager.cpp */; };
 		35F742EE126506F500F3F476 /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35F742ED126506F500F3F476 /* sprite.cpp */; };
 		35FE490A126A41E6003593BC /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35FE4909126A41E6003593BC /* player.cpp */; };
@@ -66,7 +63,6 @@
 /* Begin PBXFileReference section */
 		35124928125C600D00087E71 /* passwordfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = passwordfield.h; sourceTree = "<group>"; };
 		35124929125C600D00087E71 /* passwordfield.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = passwordfield.cpp; sourceTree = "<group>"; };
-		35124940125C61FB00087E71 /* unicode_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = unicode_font.ttf; path = /Library/Fonts/unicode_font.ttf; sourceTree = "<absolute>"; };
 		35124B36125C7B5100087E71 /* guichan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = guichan.framework; path = /System/Library/Frameworks/guichan.framework; sourceTree = "<absolute>"; };
 		354692C9126AE988004D4FB5 /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation.h; sourceTree = "<group>"; };
 		354692CA126AE988004D4FB5 /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
@@ -82,8 +78,6 @@
 		354CBA961258EEAB006F919C /* alert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = alert.cpp; sourceTree = "<group>"; };
 		354CBA981258EEDA006F919C /* loading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loading.h; sourceTree = "<group>"; };
 		354CBA991258EEDA006F919C /* loading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = loading.cpp; sourceTree = "<group>"; };
-		356CCDBB126C984300BC9CD5 /* myentitymanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myentitymanager.h; sourceTree = "<group>"; };
-		356CCDBC126C984300BC9CD5 /* myentitymanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = myentitymanager.cpp; sourceTree = "<group>"; };
 		356CCDE4126C9B2F00BC9CD5 /* myutilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = myutilities.cpp; sourceTree = "<group>"; };
 		356CCDE5126C9B2F00BC9CD5 /* myutilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myutilities.h; sourceTree = "<group>"; };
 		35810D8B1251DF1900B4ADB3 /* gaem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gaem.h; sourceTree = "<group>"; };
@@ -101,7 +95,6 @@
 		35B6E957120016D1000FB887 /* sfml-network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-network.framework"; path = "/Library/Frameworks/sfml-network.framework"; sourceTree = "<absolute>"; };
 		35E175AA125A17FC00E7CB02 /* exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exception.h; sourceTree = "<group>"; };
 		35E175AB125A17FC00E7CB02 /* exception.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exception.cpp; sourceTree = "<group>"; };
-		35E17636125A28AB00E7CB02 /* main_font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_font.ttf; sourceTree = "<group>"; };
 		35F742DC1264C92A00F3F476 /* entitymanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entitymanager.h; sourceTree = "<group>"; };
 		35F742DD1264C92A00F3F476 /* entitymanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = entitymanager.cpp; sourceTree = "<group>"; };
 		35F742EC126506F500F3F476 /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
@@ -163,8 +156,6 @@
 			children = (
 				356CCDE4126C9B2F00BC9CD5 /* myutilities.cpp */,
 				356CCDE5126C9B2F00BC9CD5 /* myutilities.h */,
-				356CCDBB126C984300BC9CD5 /* myentitymanager.h */,
-				356CCDBC126C984300BC9CD5 /* myentitymanager.cpp */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -243,8 +234,6 @@
 			isa = PBXGroup;
 			children = (
 				3598238E12661E3D00994C9B /* resources */,
-				35124940125C61FB00087E71 /* unicode_font.ttf */,
-				35E17636125A28AB00E7CB02 /* main_font.ttf */,
 				A01FB6AC0F07CF6E000AAC7B /* Info.plist */,
 			);
 			name = Resources;
@@ -307,8 +296,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35E17637125A28AB00E7CB02 /* main_font.ttf in Resources */,
-				35124941125C61FB00087E71 /* unicode_font.ttf in Resources */,
 				3598239712661E3D00994C9B /* resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,7 +325,6 @@
 				35FE490A126A41E6003593BC /* player.cpp in Sources */,
 				354692CB126AE988004D4FB5 /* animation.cpp in Sources */,
 				354692D3126AEFAD004D4FB5 /* animatedsprite.cpp in Sources */,
-				356CCDBD126C984300BC9CD5 /* myentitymanager.cpp in Sources */,
 				356CCDE6126C9B2F00BC9CD5 /* myutilities.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -20,7 +20,6 @@
 #include "Menus/alert.h"
 #include "Menus/loading.h"
 
-#include "My/myentitymanager.h"
 #include "Entities/world.h"
 #include "Entities/player.h"
 
@@ -57,7 +56,7 @@ namespace Gaem
 		_menu_manager->add("loading", new ::Menus::Loading());
 		
 		// World entity manager
-		_entity_manager = new My::MyEntityManager();
+		_entity_manager = new EntityManager();
 	}
 	
 	Gaem::~Gaem()
@@ -85,9 +84,12 @@ namespace Gaem
 		_entity_manager->add(world);
 		_entity_manager->setWorld(world);
 		
-		Entities::Player *player = new Entities::Player();
+		Entities::Player *player = new Entities::Player("resources/players/player_1.txt");
 		_entity_manager->add(player);
 		_entity_manager->setCurrentPlayer(player);
+		
+		_entity_manager->you = new Entities::Player("resources/players/player_1.txt");
+		_entity_manager->add(_entity_manager->you);
 		
 		//_menu_manager->show("main");
 	}
@@ -103,12 +105,23 @@ namespace Gaem
 				if ( event.Type == sf::Event::Closed )
 					_app.Close();
 				
-				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Escape )
+				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q )
 					_app.Close();
+				
+				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Escape )
+				{
+					if ( ! _menu_manager->hasMenus() )
+						_menu_manager->show("main");
+					else
+						_menu_manager->hide();
+				}
 				
 				if ( event.Type == sf::Event::Resized )
 				{
 					// resize window?
+					sf::View &view = _app.GetDefaultView();
+					view.SetFromRect(sf::FloatRect(0, 0, event.Size.Width, event.Size.Height));
+					_app.SetView(view);
 				}
 				
 				// Only entity events if no menu is active
@@ -211,7 +224,7 @@ namespace Gaem
 		return _menu_manager;
 	}
 	
-	My::MyEntityManager *Gaem::getEntityManager()
+	EntityManager *Gaem::getEntityManager()
 	{
 		return _entity_manager;
 	}

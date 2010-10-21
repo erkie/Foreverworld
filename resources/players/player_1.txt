@@ -1,0 +1,5 @@
+name: Me gusta
+scale: 4.0
+waiting: resources/players/player_1_waiting/info.txt
+running: resources/players/player_1_running/info.txt
+jumping: resources/players/player_1_jumping/info.txt

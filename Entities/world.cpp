@@ -16,7 +16,6 @@
 
 #include "Gaem/gaem.h"
 #include "Gaem/exception.h"
-#include "My/myentitymanager.h"
 
 #include "Entities/world.h"
 #include "Entities/player.h"
@@ -88,6 +87,11 @@ namespace Entities
 		return _scroll_left;
 	}
 	
+	int World::getReverseScrollLeft()
+	{
+		return _scroll_left - getWidth();
+	}
+	
 	void World::reverseScrollLeft(bool left)
 	{
 		_scroll_left = _scroll_left + ((left ? 1 : -1) * getWidth());
@@ -147,7 +151,7 @@ namespace Entities
 			while ( sprite->getX() > 0 )
 			{
 				old_x = sprite->getX();
-				sprite->setX(old_x - sprite->getSprite()->GetSize().x + 1);
+				sprite->setX(old_x - sprite->getSprite()->GetSize().x);
 				window.Draw(*(sprite->getSprite()));
 			}
 			sprite->setX(old_x);
@@ -157,15 +161,10 @@ namespace Entities
 			while ( sprite->getX() < -(sprite->getSprite()->GetSize().x - viewport_w) )
 			{
 				old_x = sprite->getX();
-				sprite->setX(old_x + sprite->getSprite()->GetSize().x - 0.5);
+				sprite->setX(old_x + sprite->getSprite()->GetSize().x);
 				window.Draw(*(sprite->getSprite()));
 			}
 			sprite->setX(old_x);
 		}
-		
-		/*sf::Shape player = sf::Shape::Rectangle(0, 0, 1, 100, sf::Color::Red);
-		player.SetX(_player_left - _scroll_left);
-		player.SetY(viewport_h - 100);
-		window.Draw(player);*/
 	}
 }

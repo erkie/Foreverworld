@@ -12,20 +12,25 @@
 #include <SFML/Graphics.hpp>
 
 #include "Gaem/gaem.h"
+#include "Gaem/config.h"
 
-#include "My/myentitymanager.h"
 #include "Entities/world.h"
 #include "Entities/player.h"
 
 namespace Entities
 {
-	Player::Player(): _pos_left(0), _pos_depth(50), _dir(1), _elevation(0)
+	Player::Player(const std::string &path): _pos_left(0), _pos_depth(50), _dir(1), _elevation(0)
 	{
 		_sprite = new Gaem::AnimatedSprite;
 		
-		_sprite->loadAnimation("running", "resources/players/player_1_running/info.txt");
-		_sprite->loadAnimation("waiting", "resources/players/player_1_waiting/info.txt");
-		_sprite->loadAnimation("jumping", "resources/players/player_1_jumping/info.txt");
+		Gaem::Config info(path);
+		
+		_sprite->loadAnimation("running", info.get("running"));
+		_sprite->loadAnimation("waiting", info.get("waiting"));
+		_sprite->loadAnimation("jumping", info.get("jumping"));
+		
+		_scale = info.getFloat("scale", 1.0);
+		_name = info.get("name");
 		
 		_sprite->setAnimation("waiting");
 		
@@ -50,19 +55,86 @@ namespace Entities
 		depth = depth > world_height ? world_height : depth;
 		depth = depth < 0 ? 0 : depth;
 		
-		_pos_depth = depth;
+		_pos_depth = depth; 
 		
-		float scale = 1 * (depth) / world_height + 4;
+		float scale = 1 * (depth) / world_height + _scale;
 		_sprite->getSprite()->SetScale(sf::Vector2f(scale, scale));
+	}
+	
+	bool Player::isActivePlayer()
+	{
+		return Gaem::Gaem::getInstance()->getEntityManager()->getCurrentPlayer() == this;
+	}
+	
+	void Player::jump()
+	{
+		if ( _elevation == 0 )
+			_velocity.y = 500;
+	}
+	
+	void Player::runLeft()
+	{
+		_sprite->setAnimation("running");
+		_sprite->getSprite()->FlipX(true);
+		_dir = -1;
+		_pos_left -= 250 * Gaem::Gaem::getInstance()->getTDelta();
+	}
+	
+	void Player::runRight()
+	{
+		_sprite->setAnimation("running");
+		_sprite->getSprite()->FlipX(false);
+		_dir = 1;
+		_pos_left += 250 * Gaem::Gaem::getInstance()->getTDelta();
+	}
+	
+	void Player::moveUp()
+	{
+		_sprite->setAnimation("running");
+		_pos_depth -= 100 * Gaem::Gaem::getInstance()->getTDelta();
+	}
+	
+	void Player::moveDown()
+	{
+		_sprite->setAnimation("running");
+		_pos_depth += 100 * Gaem::Gaem::getInstance()->getTDelta();
+	}
+	
+	void Player::clampPos()
+	{
+		bool did_enter_new_world = false, was_left = false;
+		
+		Gaem::Gaem *game = Gaem::Gaem::getInstance();
+		int world_width = game->getEntityManager()->getWorld()->getWidth();
+		
+		// Moved right
+		if ( _pos_left % world_width != _pos_left )
+			did_enter_new_world = true;
+		
+		// Clamp the player position to the width of the playing field
+		_pos_left = _pos_left % world_width;
+		
+		// To the left
+		if ( _pos_left < 0 )
+		{
+			_pos_left = world_width - _pos_left;
+			did_enter_new_world = was_left = true;
+		}
+		
+		if ( did_enter_new_world && isActivePlayer() )
+			game->getEntityManager()->getWorld()->reverseScrollLeft(was_left);
 	}
 	
 	void Player::handleEvent(const sf::Event &event)
 	{
+		if ( Gaem::Gaem::getInstance()->getEntityManager()->getCurrentPlayer() != this )
+			return;
+		
 		switch (event.Type) {
 			case sf::Event::KeyPressed: {
 				if ( event.Key.Code == sf::Key::Space )
 				{
-					_velocity.y = 300;
+					jump();
 				}
 				break;
 			}
@@ -80,66 +152,36 @@ namespace Entities
 		
 		float tdelta = game->getTDelta();
 		
-		// If any move key is pressed set the running sprite and move the player
-		if (
-			input.IsKeyDown(sf::Key::Left) || input.IsKeyDown(sf::Key::Right)
-			|| input.IsKeyDown(sf::Key::Down) || input.IsKeyDown(sf::Key::Up)
-		) {
-			_sprite->setAnimation("running");
-			
-			// Set left running sprite and move player
-			if ( input.IsKeyDown(sf::Key::Left) )
-			{
-				_sprite->getSprite()->FlipX(true);
-				_dir = -1;
-				_pos_left -= 250 * tdelta;
-			}
-			
-			// Set right running sprite and move player
-			if ( input.IsKeyDown(sf::Key::Right) )
-			{
-				_sprite->getSprite()->FlipX(false);
-				_dir = 1;
-				_pos_left += 250 * tdelta;
-			}
-			
-			// Move up
-			if ( input.IsKeyDown(sf::Key::Up) )
-			{
-				_pos_depth -= 100 * tdelta;
-			}
-			
-			// Move down
-			if ( input.IsKeyDown(sf::Key::Down) )
-			{
-				_pos_depth += 100 * game->getTDelta();
-			}
-			
-			bool did_enter_new_world = false, was_left = false;
-			
-			// Moved right
-			if ( _pos_left % world_width != _pos_left )
-				did_enter_new_world = true;
-			
-			// Clamp the player position to the width of the playing field
-			_pos_left = _pos_left % world_width;
-			
-			// To the left
-			if ( _pos_left < 0 )
-			{
-				_pos_left = world_width - _pos_left;
-				did_enter_new_world = was_left = true;
-			}
-			
-			if ( did_enter_new_world )
-				game->getEntityManager()->getWorld()->reverseScrollLeft(was_left);
-			
-			setDepth(_pos_depth);
-		}
-		else
+		if ( ! game->getMenuManager()->hasMenus() && isActivePlayer() )
 		{
-			_sprite->setAnimation("waiting");
+			// If any move key is pressed set the running sprite and move the player
+			if (
+				input.IsKeyDown(sf::Key::Left) || input.IsKeyDown(sf::Key::Right)
+				|| input.IsKeyDown(sf::Key::Down) || input.IsKeyDown(sf::Key::Up)
+			) {
+				// Set left running sprite and move player
+				if ( input.IsKeyDown(sf::Key::Left) )
+					runLeft();
+				
+				// Set right running sprite and move player
+				if ( input.IsKeyDown(sf::Key::Right) )
+					runRight();
+				
+				// Move up
+				if ( input.IsKeyDown(sf::Key::Up) )
+					moveUp();
+				
+				// Move down
+				if ( input.IsKeyDown(sf::Key::Down) )
+					moveDown();
+			}
+			else
+			{
+				_sprite->setAnimation("waiting");
+			}
 		}
+		
+		clampPos();
 		
 		// Update velocity
 		if ( _elevation != 0 )
@@ -148,12 +190,15 @@ namespace Entities
 			_velocity.y -= 1000 * tdelta;
 		}
 		
+		// Update position based on velocity
 		_elevation += _velocity.y * tdelta;
 		if ( _elevation <= 0 )
 		{
 			_elevation = 0;
 			_velocity.y = 0;
 		}
+		
+		setDepth(_pos_depth);
 		
 		_sprite->setY(game->getHeight() - world_height + _pos_depth - _sprite->getHeight() - _elevation);
 		_sprite->setX(_pos_left - game->getEntityManager()->getWorld()->getScrollLeft());
@@ -165,6 +210,11 @@ namespace Entities
 	void Player::draw(sf::RenderWindow &window)
 	{
 		window.Draw(*_sprite->getSprite());
+		
+		float old_x = _sprite->getX();
+		_sprite->setX(_pos_left - Gaem::Gaem::getInstance()->getEntityManager()->getWorld()->getReverseScrollLeft());
+		window.Draw(*_sprite->getSprite());
+		_sprite->setX(old_x);
 	}
 	
 	int Player::getLeft()

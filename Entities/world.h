@@ -43,6 +43,7 @@ namespace Entities
 		// Returns the height of the playing field
 		int getHeight();
 		int getScrollLeft();
+		int getReverseScrollLeft();
 		
 		// Reverse
 		void reverseScrollLeft(bool left);
