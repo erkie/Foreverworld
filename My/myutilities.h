@@ -15,6 +15,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <iterator>
 
@@ -34,5 +35,8 @@ std::vector<T> string_split(T str)
 
 bool file_exists(const std::string &f);
 std::string trim(const std::string &str, const std::string &chars = " \n\r\t");
+
+typedef std::vector<std::string> file_list;
+void list_files(const std::string &dir, file_list &res);
 
 #endif

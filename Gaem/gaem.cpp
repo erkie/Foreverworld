@@ -91,7 +91,7 @@ namespace Gaem
 		_entity_manager->you = new Entities::Player("resources/players/player_1.txt");
 		_entity_manager->add(_entity_manager->you);
 		
-		//_menu_manager->show("main");
+		_menu_manager->show("main");
 	}
 	
 	void Gaem::main()
@@ -118,10 +118,10 @@ namespace Gaem
 				
 				if ( event.Type == sf::Event::Resized )
 				{
-					// resize window?
 					sf::View &view = _app.GetDefaultView();
 					view.SetFromRect(sf::FloatRect(0, 0, event.Size.Width, event.Size.Height));
 					_app.SetView(view);
+					_menu_manager->resize();
 				}
 				
 				// Only entity events if no menu is active

@@ -77,8 +77,13 @@ namespace Gaem
 	// Gaem::MenuManager
 	//
 
-	MenuManager::MenuManager(sf::RenderWindow &app): _gui_graphics(app)
+	MenuManager::MenuManager(sf::RenderWindow &app)
 	{
+		_gui = new gcn::Gui();
+		_gui_graphics = new gcn::SFMLGraphics(app);
+		_gui_input = new gcn::SFMLInput();
+		_gui_imageloader = new gcn::SFMLImageLoader();
+		
 		// _sf_input is used by the SFML/guichan event handler
 		_sf_input = &app.GetInput();
 		
@@ -88,12 +93,19 @@ namespace Gaem
 			throw GAEM_EXCEPTION("Could not load resources/main_font.ttf");
 		}
 		
-		_gui_font = gcn::SFMLFont(_font);
-		gcn::Widget::setGlobalFont(&_gui_font);
+		_gui_font = new gcn::SFMLFont(_font);
+		gcn::Widget::setGlobalFont(_gui_font);
 		
 		// Set some global variables
-		_gui.setGraphics(&_gui_graphics);
-		_gui.setInput(&_gui_input);
+		_gui->setGraphics(_gui_graphics);
+		_gui->setInput(_gui_input);
+	}
+	
+	void MenuManager::resize()
+	{
+		delete _gui_graphics;
+		_gui_graphics = new gcn::SFMLGraphics(*Gaem::Gaem::getInstance()->getWindow());
+		_gui->setGraphics(_gui_graphics);
 	}
 	
 	void MenuManager::add(const std::string &id, Menu *menu)
@@ -163,7 +175,7 @@ namespace Gaem
 	void MenuManager::handleEvent(sf::Event &event)
 	{
 		if ( _menu_queue.size() == 0 ) return;
-		_gui_input.pushEvent(event, *_sf_input);
+		_gui_input->pushEvent(event, *_sf_input);
 	}
 	
 	void MenuManager::logic()
@@ -174,13 +186,13 @@ namespace Gaem
 			delete *iter;
 		_remove_list.clear();
 		
-		_gui.logic();
+		_gui->logic();
 	}
 	
 	void MenuManager::draw()
 	{
 		if ( _menu_queue.size() == 0 ) return;
-		_gui.draw();
+		_gui->draw();
 	}
 	
 	bool MenuManager::hasMenus()
@@ -190,6 +202,6 @@ namespace Gaem
 	
 	gcn::Gui *MenuManager::getGui()
 	{
-		return &_gui;
+		return _gui;
 	}
 }

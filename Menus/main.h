@@ -24,6 +24,7 @@ namespace Menus
 		void initLogin();
 		void initSignup();
 		void initAbout();
+		void initDev();
 		
 		gcn::Container *makeContainer();
 	public:

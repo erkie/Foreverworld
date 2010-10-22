@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3512492A125C600D00087E71 /* passwordfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35124929125C600D00087E71 /* passwordfield.cpp */; };
-		35124B37125C7B5100087E71 /* guichan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35124B36125C7B5100087E71 /* guichan.framework */; };
 		354692CB126AE988004D4FB5 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354692CA126AE988004D4FB5 /* animation.cpp */; };
 		354692D3126AEFAD004D4FB5 /* animatedsprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354692D2126AEFAD004D4FB5 /* animatedsprite.cpp */; };
+		354702EE1271E04400885A04 /* guichan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354702DC1271E03200885A04 /* guichan.framework */; };
 		354B557B125CF6B6002D794C /* fixedlabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354B557A125CF6B6002D794C /* fixedlabel.cpp */; };
 		354CB9B71258DAEB006F919C /* menumanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354CB9B61258DAEB006F919C /* menumanager.cpp */; };
 		354CB9C21258DBF2006F919C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 354CB9C11258DBF2006F919C /* main.cpp */; };
@@ -63,11 +63,12 @@
 /* Begin PBXFileReference section */
 		35124928125C600D00087E71 /* passwordfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = passwordfield.h; sourceTree = "<group>"; };
 		35124929125C600D00087E71 /* passwordfield.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = passwordfield.cpp; sourceTree = "<group>"; };
-		35124B36125C7B5100087E71 /* guichan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = guichan.framework; path = /System/Library/Frameworks/guichan.framework; sourceTree = "<absolute>"; };
+		351602061270BFAD003C8B98 /* mydirent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mydirent.h; sourceTree = "<group>"; };
 		354692C9126AE988004D4FB5 /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation.h; sourceTree = "<group>"; };
 		354692CA126AE988004D4FB5 /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
 		354692D1126AEFAD004D4FB5 /* animatedsprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animatedsprite.h; sourceTree = "<group>"; };
 		354692D2126AEFAD004D4FB5 /* animatedsprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animatedsprite.cpp; sourceTree = "<group>"; };
+		354702DC1271E03200885A04 /* guichan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = guichan.framework; path = /Library/Frameworks/guichan.framework; sourceTree = "<absolute>"; };
 		354B5579125CF6B6002D794C /* fixedlabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedlabel.h; sourceTree = "<group>"; };
 		354B557A125CF6B6002D794C /* fixedlabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fixedlabel.cpp; sourceTree = "<group>"; };
 		354CB9B51258DAEB006F919C /* menumanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menumanager.h; sourceTree = "<group>"; };
@@ -120,7 +121,7 @@
 				A01FB6D00F07CFF2000AAC7B /* sfml-window.framework in Frameworks */,
 				35B6E958120016D1000FB887 /* sfml-audio.framework in Frameworks */,
 				35B6E959120016D1000FB887 /* sfml-network.framework in Frameworks */,
-				35124B37125C7B5100087E71 /* guichan.framework in Frameworks */,
+				354702EE1271E04400885A04 /* guichan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +155,7 @@
 		356CCDB9126C983100BC9CD5 /* My */ = {
 			isa = PBXGroup;
 			children = (
+				351602061270BFAD003C8B98 /* mydirent.h */,
 				356CCDE4126C9B2F00BC9CD5 /* myutilities.cpp */,
 				356CCDE5126C9B2F00BC9CD5 /* myutilities.h */,
 			);
@@ -225,7 +227,7 @@
 				A01FB6CB0F07CFF2000AAC7B /* sfml-system.framework */,
 				A01FB6CC0F07CFF2000AAC7B /* sfml-window.framework */,
 				A01FB6CA0F07CFF2000AAC7B /* sfml-graphics.framework */,
-				35124B36125C7B5100087E71 /* guichan.framework */,
+				354702DC1271E03200885A04 /* guichan.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -336,6 +338,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "./**";
@@ -347,6 +350,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -355,6 +360,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -376,6 +386,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;

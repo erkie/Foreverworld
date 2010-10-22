@@ -7,9 +7,14 @@
  *
  */
 
+#include <string>
+#include <sstream>
+
 #include "Menus/main.h"
 
 #include "Gaem/gaem.h"
+
+#include "My/myutilities.h"
 
 #include "Widgets/passwordfield.h"
 #include "Widgets/fixedlabel.h"
@@ -50,6 +55,26 @@ namespace Menus
 		}
 	};
 	
+	class DevListModel: public gcn::ListModel
+	{
+	public:
+		file_list _files;
+		DevListModel(): gcn::ListModel()
+		{
+			list_files("resources/players", _files);
+		}
+		
+		std::string getElementAt(int i)
+		{
+			return _files[i];
+		}
+		
+		int getNumberOfElements()
+		{
+			return _files.size();
+		}
+	};
+	
 	void Main::init()
 	{
 		gcn::Window *r = newWidget<gcn::Window>("Foreverworld");
@@ -68,6 +93,7 @@ namespace Menus
 		initLogin();
 		initSignup();
 		initAbout();
+		initDev();
 		
 		setRoot(_root);
 	}
@@ -234,9 +260,40 @@ namespace Menus
 		_tabs->addTab("About", about_container);
 	}
 	
-	void Main::deinit()
+	void Main::initDev()
 	{
+		gcn::Container *dev_container = makeContainer();
 		
+		int field_width = dev_container->getChildrenArea().width - 10 * 2;
+		
+		Widgets::FixedLabel *paragraph1 = newWidget<Widgets::FixedLabel>();
+		paragraph1->setPosition(10, 10);
+		paragraph1->setCaption("Pick an animation to try out or a player to apply.");
+		paragraph1->setWidth(field_width);
+		paragraph1->adjustHeight();
+		
+		gcn::ScrollArea *scroll = newWidget<gcn::ScrollArea>();
+		scroll->setX(10);
+		scroll->setY(paragraph1->getY() + paragraph1->getHeight() + 10);
+		scroll->setWidth(field_width / 2);
+		scroll->setHeight(180);
+		scroll->setVerticalScrollPolicy(gcn::ScrollArea::SHOW_ALWAYS);
+
+		gcn::ListModel *listmodel = new DevListModel; // ADD DESTRUCTION
+		
+		gcn::ListBox *listbox = new gcn::ListBox(listmodel); // READD DESTRUCTION
+		listbox->setWidth(scroll->getWidth() - scroll->getScrollbarWidth());
+		
+		scroll->setContent(listbox);
+		
+		dev_container->add(paragraph1);
+		dev_container->add(scroll);
+		
+		// Read info-files and sprite dirs from resources/players
+		// Add them to a listbox of sorts
+		// Apply to Player
+		
+		_tabs->addTab("Developer", dev_container);
 	}
 	
 	gcn::Container *Main::makeContainer()

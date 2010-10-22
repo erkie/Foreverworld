@@ -1,11 +1,9 @@
 #include <iostream>
 
-#include <SFML/Graphics.hpp>
-
 #include <guichan/guichan.hpp>
 #include <guichan/sfml.hpp>
 
-#include "gaem/gaem.h"
+#include "Gaem/gaem.h"
 
 using namespace std;
 

@@ -99,16 +99,17 @@ namespace Gaem
 		
 		sf::Font _font;
 		
-		gcn::SFMLGraphics _gui_graphics;
-		gcn::SFMLInput _gui_input;
-		gcn::SFMLImageLoader _gui_imageloader;
-		gcn::SFMLFont _gui_font;
+		gcn::SFMLGraphics *_gui_graphics;
+		gcn::SFMLInput *_gui_input;
+		gcn::SFMLImageLoader *_gui_imageloader;
+		gcn::SFMLFont *_gui_font;
 		
 		const sf::Input *_sf_input;
 		
-		gcn::Gui _gui;
+		gcn::Gui *_gui;
 	public:
 		MenuManager(sf::RenderWindow &);
+		void resize();
 		
 		void add(Menu *);
 		void add(const std::string &, Menu *);
