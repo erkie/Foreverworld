@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include <algorithm>
 #include <SFML/Graphics.hpp>
 
@@ -211,8 +212,28 @@ namespace Entities
 	{
 		window.Draw(*_sprite->getSprite());
 		
+		// Draw pos of player(s) in top right corner
+		std::stringstream str;
+		str << _pos_left;
+		sf::String pos(str.str());
+		pos.SetColor(sf::Color(0x0E, 0x81, 0xED));
+		pos.SetX(Gaem::Gaem::getInstance()->getWidth() - pos.GetRect().GetWidth() - 10);
+		pos.SetY(isActivePlayer() ? 10 : (20 + pos.GetRect().GetHeight()));
+		window.Draw(pos);
+		
+		// Draw two more versions of the player, one outside the field to the left
+		// and one outside to the right, this so it does not disappear when the position
+		// is clamped
+		int scroll = Gaem::Gaem::getInstance()->getEntityManager()->getWorld()->getScrollLeft();
+		int width = Gaem::Gaem::getInstance()->getEntityManager()->getWorld()->getWidth();
+		
 		float old_x = _sprite->getX();
-		_sprite->setX(_pos_left - Gaem::Gaem::getInstance()->getEntityManager()->getWorld()->getReverseScrollLeft());
+		_sprite->setX(_pos_left - width - scroll);
+		window.Draw(*_sprite->getSprite());
+		_sprite->setX(old_x);
+		
+		old_x = _sprite->getX();
+		_sprite->setX(_pos_left + width - scroll);
 		window.Draw(*_sprite->getSprite());
 		_sprite->setX(old_x);
 	}
