@@ -20,7 +20,10 @@
 
 namespace Entities
 {
-	Player::Player(const std::string &path): _pos_left(0), _pos_depth(50), _dir(1), _elevation(0)
+	Player::Player(const std::string &path):
+		_pos_left(0), _pos_depth(50), _dir(1),
+		_elevation(0), _speed(250), _speed_up(100),
+		_can_jump(true)
 	{
 		_sprite = new Gaem::AnimatedSprite;
 		
@@ -31,6 +34,9 @@ namespace Entities
 		_sprite->loadAnimation("jumping", info.get("jumping"));
 		
 		_scale = info.getFloat("scale", 1.0);
+		_speed = info.getFloat("speed", 250);
+		_speed_up = info.getFloat("up speed", 100);
+		_can_jump = info.isTrue("can jump");
 		_name = info.get("name");
 		
 		_sprite->setAnimation("waiting");
@@ -69,7 +75,7 @@ namespace Entities
 	
 	void Player::jump()
 	{
-		if ( _elevation == 0 )
+		if ( _elevation == 0 && _can_jump )
 			_velocity.y = 500;
 	}
 	
@@ -78,7 +84,7 @@ namespace Entities
 		_sprite->setAnimation("running");
 		_sprite->getSprite()->FlipX(true);
 		_dir = -1;
-		_pos_left -= 250 * Gaem::Gaem::getInstance()->getTDelta();
+		_pos_left -= _speed * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
 	void Player::runRight()
@@ -86,19 +92,19 @@ namespace Entities
 		_sprite->setAnimation("running");
 		_sprite->getSprite()->FlipX(false);
 		_dir = 1;
-		_pos_left += 250 * Gaem::Gaem::getInstance()->getTDelta();
+		_pos_left += _speed * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
 	void Player::moveUp()
 	{
 		_sprite->setAnimation("running");
-		_pos_depth -= 100 * Gaem::Gaem::getInstance()->getTDelta();
+		_pos_depth -= _speed_up * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
 	void Player::moveDown()
 	{
 		_sprite->setAnimation("running");
-		_pos_depth += 100 * Gaem::Gaem::getInstance()->getTDelta();
+		_pos_depth += _speed_up * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
 	void Player::clampPos()

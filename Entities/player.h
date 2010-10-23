@@ -26,6 +26,9 @@ namespace Entities
 		
 		// Player specifc
 		float _scale;
+		float _speed;
+		float _speed_up;
+		bool _can_jump;
 		std::string _name;
 		
 		int _dir;
