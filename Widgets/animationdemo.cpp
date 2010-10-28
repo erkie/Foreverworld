@@ -20,9 +20,9 @@
 
 namespace Widgets
 {
-	AnimationDemo::AnimationDemo(): _sprite(NULL)
+	AnimationDemo::AnimationDemo(): _sprite(NULL), _scale(1.0), _offset_x(0), _offset_y(0)
 	{
-		
+		addMouseListener(this);
 	}
 	
 	AnimationDemo::~AnimationDemo()
@@ -35,7 +35,9 @@ namespace Widgets
 	{
 		if ( _sprite )
 			delete _sprite;
+		
 		_sprite = new Gaem::AnimatedSprite();
+		_sprite->getSprite()->SetScale(_scale, _scale);
 		_sprite->loadAnimation("my", name);
 		_sprite->setAnimation("my");
 	}
@@ -46,9 +48,66 @@ namespace Widgets
 		{
 			_sprite->step();
 			
+			_sprite->getSprite()->SetScale(_scale, _scale);
+			
 			_sprite->setX(getWidth() / 2 - _sprite->getWidth() / 2);
 			_sprite->setY(getHeight() / 2 - _sprite->getHeight() / 2);
 		}
+	}
+	
+	void AnimationDemo::setScale(float scale)
+	{
+		_scale = scale;
+	}
+	
+	float AnimationDemo::getScale()
+	{
+		return _scale;
+	}
+	
+	void AnimationDemo::start()
+	{
+		if ( _sprite )
+			_sprite->getAnimation()->setPlaying(true);
+	}
+	
+	void AnimationDemo::stop()
+	{
+		if ( _sprite )
+			_sprite->getAnimation()->setPlaying(false);
+	}
+	
+	void AnimationDemo::step()
+	{
+		if ( _sprite )
+		{
+			_sprite->getAnimation()->nextFrame();
+			_sprite->step();
+		}
+	}
+	
+	void AnimationDemo::reset()
+	{
+		if ( _sprite )
+			_sprite->getAnimation()->reset();
+	}
+	
+	void AnimationDemo::flip()
+	{
+		if ( _sprite )
+			_sprite->flip(!_sprite->isFlipped());
+	}
+	
+	void AnimationDemo::mouseDragged(gcn::MouseEvent &mouseEvent)
+	{
+		_offset_x = mouseEvent.getX() - _last_x;
+		_offset_y = mouseEvent.getY() - _last_y;
+	}
+	
+	void AnimationDemo::mouseMoved(gcn::MouseEvent &mouseEvent)
+	{
+		_last_x = mouseEvent.getX();
+		_last_y = mouseEvent.getY();
 	}
 	
 	void AnimationDemo::draw(gcn::Graphics *graphics)
@@ -77,8 +136,8 @@ namespace Widgets
 		
 		if ( _sprite )
 		{
-			_sprite->setX(_sprite->getX() + graphics->getCurrentClipArea().xOffset);
-			_sprite->setY(_sprite->getY() + graphics->getCurrentClipArea().yOffset);
+			_sprite->setX(_sprite->getX() + graphics->getCurrentClipArea().xOffset + _offset_x);
+			_sprite->setY(_sprite->getY() + graphics->getCurrentClipArea().yOffset + _offset_y);
 			Gaem::Gaem::getInstance()->getWindow()->Draw(*_sprite->getSprite());
 		}
 	}

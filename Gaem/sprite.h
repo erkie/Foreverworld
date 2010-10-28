@@ -21,6 +21,7 @@ namespace Gaem
 	protected:
 		sf::Sprite _sprite;
 		sf::Vector2f _position;
+		bool _is_flipped;
 	public:
 		Sprite();
 		Sprite(const std::string &);
@@ -36,6 +37,9 @@ namespace Gaem
 		float getY();
 		int getWidth();
 		int getHeight();
+		
+		bool isFlipped();
+		void flip(bool);
 	};
 }
 

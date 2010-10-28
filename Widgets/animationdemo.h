@@ -16,14 +16,30 @@
 
 namespace Widgets
 {
-	class AnimationDemo: public gcn::Widget
+	class AnimationDemo: public gcn::Widget, public gcn::MouseListener
 	{
 		Gaem::AnimatedSprite *_sprite;
+		float _scale;
+		
+		int _offset_x, _offset_y;
+		int _last_x, _last_y;
 	public:
 		AnimationDemo();
 		~AnimationDemo();
 		
 		void setAnimation(const std::string &name);
+		
+		void setScale(float);
+		float getScale();
+		
+		void flip();
+		void reset();
+		void start();
+		void stop();
+		void step();
+		
+		virtual void mouseDragged(gcn::MouseEvent &mouseEvent);
+		virtual void mouseMoved(gcn::MouseEvent &mouseEvent);
 		
 		virtual void draw(gcn::Graphics *graphics);
 		virtual void logic();

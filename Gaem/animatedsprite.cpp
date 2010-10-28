@@ -13,7 +13,7 @@
 
 namespace Gaem
 {
-	AnimatedSprite::AnimatedSprite(): Sprite()
+	AnimatedSprite::AnimatedSprite(): Sprite(), _current_animation(NULL)
 	{
 		
 	}
@@ -41,6 +41,11 @@ namespace Gaem
 		
 		_sprite.SetX(_position.x);
 		_sprite.SetY(_position.y);
+	}
+	
+	Animation *AnimatedSprite::getAnimation()
+	{
+		return _current_animation;
 	}
 	
 	void AnimatedSprite::step()

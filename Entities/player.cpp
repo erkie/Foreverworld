@@ -82,7 +82,7 @@ namespace Entities
 	void Player::runLeft()
 	{
 		_sprite->setAnimation("running");
-		_sprite->getSprite()->FlipX(true);
+		_sprite->flip(true);
 		_dir = -1;
 		_pos_left -= _speed * Gaem::Gaem::getInstance()->getTDelta();
 	}
@@ -90,7 +90,7 @@ namespace Entities
 	void Player::runRight()
 	{
 		_sprite->setAnimation("running");
-		_sprite->getSprite()->FlipX(false);
+		_sprite->flip(false);
 		_dir = 1;
 		_pos_left += _speed * Gaem::Gaem::getInstance()->getTDelta();
 	}
@@ -219,13 +219,13 @@ namespace Entities
 		window.Draw(*_sprite->getSprite());
 		
 		// Draw pos of player(s) in top right corner
-		std::stringstream str;
+		/*std::stringstream str;
 		str << _pos_left;
 		sf::String pos(str.str());
 		pos.SetColor(sf::Color(0x0E, 0x81, 0xED));
 		pos.SetX(Gaem::Gaem::getInstance()->getWidth() - pos.GetRect().GetWidth() - 10);
 		pos.SetY(isActivePlayer() ? 10 : (20 + pos.GetRect().GetHeight()));
-		window.Draw(pos);
+		window.Draw(pos);*/
 		
 		// Draw two more versions of the player, one outside the field to the left
 		// and one outside to the right, this so it does not disappear when the position

@@ -38,6 +38,7 @@ namespace Gaem
 		for ( listener_list::iterator iter = _listeners.begin(); iter != _listeners.end(); iter++ )
 			delete *iter;
 		
+		_table.clear();
 		_widgets.clear();
 		_listeners.clear();
 	}
@@ -45,6 +46,11 @@ namespace Gaem
 	void Menu::show()
 	{
 		// pass
+	}
+	
+	gcn::Widget *Menu::get(const std::string &name)
+	{
+		return _table[name];
 	}
 	
 	void Menu::setActive()

@@ -37,6 +37,7 @@ namespace Gaem
 	protected:
 		typedef std::list<gcn::Widget*> widget_list;
 		typedef std::list<Listener*> listener_list;
+		std::map<std::string, gcn::Widget*> _table;
 		
 		widget_list _widgets;
 		listener_list _listeners;
@@ -57,6 +58,7 @@ namespace Gaem
 		void setActive();
 		void setRoot(gcn::Container *);
 		gcn::Widget *getRoot();
+		gcn::Widget *get(const std::string& key);
 		
 		void centerRoot();
 		
@@ -73,6 +75,24 @@ namespace Gaem
 		{
 			T *w = new T(a);
 			_widgets.push_back(w);
+			return w;
+		}
+		
+		template<typename T>
+		T* newNamedWidget(const std::string &name)
+		{
+			T *w = new T;
+			_widgets.push_back(w);
+			_table[name] = w;
+			return w;
+		}
+		
+		template<typename T>
+		T* newNamedWidget(const std::string &name, const std::string &a)
+		{
+			T *w = new T(a);
+			_widgets.push_back(w);
+			_table[name] = a;
 			return w;
 		}
 		

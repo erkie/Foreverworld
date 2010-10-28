@@ -26,6 +26,7 @@ namespace Gaem
 		sf::IntRect _rect;
 		float _frame_time;
 		bool _run_once;
+		bool _playing;
 		
 		float _last_time;
 	public:
@@ -38,6 +39,9 @@ namespace Gaem
 		
 		sf::Image *getImage();
 		sf::IntRect getRect();
+		
+		void setPlaying(bool);
+		bool getPlaying();
 		
 		int getWidth();
 		int getHeight();
