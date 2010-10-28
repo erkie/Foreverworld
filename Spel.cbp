@@ -9,7 +9,7 @@
 			<Target title="Debug">
 				<Option output="bin\Debug\Spel" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj\Debug\" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
@@ -87,16 +87,22 @@
 		<Unit filename="Gaem\sprite.h" />
 		<Unit filename="Menus\alert.cpp" />
 		<Unit filename="Menus\alert.h" />
+		<Unit filename="Menus\developer.cpp" />
+		<Unit filename="Menus\developer.h" />
 		<Unit filename="Menus\loading.cpp" />
 		<Unit filename="Menus\loading.h" />
 		<Unit filename="Menus\main.cpp" />
 		<Unit filename="Menus\main.h" />
-		<Unit filename="My\myentitymanager.cpp" />
+		<Unit filename="My\mydirent.h" />
 		<Unit filename="My\myentitymanager.h" />
 		<Unit filename="My\myutilities.cpp" />
 		<Unit filename="My\myutilities.h" />
+		<Unit filename="Widgets\animationdemo.cpp" />
+		<Unit filename="Widgets\animationdemo.h" />
 		<Unit filename="Widgets\fixedlabel.cpp" />
 		<Unit filename="Widgets\fixedlabel.h" />
+		<Unit filename="Widgets\image.cpp" />
+		<Unit filename="Widgets\image.h" />
 		<Unit filename="Widgets\passwordfield.cpp" />
 		<Unit filename="Widgets\passwordfield.h" />
 		<Unit filename="main.cpp" />
