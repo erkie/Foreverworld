@@ -18,10 +18,11 @@
 
 #include "Widgets/passwordfield.h"
 #include "Widgets/fixedlabel.h"
+#include "Widgets/animationdemo.h"
 
 namespace Menus
 {
-	class MainLoginSubmit: public gcn::ActionListener, public ::Gaem::Listener
+	class MainLoginSubmit: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
 		{
@@ -30,7 +31,7 @@ namespace Menus
 		}
 	};
 	
-	class MainHideMenu: public gcn::ActionListener, public ::Gaem::Listener
+	class MainHideMenu: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
 		{
@@ -38,7 +39,7 @@ namespace Menus
 		}
 	};
 	
-	class MainSignupSubmit: public gcn::ActionListener, public ::Gaem::Listener
+	class MainSignupSubmit: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
 		{
@@ -47,7 +48,7 @@ namespace Menus
 		}
 	};
 	
-	class MainFuckYou: public gcn::ActionListener, public ::Gaem::Listener
+	class MainFuckYou: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
 		{
@@ -55,47 +56,28 @@ namespace Menus
 		}
 	};
 	
-	class DevListModel: public gcn::ListModel
-	{
-	public:
-		file_list _files;
-		DevListModel(): gcn::ListModel()
-		{
-			list_files("resources/players", _files);
-		}
-		
-		std::string getElementAt(int i)
-		{
-			return _files[i];
-		}
-		
-		int getNumberOfElements()
-		{
-			return _files.size();
-		}
-	};
+	Main* Main::instance = NULL;
 	
 	void Main::init()
 	{
-		gcn::Window *r = newWidget<gcn::Window>("Foreverworld");
-		r->setTitleBarHeight(25);
-		r->setDimension(gcn::Rectangle(0, 0, 300, 300));
-		r->setPosition(50, 50);
-		_root = static_cast<gcn::Container*>(r);
+		Main::instance = this;
+		
+		gcn::Window *root = newWidget<gcn::Window>("Foreverworld");
+		root->setTitleBarHeight(25);
+		root->setDimension(gcn::Rectangle(0, 0, 300, 300));
+		root->setPosition(50, 50);
+		setRoot(root);
 		
 		centerRoot();
 		
 		// Create the tabs
 		_tabs = newWidget<gcn::TabbedArea>();
-		_tabs->setSize(_root->getChildrenArea().width, _root->getChildrenArea().height);
-		_root->add(_tabs);
+		_tabs->setSize(_root->getChildrenArea().width, root->getChildrenArea().height);
+		root->add(_tabs);
 		
 		initLogin();
 		initSignup();
 		initAbout();
-		initDev();
-		
-		setRoot(_root);
 	}
 	
 	//
@@ -258,42 +240,6 @@ namespace Menus
 		about_container->add(stupid);
 		
 		_tabs->addTab("About", about_container);
-	}
-	
-	void Main::initDev()
-	{
-		gcn::Container *dev_container = makeContainer();
-		
-		int field_width = dev_container->getChildrenArea().width - 10 * 2;
-		
-		Widgets::FixedLabel *paragraph1 = newWidget<Widgets::FixedLabel>();
-		paragraph1->setPosition(10, 10);
-		paragraph1->setCaption("Pick an animation to try out or a player to apply.");
-		paragraph1->setWidth(field_width);
-		paragraph1->adjustHeight();
-		
-		gcn::ScrollArea *scroll = newWidget<gcn::ScrollArea>();
-		scroll->setX(10);
-		scroll->setY(paragraph1->getY() + paragraph1->getHeight() + 10);
-		scroll->setWidth(field_width / 2);
-		scroll->setHeight(180);
-		scroll->setVerticalScrollPolicy(gcn::ScrollArea::SHOW_ALWAYS);
-
-		gcn::ListModel *listmodel = new DevListModel; // ADD DESTRUCTION
-		
-		gcn::ListBox *listbox = new gcn::ListBox(listmodel); // READD DESTRUCTION
-		listbox->setWidth(scroll->getWidth() - scroll->getScrollbarWidth());
-		
-		scroll->setContent(listbox);
-		
-		dev_container->add(paragraph1);
-		dev_container->add(scroll);
-		
-		// Read info-files and sprite dirs from resources/players
-		// Add them to a listbox of sorts
-		// Apply to Player
-		
-		_tabs->addTab("Developer", dev_container);
 	}
 	
 	gcn::Container *Main::makeContainer()

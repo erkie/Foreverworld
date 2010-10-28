@@ -50,6 +50,7 @@ namespace Gaem
 		~Menu();
 		
 		virtual void init() = 0;
+		virtual void show();
 		
 		void setManager(MenuManager *);
 		

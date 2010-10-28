@@ -17,6 +17,7 @@
 #include "Gaem/exception.h"
 
 #include "Menus/main.h"
+#include "Menus/developer.h"
 #include "Menus/alert.h"
 #include "Menus/loading.h"
 
@@ -52,9 +53,6 @@ namespace Gaem
 		// Menus
 		_menu_manager = new MenuManager(_app);
 		
-		_menu_manager->add("main", new ::Menus::Main());
-		_menu_manager->add("loading", new ::Menus::Loading());
-		
 		// World entity manager
 		_entity_manager = new EntityManager();
 	}
@@ -80,6 +78,7 @@ namespace Gaem
 	
 	void Gaem::init()
 	{
+		// Add ever-present game entities
 		Entities::World *world = new Entities::World();
 		_entity_manager->add(world);
 		_entity_manager->setWorld(world);
@@ -91,6 +90,13 @@ namespace Gaem
 		_entity_manager->you = new Entities::Player("resources/players/player_1.txt");
 		_entity_manager->add(_entity_manager->you);
 		
+		// Load menus
+		_menu_manager->add("main", new ::Menus::Main());
+		_menu_manager->add("developer", new ::Menus::Developer());
+		_menu_manager->add("loading", new ::Menus::Loading());
+		
+		
+		// Show main menu
 		_menu_manager->show("main");
 	}
 	
@@ -108,12 +114,19 @@ namespace Gaem
 				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q )
 					_app.Close();
 				
+				// Open main menu on <esc>
 				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Escape )
 				{
 					if ( ! _menu_manager->hasMenus() )
 						_menu_manager->show("main");
 					else
 						_menu_manager->hide();
+				}
+				
+				// Open developer menu on <D>
+				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::D )
+				{
+					_menu_manager->show("developer");
 				}
 				
 				if ( event.Type == sf::Event::Resized )
@@ -128,19 +141,19 @@ namespace Gaem
 				// Otherwise pipe the events to the menu
 				if ( _menu_manager->hasMenus() )
 					_menu_manager->handleEvent(event);
-				else
 				// Handle entity events
+				else
 					_entity_manager->handleEvent(event);
 			}
 			
 			_app.Clear(sf::Color::White);
 			
 			// Logic for menus
-			// Draw menu
+			// Draw sprites
 			_entity_manager->logic();
 			_entity_manager->draw(_app);
 			
-			// Logic and draw sprites
+			// Logic and draw menus
 			try {
 				_menu_manager->logic();
 				_menu_manager->draw();
@@ -157,6 +170,10 @@ namespace Gaem
 	
 	void Gaem::errorMain(const std::string &error)
 	{
+		// Clear menu queue so the user can't hide the alert and continue everything
+		while ( _menu_manager->hasMenus() )
+			_menu_manager->hide();
+		
 		_menu_manager->alert(error);
 		
 		while (_app.IsOpened())

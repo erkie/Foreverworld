@@ -42,8 +42,14 @@ namespace Gaem
 		_listeners.clear();
 	}
 	
+	void Menu::show()
+	{
+		// pass
+	}
+	
 	void Menu::setActive()
 	{
+		show();
 		setRoot(_root);
 	}
 	
@@ -59,6 +65,7 @@ namespace Gaem
 	
 	void Menu::setRoot(gcn::Container *root)
 	{
+		_root = root;
 		_manager->getGui()->setTop(root);
 	}
 	
@@ -69,8 +76,8 @@ namespace Gaem
 	
 	void Menu::centerRoot()
 	{
-		_root->setX(Gaem::Gaem::getInstance()->getWindow()->GetWidth()/2 - _root->getWidth()/2);
-		_root->setY(Gaem::Gaem::getInstance()->getWindow()->GetHeight()/2 - _root->getHeight()/2);
+		_root->setX(Gaem::Gaem::getInstance()->getWidth()/2 - _root->getWidth()/2);
+		_root->setY(Gaem::Gaem::getInstance()->getHeight()/2 - _root->getHeight()/2);
 	}
 	
 	//

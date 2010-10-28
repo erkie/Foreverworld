@@ -14,7 +14,7 @@
 
 namespace Menus
 {
-	class Loading: public ::Gaem::Menu
+	class Loading: public Gaem::Menu
 	{
 	public:
 		void init();

@@ -166,5 +166,16 @@ namespace Entities
 			}
 			sprite->setX(old_x);
 		}
+		
+		// Draw last layer repeatedly upwards so the sky never ends
+		Gaem::Sprite *last = (*(--_layers.rend()))->sprite;
+		int old_y = last->getY();
+		while ( last->getY() > 0 )
+		{
+			old_y = last->getY();
+			last->setY(old_y - last->getHeight());
+			window.Draw(*last->getSprite());
+		}
+		last->setY(old_y);
 	}
 }

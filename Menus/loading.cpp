@@ -18,7 +18,7 @@ namespace Menus
 		gcn::Window *r = newWidget<gcn::Window>("Loading");
 		r->setTitleBarHeight(25);
 		r->setSize(300, 100);
-		_root = static_cast<gcn::Container*>(r);
+		setRoot(r);
 		
 		gcn::Label *indicator = newWidget<gcn::Label>("Loading a lot of things...");
 		indicator->adjustSize();
@@ -28,7 +28,5 @@ namespace Menus
 		_root->add(indicator);
 		
 		centerRoot();
-		
-		setRoot(_root);
 	}
 }

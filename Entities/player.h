@@ -19,6 +19,7 @@ namespace Entities
 {
 	class Player: public Gaem::Entity
 	{
+	protected:
 		sf::Vector2f _position;
 		sf::Vector2f _velocity;
 		

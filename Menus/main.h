@@ -15,19 +15,22 @@
 #include <guichan/guichan.hpp>
 #include "Gaem/menumanager.h"
 
+#include "Widgets/animationdemo.h"
+
 namespace Menus
 {	
-	class Main: public ::Gaem::Menu
-	{
+	class Main: public Gaem::Menu
+	{	
 		gcn::TabbedArea *_tabs;
 		
 		void initLogin();
 		void initSignup();
 		void initAbout();
-		void initDev();
 		
 		gcn::Container *makeContainer();
 	public:
+		static Main* instance;
+		
 		void init();
 		void deinit();
 	};
