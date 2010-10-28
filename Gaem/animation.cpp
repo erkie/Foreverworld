@@ -21,7 +21,7 @@
 
 namespace Gaem
 {
-	Animation::Animation(const std::string &path): _path(path), _last_time(0), _run_once(false)
+	Animation::Animation(const std::string &path): _path(path), _last_time(0), _run_once(false), _playing(true)
 	{
 		load();
 	}
@@ -54,6 +54,9 @@ namespace Gaem
 	
 	void Animation::step()
 	{
+		if ( ! _playing )
+			return;
+		
 		float tdelta = Gaem::Gaem::getInstance()->getTDelta();
 		if ( tdelta + _last_time > _frame_time )
 		{
@@ -76,6 +79,16 @@ namespace Gaem
 	void Animation::reset()
 	{
 		_rect = sf::IntRect(0, 0, _width, _image->GetHeight());
+	}
+	
+	void Animation::setPlaying(bool to)
+	{
+		_playing = to;
+	}
+	
+	bool Animation::getPlaying()
+	{
+		return _playing;
 	}
 	
 	sf::Image *Animation::getImage()

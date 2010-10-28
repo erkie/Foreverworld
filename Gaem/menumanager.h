@@ -37,6 +37,7 @@ namespace Gaem
 	protected:
 		typedef std::list<gcn::Widget*> widget_list;
 		typedef std::list<Listener*> listener_list;
+		std::map<std::string, gcn::Widget*> _table;
 		
 		widget_list _widgets;
 		listener_list _listeners;
@@ -50,12 +51,14 @@ namespace Gaem
 		~Menu();
 		
 		virtual void init() = 0;
+		virtual void show();
 		
 		void setManager(MenuManager *);
 		
 		void setActive();
 		void setRoot(gcn::Container *);
 		gcn::Widget *getRoot();
+		gcn::Widget *get(const std::string& key);
 		
 		void centerRoot();
 		
@@ -72,6 +75,24 @@ namespace Gaem
 		{
 			T *w = new T(a);
 			_widgets.push_back(w);
+			return w;
+		}
+		
+		template<typename T>
+		T* newNamedWidget(const std::string &name)
+		{
+			T *w = new T;
+			_widgets.push_back(w);
+			_table[name] = w;
+			return w;
+		}
+		
+		template<typename T>
+		T* newNamedWidget(const std::string &name, const std::string &a)
+		{
+			T *w = new T(a);
+			_widgets.push_back(w);
+			_table[name] = a;
 			return w;
 		}
 		
@@ -99,16 +120,17 @@ namespace Gaem
 		
 		sf::Font _font;
 		
-		gcn::SFMLGraphics _gui_graphics;
-		gcn::SFMLInput _gui_input;
-		gcn::SFMLImageLoader _gui_imageloader;
-		gcn::SFMLFont _gui_font;
+		gcn::SFMLGraphics *_gui_graphics;
+		gcn::SFMLInput *_gui_input;
+		gcn::SFMLImageLoader *_gui_imageloader;
+		gcn::SFMLFont *_gui_font;
 		
 		const sf::Input *_sf_input;
 		
-		gcn::Gui _gui;
+		gcn::Gui *_gui;
 	public:
 		MenuManager(sf::RenderWindow &);
+		void resize();
 		
 		void add(Menu *);
 		void add(const std::string &, Menu *);

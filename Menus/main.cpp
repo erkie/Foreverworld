@@ -7,16 +7,22 @@
  *
  */
 
+#include <string>
+#include <sstream>
+
 #include "Menus/main.h"
 
 #include "Gaem/gaem.h"
 
+#include "My/myutilities.h"
+
 #include "Widgets/passwordfield.h"
 #include "Widgets/fixedlabel.h"
+#include "Widgets/animationdemo.h"
 
 namespace Menus
 {
-	class MainLoginSubmit: public gcn::ActionListener, public ::Gaem::Listener
+	class MainLoginSubmit: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
 		{
@@ -25,7 +31,7 @@ namespace Menus
 		}
 	};
 	
-	class MainHideMenu: public gcn::ActionListener, public ::Gaem::Listener
+	class MainHideMenu: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
 		{
@@ -33,7 +39,7 @@ namespace Menus
 		}
 	};
 	
-	class MainSignupSubmit: public gcn::ActionListener, public ::Gaem::Listener
+	class MainSignupSubmit: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
 		{
@@ -42,7 +48,7 @@ namespace Menus
 		}
 	};
 	
-	class MainFuckYou: public gcn::ActionListener, public ::Gaem::Listener
+	class MainFuckYou: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
 		{
@@ -50,26 +56,28 @@ namespace Menus
 		}
 	};
 	
+	Main* Main::instance = NULL;
+	
 	void Main::init()
 	{
-		gcn::Window *r = newWidget<gcn::Window>("Foreverworld");
-		r->setTitleBarHeight(25);
-		r->setDimension(gcn::Rectangle(0, 0, 300, 300));
-		r->setPosition(50, 50);
-		_root = static_cast<gcn::Container*>(r);
+		Main::instance = this;
+		
+		gcn::Window *root = newWidget<gcn::Window>("Foreverworld");
+		root->setTitleBarHeight(25);
+		root->setDimension(gcn::Rectangle(0, 0, 300, 300));
+		root->setPosition(50, 50);
+		setRoot(root);
 		
 		centerRoot();
 		
 		// Create the tabs
 		_tabs = newWidget<gcn::TabbedArea>();
-		_tabs->setSize(_root->getChildrenArea().width, _root->getChildrenArea().height);
-		_root->add(_tabs);
+		_tabs->setSize(_root->getChildrenArea().width, root->getChildrenArea().height);
+		root->add(_tabs);
 		
 		initLogin();
 		initSignup();
 		initAbout();
-		
-		setRoot(_root);
 	}
 	
 	//
@@ -232,11 +240,6 @@ namespace Menus
 		about_container->add(stupid);
 		
 		_tabs->addTab("About", about_container);
-	}
-	
-	void Main::deinit()
-	{
-		
 	}
 	
 	gcn::Container *Main::makeContainer()

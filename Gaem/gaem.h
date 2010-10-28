@@ -20,10 +20,8 @@
 #include "Gaem/menumanager.h"
 #include "Gaem/entitymanager.h"
 
-#include "My/myentitymanager.h"
-
 namespace Gaem
-{	
+{
 	class Gaem
 	{
 		static Gaem *_instance;
@@ -32,7 +30,7 @@ namespace Gaem
 		
 		Config *_config;
 		MenuManager *_menu_manager;
-		My::MyEntityManager *_entity_manager;
+		EntityManager *_entity_manager;
 		ResourceManager *_resource_manager;
 		
 		int _w, _h;
@@ -53,7 +51,7 @@ namespace Gaem
 		sf::RenderWindow *getWindow();
 		Config *getConfig();
 		MenuManager *getMenuManager();
-		My::MyEntityManager *getEntityManager();
+		EntityManager *getEntityManager();
 		ResourceManager *getResourceManager();
 		
 		static Gaem *getInstance();

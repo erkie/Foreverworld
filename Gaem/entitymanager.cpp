@@ -13,6 +13,9 @@
 #include "Gaem/entity.h"
 #include "Gaem/exception.h"
 
+#include "Entities/world.h"
+#include "Entities/player.h"
+
 namespace Gaem
 {
 	EntityManager::EntityManager()
@@ -36,6 +39,8 @@ namespace Gaem
 		{
 			(*iter)->logic();
 		}
+		
+		this->you->runRight();
 	}
 	
 	void EntityManager::draw(sf::RenderWindow &window)
@@ -52,5 +57,25 @@ namespace Gaem
 		{
 			(*iter)->handleEvent(event);
 		}
+	}
+	
+	void EntityManager::setCurrentPlayer(Entities::Player *player)
+	{
+		_current_player = player;
+	}
+	
+	Entities::Player *EntityManager::getCurrentPlayer()
+	{
+		return _current_player;
+	}
+	
+	void EntityManager::setWorld(Entities::World *world)
+	{
+		_world = world;
+	}
+	
+	Entities::World *EntityManager::getWorld()
+	{
+		return _world;
 	}
 }

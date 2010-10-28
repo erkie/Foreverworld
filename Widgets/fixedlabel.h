@@ -11,6 +11,7 @@
 #define __WIDGETS_FIXEDLABEL_H__
 
 #include <string>
+#include <list>
 #include <guichan/guichan.hpp>
 
 #include "My/myutilities.h"
@@ -19,6 +20,8 @@ namespace Widgets
 {
 	class FixedLabel: public gcn::Label
 	{
+	protected:
+		std::list<std::string> _rows;
 	public:
 		FixedLabel(const std::string &t = "");
 		

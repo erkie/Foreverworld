@@ -35,7 +35,7 @@ namespace Menus
 		_my_root->setTitleBarHeight(25);
 		_my_root->setDimension(gcn::Rectangle(0, 0, 500, 100));
 		_my_root->setCaption("Attention, please");
-		_root = _my_root;
+		setRoot(_my_root);
 		
 		_label = newWidget<Widgets::FixedLabel>();
 		_label->setPosition(10, 10);
@@ -51,8 +51,6 @@ namespace Menus
 		
 		_root->add(_label);
 		_root->add(_okay);
-		
-		setRoot(_root);
 	}
 	
 	void Alert::setMessage(const std::string &message)

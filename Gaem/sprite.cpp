@@ -16,12 +16,12 @@
 
 namespace Gaem
 {
-	Sprite::Sprite()
+	Sprite::Sprite(): _is_flipped(false)
 	{
 		
 	}
 	
-	Sprite::Sprite(const std::string &file)
+	Sprite::Sprite(const std::string &file): _is_flipped(false)
 	{
 		_sprite.SetImage(*Gaem::Gaem::getInstance()->getResourceManager()->getImage(file));
 	}
@@ -80,5 +80,16 @@ namespace Gaem
 	int Sprite::getHeight()
 	{
 		return _sprite.GetSize().y;
+	}
+	
+	bool Sprite::isFlipped()
+	{
+		return _is_flipped;
+	}
+	
+	void Sprite::flip(bool to)
+	{
+		_is_flipped = to;
+		_sprite.FlipX(_is_flipped);
 	}
 }

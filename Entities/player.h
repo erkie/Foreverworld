@@ -19,23 +19,41 @@ namespace Entities
 {
 	class Player: public Gaem::Entity
 	{
+	protected:
 		sf::Vector2f _position;
 		sf::Vector2f _velocity;
 		
 		Gaem::AnimatedSprite *_sprite;
+		
+		// Player specifc
+		float _scale;
+		float _speed;
+		float _speed_up;
+		bool _can_jump;
+		std::string _name;
 		
 		int _dir;
 		int _pos_left;
 		float _pos_depth;
 		float _elevation;
 	public:
-		Player();
+		Player(const std::string &);
 		~Player();
 		
 		void setDepth(float);
 		int getLeft();
 		int getRight();
 		float getDepth();
+		
+		bool isActivePlayer();
+		
+		void jump();
+		void runLeft();
+		void runRight();
+		void moveUp();
+		void moveDown();
+		
+		void clampPos();
 		
 		void handleEvent(const sf::Event &);
 		void logic();

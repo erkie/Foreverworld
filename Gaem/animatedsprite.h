@@ -32,6 +32,8 @@ namespace Gaem
 		void loadAnimation(const std::string &key, const std::string &path);
 		void setAnimation(const std::string &key);
 		
+		Animation *getAnimation();
+		
 		void step();
 		
 		int getWidth();
