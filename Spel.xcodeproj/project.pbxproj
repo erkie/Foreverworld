@@ -22,10 +22,12 @@
 		358AE0BA1250BE34007AA254 /* SFML.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A01FB6CD0F07CFF2000AAC7B /* SFML.framework */; };
 		358AE0BB1250BE34007AA254 /* sfml-audio.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E956120016D1000FB887 /* sfml-audio.framework */; };
 		358AE0BC1250BE34007AA254 /* sfml-network.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E957120016D1000FB887 /* sfml-network.framework */; };
+		3596013D12787BA000A831E0 /* developer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3596013C12787BA000A831E0 /* developer.cpp */; };
 		359822C11265F3C400994C9B /* entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 359822C01265F3C400994C9B /* entity.cpp */; };
 		359822FD1265F81900994C9B /* world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 359822FC1265F81900994C9B /* world.cpp */; };
 		3598239712661E3D00994C9B /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 3598238E12661E3D00994C9B /* resources */; };
 		3598249D1266343A00994C9B /* resourcemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3598249C1266343A00994C9B /* resourcemanager.cpp */; };
+		35B38F6D12760D7D003CA3A2 /* animationdemo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B38F6C12760D7D003CA3A2 /* animationdemo.cpp */; };
 		35B6E958120016D1000FB887 /* sfml-audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E956120016D1000FB887 /* sfml-audio.framework */; };
 		35B6E959120016D1000FB887 /* sfml-network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E957120016D1000FB887 /* sfml-network.framework */; };
 		35E175AC125A17FC00E7CB02 /* exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35E175AB125A17FC00E7CB02 /* exception.cpp */; };
@@ -85,6 +87,8 @@
 		35810D8C1251DF1900B4ADB3 /* gaem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gaem.cpp; sourceTree = "<group>"; };
 		35810DAC1251E18F00B4ADB3 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		35810DAD1251E18F00B4ADB3 /* config.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = config.cpp; sourceTree = "<group>"; };
+		3596013B12787BA000A831E0 /* developer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = developer.h; sourceTree = "<group>"; };
+		3596013C12787BA000A831E0 /* developer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = developer.cpp; sourceTree = "<group>"; };
 		359822BF1265F3C400994C9B /* entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entity.h; sourceTree = "<group>"; };
 		359822C01265F3C400994C9B /* entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = entity.cpp; sourceTree = "<group>"; };
 		359822FB1265F81900994C9B /* world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = world.h; sourceTree = "<group>"; };
@@ -92,6 +96,8 @@
 		3598238E12661E3D00994C9B /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
 		3598249B1266343A00994C9B /* resourcemanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resourcemanager.h; sourceTree = "<group>"; };
 		3598249C1266343A00994C9B /* resourcemanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resourcemanager.cpp; sourceTree = "<group>"; };
+		35B38F6B12760D7D003CA3A2 /* animationdemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animationdemo.h; sourceTree = "<group>"; };
+		35B38F6C12760D7D003CA3A2 /* animationdemo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animationdemo.cpp; sourceTree = "<group>"; };
 		35B6E956120016D1000FB887 /* sfml-audio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-audio.framework"; path = "/Library/Frameworks/sfml-audio.framework"; sourceTree = "<absolute>"; };
 		35B6E957120016D1000FB887 /* sfml-network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-network.framework"; path = "/Library/Frameworks/sfml-network.framework"; sourceTree = "<absolute>"; };
 		35E175AA125A17FC00E7CB02 /* exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exception.h; sourceTree = "<group>"; };
@@ -135,6 +141,8 @@
 				35124929125C600D00087E71 /* passwordfield.cpp */,
 				354B5579125CF6B6002D794C /* fixedlabel.h */,
 				354B557A125CF6B6002D794C /* fixedlabel.cpp */,
+				35B38F6B12760D7D003CA3A2 /* animationdemo.h */,
+				35B38F6C12760D7D003CA3A2 /* animationdemo.cpp */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -148,6 +156,8 @@
 				354CBA961258EEAB006F919C /* alert.cpp */,
 				354CBA981258EEDA006F919C /* loading.h */,
 				354CBA991258EEDA006F919C /* loading.cpp */,
+				3596013B12787BA000A831E0 /* developer.h */,
+				3596013C12787BA000A831E0 /* developer.cpp */,
 			);
 			path = Menus;
 			sourceTree = "<group>";
@@ -328,6 +338,8 @@
 				354692CB126AE988004D4FB5 /* animation.cpp in Sources */,
 				354692D3126AEFAD004D4FB5 /* animatedsprite.cpp in Sources */,
 				356CCDE6126C9B2F00BC9CD5 /* myutilities.cpp in Sources */,
+				35B38F6D12760D7D003CA3A2 /* animationdemo.cpp in Sources */,
+				3596013D12787BA000A831E0 /* developer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
