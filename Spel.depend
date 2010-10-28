@@ -1,0 +1,250 @@
+# depslib dependency file v1.0
+1287516074 source:c:\users\erik\programming\spel\entities\player.cpp
+	<iostream>
+	<algorithm>
+	<SFML/Graphics.hpp>
+	"Gaem/gaem.h"
+	"My/myentitymanager.h"
+	"Entities/world.h"
+	"Entities/player.h"
+
+1287516074 c:\users\erik\programming\spel\\gaem\gaem.h
+	<SFML/System.hpp>
+	<SFML/Graphics.hpp>
+	"Gaem/exception.h"
+	"Gaem/config.h"
+	"Gaem/resourcemanager.h"
+	"Gaem/menumanager.h"
+	"Gaem/entitymanager.h"
+	"My/myentitymanager.h"
+
+1287516074 c:\users\erik\programming\spel\\gaem\exception.h
+	<string>
+
+1287516074 c:\users\erik\programming\spel\\gaem\config.h
+	<string>
+	<map>
+
+1287516074 c:\users\erik\programming\spel\\gaem\resourcemanager.h
+	<map>
+	<SFML/Graphics.hpp>
+
+1287561247 c:\users\erik\programming\spel\\gaem\menumanager.h
+	<string>
+	<list>
+	<map>
+	<stack>
+	<SFML/Window.hpp>
+	<guichan/guichan.hpp>
+	<guichan/sfml.hpp>
+
+1287516074 c:\users\erik\programming\spel\\gaem\entitymanager.h
+	<list>
+	<SFML/Graphics.hpp>
+
+1287516074 c:\users\erik\programming\spel\\my\myentitymanager.h
+	"Gaem/entitymanager.h"
+
+1287516074 c:\users\erik\programming\spel\\entities\world.h
+	<string>
+	<list>
+	<SFML/Graphics.hpp>
+	"Gaem/entity.h"
+	"Gaem/sprite.h"
+
+1287516074 c:\users\erik\programming\spel\\gaem\entity.h
+	<SFML/Graphics.hpp>
+
+1287516074 c:\users\erik\programming\spel\\gaem\sprite.h
+	<string>
+	<SFML/Graphics.hpp>
+
+1287516074 c:\users\erik\programming\spel\\entities\player.h
+	<SFML/Graphics.hpp>
+	"Gaem/entity.h"
+	"Gaem/animatedsprite.h"
+
+1287516074 c:\users\erik\programming\spel\\gaem\animatedsprite.h
+	<string>
+	<map>
+	"Gaem/sprite.h"
+	"Gaem/animation.h"
+
+1287516074 c:\users\erik\programming\spel\\gaem\animation.h
+	<string>
+	<SFML/Graphics.hpp>
+
+1287516074 source:c:\users\erik\programming\spel\entities\world.cpp
+	<fstream>
+	<iostream>
+	<SFML/Graphics.hpp>
+	"My/myutilities.h"
+	"Gaem/gaem.h"
+	"Gaem/exception.h"
+	"My/myentitymanager.h"
+	"Entities/world.h"
+	"Entities/player.h"
+
+1287516074 c:\users\erik\programming\spel\\my\myutilities.h
+	<fstream>
+	<iostream>
+	<string>
+	<sstream>
+	<vector>
+	<algorithm>
+	<iterator>
+
+1287516074 source:c:\users\erik\programming\spel\gaem\animatedsprite.cpp
+	<iostream>
+	"Gaem/animatedsprite.h"
+
+1287516074 source:c:\users\erik\programming\spel\gaem\animation.cpp
+	<string>
+	<fstream>
+	<SFML/Graphics.hpp>
+	"Gaem/gaem.h"
+	"Gaem/config.h"
+	"Gaem/resourcemanager.h"
+	"Gaem/exception.h"
+	"Gaem/animation.h"
+
+1287516074 source:c:\users\erik\programming\spel\gaem\config.cpp
+	<fstream>
+	<sstream>
+	"Gaem/config.h"
+	"Gaem/exception.h"
+	"My/myutilities.h"
+
+1287516074 source:c:\users\erik\programming\spel\gaem\entity.cpp
+	"Gaem/entity.h"
+
+1287516074 source:c:\users\erik\programming\spel\gaem\entitymanager.cpp
+	<SFML/Graphics.hpp>
+	"Gaem/entitymanager.h"
+	"Gaem/entity.h"
+	"Gaem/exception.h"
+
+1287516074 source:c:\users\erik\programming\spel\gaem\exception.cpp
+	"Gaem/exception.h"
+
+1287527907 source:c:\users\erik\programming\spel\gaem\gaem.cpp
+	<iostream>
+	<SFML/Window.hpp>
+	<SFML/Graphics.hpp>
+	"Gaem/gaem.h"
+	"Gaem/config.h"
+	"Gaem/exception.h"
+	"Menus/main.h"
+	"Menus/alert.h"
+	"Menus/loading.h"
+	"My/myentitymanager.h"
+	"Entities/world.h"
+	"Entities/player.h"
+
+1287516074 c:\users\erik\programming\spel\\menus\main.h
+	<iostream>
+	<guichan/guichan.hpp>
+	"Gaem/menumanager.h"
+
+1287516074 c:\users\erik\programming\spel\\menus\alert.h
+	<string>
+	<guichan/guichan.hpp>
+	"Widgets/fixedlabel.h"
+	"Gaem/menumanager.h"
+
+1287516074 c:\users\erik\programming\spel\\widgets\fixedlabel.h
+	<string>
+	<guichan/guichan.hpp>
+	"My/myutilities.h"
+
+1287516074 c:\users\erik\programming\spel\\menus\loading.h
+	"Gaem/menumanager.h"
+
+1287527946 source:c:\users\erik\programming\spel\gaem\menumanager.cpp
+	<algorithm>
+	<SFML/Graphics.hpp>
+	<guichan/guichan.hpp>
+	<guichan/sfml.hpp>
+	"Gaem/gaem.h"
+	"Gaem/exception.h"
+	"Gaem/menumanager.h"
+	"Menus/alert.h"
+	"Widgets/passwordfield.h"
+
+1287516074 c:\users\erik\programming\spel\\widgets\passwordfield.h
+	<guichan/guichan.hpp>
+
+1287516074 source:c:\users\erik\programming\spel\gaem\resourcemanager.cpp
+	<map>
+	<SFML/Graphics.hpp>
+	"Gaem/exception.h"
+	"Gaem/resourcemanager.h"
+
+1287516074 source:c:\users\erik\programming\spel\gaem\sprite.cpp
+	<SFML/Graphics.hpp>
+	"Gaem/gaem.h"
+	"Gaem/resourcemanager.h"
+	"Gaem/sprite.h"
+
+1287516074 source:c:\users\erik\programming\spel\menus\alert.cpp
+	<guichan/guichan.hpp>
+	"Widgets/fixedlabel.h"
+	"Gaem/gaem.h"
+	"alert.h"
+
+1287516074 c:\users\erik\programming\spel\menus\alert.h
+	<string>
+	<guichan/guichan.hpp>
+	"Widgets/fixedlabel.h"
+	"Gaem/menumanager.h"
+
+1287516074 source:c:\users\erik\programming\spel\menus\loading.cpp
+	<guichan/guichan.hpp>
+	"loading.h"
+
+1287516074 c:\users\erik\programming\spel\menus\loading.h
+	"Gaem/menumanager.h"
+
+1287516074 source:c:\users\erik\programming\spel\menus\main.cpp
+	"Menus/main.h"
+	"Gaem/gaem.h"
+	"Widgets/passwordfield.h"
+	"Widgets/fixedlabel.h"
+
+1287516074 source:c:\users\erik\programming\spel\my\myentitymanager.cpp
+	"My/myentitymanager.h"
+	"Entities/world.h"
+	"Entities/player.h"
+
+1287516074 source:c:\users\erik\programming\spel\my\myutilities.cpp
+	<string>
+	<fstream>
+	"My/myutilities.h"
+
+1287516074 source:c:\users\erik\programming\spel\widgets\fixedlabel.cpp
+	<sstream>
+	<string>
+	"Widgets/fixedlabel.h"
+
+1287516074 source:c:\users\erik\programming\spel\widgets\passwordfield.cpp
+	<guichan/guichan.hpp>
+	"My/myutilities.h"
+	"Widgets/passwordfield.h"
+
+1287516074 source:c:\users\erik\programming\spel\main.cpp
+	<iostream>
+	<SFML/Graphics.hpp>
+	<guichan/guichan.hpp>
+	<guichan/sfml.hpp>
+	"gaem/gaem.h"
+
+1287516074 c:\users\erik\programming\spel\gaem\gaem.h
+	<SFML/System.hpp>
+	<SFML/Graphics.hpp>
+	"Gaem/exception.h"
+	"Gaem/config.h"
+	"Gaem/resourcemanager.h"
+	"Gaem/menumanager.h"
+	"Gaem/entitymanager.h"
+	"My/myentitymanager.h"
+

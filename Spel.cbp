@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Spel" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\Spel" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="resources" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-static-libstdc++" />
+					<Add option="-static-libgcc" />
+					<Add option="-static -lGuichan" />
+					<Add option="-static -lsfml-graphics" />
+					<Add option="-static -lsfml-window" />
+					<Add option="-static -lsfml-network" />
+					<Add option="-static -lsfml-system" />
+					<Add option="-static -lsfml-main" />
+					<Add option="-static -lopengl32" />
+					<Add option="-static -lfreetype" />
+					<Add option="-static -lopenal32" />
+					<Add option="-static -lsndfile" />
+					<Add option="-static -lgdi32" />
+					<Add option="-static -lwinmm" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\Spel" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-static-libstdc++" />
+					<Add option="-static-libgcc" />
+					<Add option="-static-lGuichan" />
+					<Add option="-static-lsfml-graphics" />
+					<Add option="-static-lsfml-window" />
+					<Add option="-static-lsfml-system" />
+					<Add option="-static-lsfml-network" />
+					<Add option="-static-lsfml-main" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="C:\Users\Erik\Programming\spel\" />
+		</Compiler>
+		<Unit filename="Entities\player.cpp" />
+		<Unit filename="Entities\player.h" />
+		<Unit filename="Entities\world.cpp" />
+		<Unit filename="Entities\world.h" />
+		<Unit filename="Gaem\animatedsprite.cpp" />
+		<Unit filename="Gaem\animatedsprite.h" />
+		<Unit filename="Gaem\animation.cpp" />
+		<Unit filename="Gaem\animation.h" />
+		<Unit filename="Gaem\config.cpp" />
+		<Unit filename="Gaem\config.h" />
+		<Unit filename="Gaem\entity.cpp" />
+		<Unit filename="Gaem\entity.h" />
+		<Unit filename="Gaem\entitymanager.cpp" />
+		<Unit filename="Gaem\entitymanager.h" />
+		<Unit filename="Gaem\exception.cpp" />
+		<Unit filename="Gaem\exception.h" />
+		<Unit filename="Gaem\gaem.cpp" />
+		<Unit filename="Gaem\gaem.h" />
+		<Unit filename="Gaem\menumanager.cpp" />
+		<Unit filename="Gaem\menumanager.h" />
+		<Unit filename="Gaem\resourcemanager.cpp" />
+		<Unit filename="Gaem\resourcemanager.h" />
+		<Unit filename="Gaem\sprite.cpp" />
+		<Unit filename="Gaem\sprite.h" />
+		<Unit filename="Menus\alert.cpp" />
+		<Unit filename="Menus\alert.h" />
+		<Unit filename="Menus\loading.cpp" />
+		<Unit filename="Menus\loading.h" />
+		<Unit filename="Menus\main.cpp" />
+		<Unit filename="Menus\main.h" />
+		<Unit filename="My\myentitymanager.cpp" />
+		<Unit filename="My\myentitymanager.h" />
+		<Unit filename="My\myutilities.cpp" />
+		<Unit filename="My\myutilities.h" />
+		<Unit filename="Widgets\fixedlabel.cpp" />
+		<Unit filename="Widgets\fixedlabel.h" />
+		<Unit filename="Widgets\passwordfield.cpp" />
+		<Unit filename="Widgets\passwordfield.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
