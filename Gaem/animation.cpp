@@ -117,4 +117,9 @@ namespace Gaem
 	{
 		return _height;
 	}
+	
+	int Animation::getFrameNum()
+	{
+		return _image->GetWidth() / _width * _rect.Left / _image->GetWidth() + 1;
+	}
 }

@@ -8,6 +8,7 @@
  */
 
 #include <iostream>
+#include <sstream>
 
 #include <SFML/Graphics.hpp>
 
@@ -109,8 +110,10 @@ namespace Widgets
 	
 	void AnimationDemo::mouseDragged(gcn::MouseEvent &mouseEvent)
 	{
-		_offset_x = mouseEvent.getX() - _last_x;
-		_offset_y = mouseEvent.getY() - _last_y;
+		_offset_x += mouseEvent.getX() - _last_x;
+		_offset_y += mouseEvent.getY() - _last_y;
+		_last_x = mouseEvent.getX();
+		_last_y = mouseEvent.getY();
 	}
 	
 	void AnimationDemo::mouseMoved(gcn::MouseEvent &mouseEvent)
@@ -148,6 +151,17 @@ namespace Widgets
 			_sprite->setX(_sprite->getX() + graphics->getCurrentClipArea().xOffset + _offset_x);
 			_sprite->setY(_sprite->getY() + graphics->getCurrentClipArea().yOffset + _offset_y);
 			Gaem::Gaem::getInstance()->getWindow()->Draw(*_sprite->getSprite());
+		}
+		
+		graphics->setFont(getFont());
+		graphics->setColor(getBaseColor());
+		
+		if ( _sprite )
+		{
+			std::stringstream num;
+			num << "#" << _sprite->getAnimation()->getFrameNum();
+			std::string framenum = num.str();
+			graphics->drawText(framenum, 0, 0);
 		}
 	}
 }

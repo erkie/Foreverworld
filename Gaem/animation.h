@@ -46,6 +46,8 @@ namespace Gaem
 		
 		int getWidth();
 		int getHeight();
+		
+		int getFrameNum();
 	};
 }
 
