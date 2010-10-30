@@ -13,7 +13,7 @@
 
 namespace Widgets
 {
-	Image::Image(): _has_image(false), _image(NULL), _i_loaded_the_image(false)
+	Image::Image(): _image(NULL), _has_image(false), _i_loaded_the_image(false)
 	{
 		setWidth(0);
 		setHeight(0);

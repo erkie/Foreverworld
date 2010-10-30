@@ -109,8 +109,6 @@ namespace Entities
 		
 		// Get position of player
 		Player *player = Gaem::Gaem::getInstance()->getEntityManager()->getCurrentPlayer();
-
-		int pos_x = player->getLeft() - viewport_w / 2;
 		
 		// Goes outside the screen to the right
 		if ( player->getRight() - _scroll_left > viewport_w - 100 )
@@ -139,7 +137,6 @@ namespace Entities
 	void World::draw(sf::RenderWindow &window)
 	{
 		int viewport_w = Gaem::Gaem::getInstance()->getWidth();
-		int viewport_h = Gaem::Gaem::getInstance()->getHeight();
 		
 		for ( layer_list::iterator iter = _layers.begin(); iter != _layers.end(); iter++ )
 		{

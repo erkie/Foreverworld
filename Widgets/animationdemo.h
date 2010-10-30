@@ -37,6 +37,7 @@ namespace Widgets
 		void start();
 		void stop();
 		void step();
+		void rewind();
 		
 		virtual void mouseDragged(gcn::MouseEvent &mouseEvent);
 		virtual void mouseMoved(gcn::MouseEvent &mouseEvent);

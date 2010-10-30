@@ -21,9 +21,9 @@
 namespace Entities
 {
 	Player::Player(const std::string &path):
-		_pos_left(0), _pos_depth(50), _dir(1),
-		_elevation(0), _speed(250), _speed_up(100),
-		_can_jump(true)
+		_speed(250),  
+	_speed_up(100),
+	_can_jump(true), _dir(1),_pos_left(0), _pos_depth(50),_elevation(0)
 	{
 		_sprite = new Gaem::AnimatedSprite;
 		
@@ -145,6 +145,8 @@ namespace Entities
 				}
 				break;
 			}
+			
+			default: break;
 		}
 	}
 	
@@ -153,8 +155,6 @@ namespace Entities
 		Gaem::Gaem *game = Gaem::Gaem::getInstance();
 		const sf::Input &input = game->getWindow()->GetInput();
 		
-		int viewport_w = game->getWidth();
-		int world_width = game->getEntityManager()->getWorld()->getWidth();
 		int world_height = game->getEntityManager()->getWorld()->getHeight();
 		
 		float tdelta = game->getTDelta();

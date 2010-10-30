@@ -35,6 +35,7 @@ namespace Gaem
 		
 		void step();
 		void nextFrame();
+		void prevFrame();
 		void reset();
 		
 		sf::Image *getImage();

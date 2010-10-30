@@ -86,6 +86,15 @@ namespace Widgets
 		}
 	}
 	
+	void AnimationDemo::rewind()
+	{
+		if ( _sprite )
+		{
+			_sprite->getAnimation()->prevFrame();
+			_sprite->step();
+		}
+	}
+	
 	void AnimationDemo::reset()
 	{
 		if ( _sprite )

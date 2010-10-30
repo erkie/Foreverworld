@@ -135,14 +135,24 @@ namespace Menus
 			static_cast<Widgets::AnimationDemo*>(Developer::instance->get("animation_demo"))->start();
 		}
 	};
-
-	// Next frame for a paused animationdemo
+	
+		// Next frame for a paused animationdemo
 	class DevNextButton: public gcn::ActionListener, public Gaem::Listener
 	{
 	public:
 		void action(const gcn::ActionEvent &event)
 		{
 			static_cast<Widgets::AnimationDemo*>(Developer::instance->get("animation_demo"))->step();
+		}
+	};
+	
+	// Previous frame for a paused animationdemo
+	class DevPrevButton: public gcn::ActionListener, public Gaem::Listener
+	{
+	public:
+		void action(const gcn::ActionEvent &event)
+		{
+			static_cast<Widgets::AnimationDemo*>(Developer::instance->get("animation_demo"))->rewind();
 		}
 	};
 
@@ -313,10 +323,16 @@ namespace Menus
 		next_button->setX(reset_button->getX() - 10 - next_button->getWidth());
 		next_button->setY(toolbar_y);
 		next_button->addActionListener(newListener<DevNextButton>());
+		
+		// Previous frame button
+		gcn::Button *prev_button = newWidget<gcn::Button>("Prev");
+		prev_button->setX(next_button->getX() - 10 - prev_button->getWidth());
+		prev_button->setY(toolbar_y);
+		prev_button->addActionListener(newListener<DevPrevButton>());
 
 		// Stop button
 		gcn::Button *stop_button = newWidget<gcn::Button>("Stop");
-		stop_button->setX(next_button->getX() - 10 - stop_button->getWidth());
+		stop_button->setX(prev_button->getX() - 10 - stop_button->getWidth());
 		stop_button->setY(toolbar_y);
 		stop_button->addActionListener(newListener<DevStopButton>());
 
@@ -331,6 +347,7 @@ namespace Menus
 		anim_container->add(reverse_button);
 		anim_container->add(reset_button);
 		anim_container->add(next_button);
+		anim_container->add(prev_button);
 		anim_container->add(stop_button);
 		anim_container->add(play_button);
 		anim_container->add(demo);

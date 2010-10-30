@@ -21,7 +21,7 @@
 
 namespace Gaem
 {
-	Animation::Animation(const std::string &path): _path(path), _last_time(0), _run_once(false), _playing(true)
+	Animation::Animation(const std::string &path): _path(path), _run_once(false), _playing(true), _last_time(0)
 	{
 		load();
 	}
@@ -72,8 +72,15 @@ namespace Gaem
 	void Animation::nextFrame()
 	{
 		_rect.Offset(_width, 0);
-		if ( _rect.Left >= _image->GetWidth() )
+		if ( _rect.Left >= (int)_image->GetWidth() )
 			reset();
+	}
+	
+	void Animation::prevFrame()
+	{
+		_rect.Offset(-_width, 0);
+		if ( _rect.Left < 0 )
+			_rect = sf::IntRect(_image->GetWidth() - _width, 0, _image->GetWidth(), _image->GetHeight());
 	}
 	
 	void Animation::reset()
