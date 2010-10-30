@@ -21,9 +21,9 @@
 namespace Entities
 {
 	Player::Player(const std::string &path):
-		_speed(250),  
-	_speed_up(100),
-	_can_jump(true), _dir(1),_pos_left(0), _pos_depth(50),_elevation(0)
+		_speed(250), _speed_up(100), _can_jump(true),
+		_dir(1),_pos_left(0), _pos_depth(50),
+		_elevation(0)
 	{
 		_sprite = new Gaem::AnimatedSprite;
 		
@@ -81,7 +81,8 @@ namespace Entities
 	
 	void Player::runLeft()
 	{
-		_sprite->setAnimation("running");
+		if ( _elevation == 0 )
+			_sprite->setAnimation("running");
 		_sprite->flip(true);
 		_dir = -1;
 		_pos_left -= _speed * Gaem::Gaem::getInstance()->getTDelta();
@@ -89,7 +90,8 @@ namespace Entities
 	
 	void Player::runRight()
 	{
-		_sprite->setAnimation("running");
+		if ( _elevation == 0 )
+			_sprite->setAnimation("running");
 		_sprite->flip(false);
 		_dir = 1;
 		_pos_left += _speed * Gaem::Gaem::getInstance()->getTDelta();
@@ -97,13 +99,15 @@ namespace Entities
 	
 	void Player::moveUp()
 	{
-		_sprite->setAnimation("running");
+		if ( _elevation == 0 )
+			_sprite->setAnimation("running");
 		_pos_depth -= _speed_up * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
 	void Player::moveDown()
 	{
-		_sprite->setAnimation("running");
+		if ( _elevation == 0 )
+			_sprite->setAnimation("running");
 		_pos_depth += _speed_up * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
@@ -182,7 +186,7 @@ namespace Entities
 				if ( input.IsKeyDown(sf::Key::Down) )
 					moveDown();
 			}
-			else
+			else if ( _elevation == 0 )
 			{
 				_sprite->setAnimation("waiting");
 			}
@@ -193,6 +197,7 @@ namespace Entities
 		// Update velocity
 		if ( _elevation != 0 )
 		{
+			_sprite->setAnimation("jumping");
 			_sprite->setAnimation("jumping");
 			_velocity.y -= 1000 * tdelta;
 		}

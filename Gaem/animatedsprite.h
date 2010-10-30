@@ -25,6 +25,7 @@ namespace Gaem
 		
 		animation_map _animations;
 		Animation *_current_animation;
+		std::string _current;
 	public:
 		AnimatedSprite();
 		~AnimatedSprite();

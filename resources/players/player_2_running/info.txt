@@ -1,0 +1,3 @@
+file: resources/players/player_2_running/run.png
+width: 23
+frame time: 0.07

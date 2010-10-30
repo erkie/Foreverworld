@@ -32,9 +32,10 @@ namespace Gaem
 	void AnimatedSprite::setAnimation(const std::string &key)
 	{
 		// We don't have to reset everything if it is already active
-		if ( _current_animation == _animations[key] ) return;
+		if ( _current == key ) return;
 		
 		_current_animation = _animations[key];
+		_current = key;
 		_current_animation->reset();
 		_sprite.SetImage(*_current_animation->getImage());
 		_sprite.SetSubRect(_current_animation->getRect());
