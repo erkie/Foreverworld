@@ -7,6 +7,7 @@
  *
  */
 
+#include <algorithm>
 #include <SFML/Graphics.hpp>
 
 #include "Gaem/entitymanager.h"
@@ -30,7 +31,8 @@ namespace Gaem
 	
 	void EntityManager::remove(Entity *entity)
 	{
-		throw GAEM_EXCEPTION("EntityManager::remove Stub");
+		_entities.erase(std::find(_entities.begin(), _entities.end(), entity));
+		delete entity;
 	}
 	
 	void EntityManager::logic()

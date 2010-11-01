@@ -64,7 +64,8 @@ namespace Entities
 		
 		_pos_depth = depth; 
 		
-		float scale = 1 * (depth) / world_height + _scale;
+		float factor = 0.3 * (world_height - depth) / world_height;
+		float scale = (1 - factor) * _scale;
 		_sprite->getSprite()->SetScale(sf::Vector2f(scale, scale));
 	}
 	

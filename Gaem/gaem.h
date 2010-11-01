@@ -33,6 +33,8 @@ namespace Gaem
 		EntityManager *_entity_manager;
 		ResourceManager *_resource_manager;
 		
+		float _tdelta;
+		
 		int _w, _h;
 	public:
 		Gaem();

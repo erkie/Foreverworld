@@ -11,14 +11,17 @@
 #include <guichan/guichan.hpp>
 
 #include "Gaem/gaem.h"
+#include "Gaem/config.h"
 #include "Gaem/resourcemanager.h"
 
+#include "Entities/player.h"
 #include "Menus/developer.h"
 #include "My/myutilities.h"
 
 #include "Widgets/fixedlabel.h"
 #include "Widgets/animationdemo.h"
 #include "Widgets/image.h"
+#include "Widgets/informationtable.h"
 
 namespace Menus
 {
@@ -51,41 +54,20 @@ namespace Menus
 		DevAnimationModel(): gcn::ListModel()
 		{
 			list_files("resources/players", _files);
-			_files.erase(std::remove_if(_files.begin(), _files.end(), *this));
+			_files.erase(std::remove_if(_files.begin(), _files.end(), *this), _files.end());
 		}
 
-		std::string getElementAt(int i) { return _files[i]; }
-		int getNumberOfElements() { return _files.size(); }
-	};
-
-	// Fetch all available players
-	class DevPlayerModel: public gcn::ListModel
-	{
-	public:
-		file_list _files;
-
-		bool operator()(const std::string &name)
-		{
-			return name.substr(-4) != ".txt";
-		}
-
-		DevPlayerModel(): gcn::ListModel()
-		{
-			list_files("resources/players", _files);
-			_files.erase(std::remove_if(_files.begin(), _files.end(), *this));
-		}
-
-		std::string getElementAt(int i) { return _files[i]; }
+		std::string getElementAt(int i) { if ( i < 0 || i >= (int)_files.size() ) return ""; return _files[i]; }
 		int getNumberOfElements() { return _files.size(); }
 	};
 
 	// Change the animation demo when clicked the list
-	class DevAnimationSelection: public gcn::ActionListener, public Gaem::Listener
+	class DevAnimationSelection: public gcn::SelectionListener, public Gaem::Listener
 	{
 	public:
 		Widgets::AnimationDemo *_demo;
 
-		void action(const gcn::ActionEvent &event)
+		void valueChanged(const gcn::SelectionEvent &event)
 		{
 			gcn::ListBox *list = static_cast<gcn::ListBox*>(event.getSource());
 			int index = list->getSelected();
@@ -93,7 +75,7 @@ namespace Menus
 			std::string selected = list->getListModel()->getElementAt(index);
 			std::string name = "resources/players/" + selected + "/info.txt";
 
-			if ( ! file_exists(name) )
+			if ( selected == "" || ! file_exists(name) )
 				return;
 
 			_demo->setAnimation(name);
@@ -136,7 +118,7 @@ namespace Menus
 		}
 	};
 	
-		// Next frame for a paused animationdemo
+	// Next frame for a paused animationdemo
 	class DevNextButton: public gcn::ActionListener, public Gaem::Listener
 	{
 	public:
@@ -181,6 +163,70 @@ namespace Menus
 		Player tab
 	 ===
 	*/
+	
+	// Fetch all available players
+	class DevPlayerModel: public gcn::ListModel
+	{
+	public:
+		file_list _files;
+		
+		bool operator()(const std::string &name)
+		{
+			return name.substr(name.length() - 4, name.length()) != ".txt";
+		}
+		
+		DevPlayerModel(): gcn::ListModel()
+		{
+			list_files("resources/players", _files);
+			_files.erase(std::remove_if(_files.begin(), _files.end(), *this), _files.end());
+		}
+		
+		std::string getElementAt(int i) { if ( i < 0 || i >= (int)_files.size() ) return ""; return _files[i]; }
+		int getNumberOfElements() { return _files.size(); }
+	};
+
+	// Change selected player when clicked the list
+	class DevPlayerSelection: public gcn::SelectionListener, public Gaem::Listener
+	{
+	public:
+		void valueChanged(const gcn::SelectionEvent &event)
+		{
+			gcn::ListBox *list = static_cast<gcn::ListBox*>(event.getSource());
+			int index = list->getSelected();
+			
+			std::string selected = list->getListModel()->getElementAt(index);
+			if ( selected == "" )
+				return;
+			
+			Gaem::Config config("resources/players/" + selected);
+			
+			Widgets::InformationTable *table = static_cast<Widgets::InformationTable*>(Developer::instance->get("player_info"));
+			table->setRow("Name", config.get("name"));
+			table->setRow("Scale", config.get("scale"));
+			table->setRow("Can jump?", config.get("can jump"));
+			table->setRow("Speed", config.get("speed") + " px/sec");
+			table->setRow("Up speed", config.get("up speed") + " px/sec");
+			
+			Developer::instance->setCurrentPlayer("resources/players/" + selected);
+		}
+	};
+	
+	class DevPlayerApply: public gcn::ActionListener, public Gaem::Listener
+	{
+	public:
+		void action(const gcn::ActionEvent &event)
+		{
+			std::string path = Developer::instance->getCurrentPlayer();
+			
+			Gaem::EntityManager *manager = Gaem::Gaem::getInstance()->getEntityManager();
+			
+			manager->remove(manager->getCurrentPlayer());
+			
+			Entities::Player *player = new Entities::Player(path);
+			manager->add(player);
+			manager->setCurrentPlayer(player);
+		}
+	};
 
 	/*
 	 ===
@@ -289,7 +335,7 @@ namespace Menus
 
 		DevAnimationSelection *event = newListener<DevAnimationSelection>();
 		event->setDemo(demo);
-		listbox->addActionListener(event);
+		listbox->addSelectionListener(event);
 
 		// Create slider for scale
 		gcn::Slider *slider = newNamedWidget<gcn::Slider>("scale_slider");
@@ -361,13 +407,52 @@ namespace Menus
 		gcn::Container *players_container = makeContainer();
 
 		int field_width = players_container->getChildrenArea().width - 2 * 10;
+		int field_height = players_container->getChildrenArea().height;
 
-		Widgets::FixedLabel *text = newWidget<Widgets::FixedLabel>("Nothing to see here yet, move along please.");
+		Widgets::FixedLabel *text = newWidget<Widgets::FixedLabel>("Try out your players. (Make sure they rock the house)");
 		text->setWidth(field_width);
 		text->setX(10);
 		text->setY(10);
 		text->adjustHeight();
 		players_container->add(text);
+		
+		// Create select list
+		gcn::ScrollArea *scroll = newWidget<gcn::ScrollArea>();
+		scroll->setX(10);
+		scroll->setY(text->getBottom() + 10);
+		scroll->setWidth(150);
+		scroll->setHeight(field_height - text->getBottom() - 20);
+		scroll->setVerticalScrollPolicy(gcn::ScrollArea::SHOW_ALWAYS);
+				
+		gcn::ListModel *model = new DevPlayerModel;
+		gcn::ListBox *listbox = newWidget<gcn::ListBox>();
+		listbox->setListModel(model);
+		listbox->setWidth(scroll->getWidth() - scroll->getScrollbarWidth());
+		listbox->addSelectionListener(newListener<DevPlayerSelection>());
+		
+		// Create set active player button
+		gcn::Button *set_player = newWidget<gcn::Button>("Set player");
+		set_player->setX(scroll->getRight() + 10);
+		set_player->setY(scroll->getBottom() - set_player->getHeight());
+		set_player->addActionListener(newListener<DevPlayerApply>());
+		
+		// Create table for information
+		Widgets::InformationTable *table = newNamedWidget<Widgets::InformationTable>("player_info");
+		table->setX(scroll->getRight() + 10);
+		table->setY(scroll->getY());
+		table->setWidth(field_width - scroll->getRight());
+		table->setRow("Name", "");
+		table->setRow("Scale", "");
+		table->setRow("Can jump?", "");
+		table->setRow("Speed", "");
+		table->setRow("Up speed", "");
+		table->adjustHeight();
+		
+		scroll->setContent(listbox);
+		
+		players_container->add(scroll);
+		players_container->add(set_player);
+		players_container->add(table);
 
 		_tabs->addTab("Players", players_container);
 	}
@@ -375,6 +460,16 @@ namespace Menus
 	void Developer::show()
 	{
 		centerRoot();
+	}
+	
+	void Developer::setCurrentPlayer(const std::string &path)
+	{
+		_current_player = path;
+	}
+	
+	std::string Developer::getCurrentPlayer()
+	{
+		return _current_player;
 	}
 
 	gcn::Container *Developer::makeContainer()

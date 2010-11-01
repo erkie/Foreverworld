@@ -101,9 +101,11 @@ namespace Gaem
 	}
 
 	void Gaem::main()
-	{
+	{	
 		while (_app.IsOpened())
 		{
+			_tdelta = _app.GetFrameTime();
+			
 			sf::Event event;
 			while (_app.GetEvent(event))
 			{
@@ -223,7 +225,7 @@ namespace Gaem
 
 	float Gaem::getTDelta()
 	{
-		return _app.GetFrameTime();
+		return _tdelta;
 	}
 
 	sf::RenderWindow *Gaem::getWindow()

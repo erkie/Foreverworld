@@ -1,0 +1,8 @@
+name: Linksy
+scale: 2.0
+can jump: yes
+speed: 250
+up speed: 100
+waiting: resources/players/player_2_waiting/info.txt
+running: resources/players/player_2_running/info.txt
+jumping: resources/players/player_2_jumping/info.txt

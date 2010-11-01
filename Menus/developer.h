@@ -12,6 +12,7 @@
 
 #include <guichan/guichan.hpp>
 #include "Gaem/menumanager.h"
+
 #include "Widgets/animationdemo.h"
 
 namespace Menus
@@ -20,6 +21,7 @@ namespace Menus
 	{
 		gcn::TabbedArea *_tabs;
 		gcn::ListModel *_model;
+		std::string _current_player;
 	public:
 		static Developer *instance;
 		
@@ -31,6 +33,9 @@ namespace Menus
 		void initHome();
 		void initAnimations();
 		void initPlayers();
+		
+		void setCurrentPlayer(const std::string &);
+		std::string getCurrentPlayer();
 		
 		gcn::Container *makeContainer();
 	};
