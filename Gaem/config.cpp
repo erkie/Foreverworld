@@ -24,12 +24,12 @@ namespace Gaem
 		if ( name == "master" )
 		{
 			// Change to read from file
-			
+
 			_values["use_vsync"] = "true";
 			_values["max_framerate"] = "60";
-			
+
 			_values["window_fullscreen"] = "false";
-			
+
 			// Ignored if using fullscreen
 			_values["window_width"] = "700";
 			_values["window_height"] = "500";
@@ -37,7 +37,7 @@ namespace Gaem
 		else
 		{
 			std::ifstream file(name.c_str());
-			
+
 			if ( file.good() )
 			{
 				_values = parseFile(file);
@@ -49,17 +49,22 @@ namespace Gaem
 
 		}
 	}
-	
+
 	Config::Config(std::istream &file)
 	{
 		_values = parseFile(file);
 	}
-	
+
 	string Config::get(string key)
 	{
 		return _values[key];
 	}
-	
+
+	void Config::set(string key, string value)
+	{
+		_values[key] = value;
+	}
+
 	int Config::getInt(string key, int def)
 	{
 		int res = 0;
@@ -69,7 +74,7 @@ namespace Gaem
 			return def;
 		return res;
 	}
-	
+
 	float Config::getFloat(string key, float def)
 	{
 		float res = 0.0;
@@ -79,30 +84,30 @@ namespace Gaem
 			return def;
 		return res;
 	}
-	
+
 	bool Config::isTrue(string key)
 	{
 		return _values[key] == "1" || _values[key] == "true" || _values[key] == "yes";
 	}
-	
+
 	bool Config::isFalse(string key)
 	{
 		return !isTrue(key);
 	}
-	
+
 	Config::cfg_values Config::parseFile(std::istream &file)
 	{
 		map<string, string> ret;
-		
+
 		while ( file.good() )
 		{
 			std::string key, value;
 			getline(file, key, ':');
 			getline(file, value);
-			
+
 			ret[key] = trim(value);
 		}
-		
+
 		return ret;
 	}
 }

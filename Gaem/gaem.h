@@ -25,37 +25,38 @@ namespace Gaem
 	class Gaem
 	{
 		static Gaem *_instance;
-		
+
 		sf::RenderWindow _app;
-		
+
 		Config *_config;
 		MenuManager *_menu_manager;
 		EntityManager *_entity_manager;
 		ResourceManager *_resource_manager;
-		
+
 		float _tdelta;
-		
+
 		int _w, _h;
 	public:
 		Gaem();
 		~Gaem();
-		
+
 		void init();
 		void main();
 		void errorMain(const std::string &msg);
-		
+
 		void initWindow(int w, int h);
+		void resize(int w, int h);
 		int getWidth();
 		int getHeight();
-		
+
 		float getTDelta();
-		
+
 		sf::RenderWindow *getWindow();
 		Config *getConfig();
 		MenuManager *getMenuManager();
 		EntityManager *getEntityManager();
 		ResourceManager *getResourceManager();
-		
+
 		static Gaem *getInstance();
 	};
 }

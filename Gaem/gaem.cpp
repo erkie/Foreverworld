@@ -3,7 +3,7 @@
  *  Spel
  *
  *  Created by Erik Andersson on 2010-09-28.
- *  Copyright 2010 Ã…va gymnasium. All rights reserved.
+ *  Copyright 2010 Åva gymnasium. All rights reserved.
  *
  */
 
@@ -76,6 +76,14 @@ namespace Gaem
 		_app.Create(mode, "Foreverworld", window_style);
 	}
 
+	void Gaem::resize(int w, int h)
+	{
+		sf::View &view = _app.GetDefaultView();
+		view.SetFromRect(sf::FloatRect(0, 0, w, h));
+		_app.SetView(view);
+		_menu_manager->resize();
+	}
+
 	void Gaem::init()
 	{
 		// Add ever-present game entities
@@ -95,17 +103,16 @@ namespace Gaem
 		_menu_manager->add("developer", new ::Menus::Developer());
 		_menu_manager->add("loading", new ::Menus::Loading());
 
-
 		// Show main menu
 		_menu_manager->show("main");
 	}
 
 	void Gaem::main()
-	{	
+	{
 		while (_app.IsOpened())
 		{
 			_tdelta = _app.GetFrameTime();
-			
+
 			sf::Event event;
 			while (_app.GetEvent(event))
 			{
@@ -115,6 +122,13 @@ namespace Gaem
 
 				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q )
 					_app.Close();
+
+				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::F )
+				{
+					_config->set("window_fullscreen", "yes");
+					initWindow(-1, -1);
+					resize(_app.GetWidth(), _app.GetHeight());
+				}
 
 				// Open main menu on <esc>
 				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Escape )
@@ -133,10 +147,7 @@ namespace Gaem
 
 				if ( event.Type == sf::Event::Resized )
 				{
-					sf::View &view = _app.GetDefaultView();
-					view.SetFromRect(sf::FloatRect(0, 0, event.Size.Width, event.Size.Height));
-					_app.SetView(view);
-					_menu_manager->resize();
+					resize(event.Size.Width, event.Size.Height);
 				}
 
 				// Only entity events if no menu is active
