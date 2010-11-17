@@ -19,11 +19,7 @@ class Player
 	
 	inet::id_type _id;
 	
-	int _dir;
-	int _pos_left;
-	float _pos_depth;
-	float _elevation;
-	inet::PlayerActionState _state;
+	inet::PlayerState _state;
 	
 	// Specs
 	std::string _character;
@@ -37,17 +33,19 @@ public:
 	void setCharacter(const std::string &);
 	void setId(inet::id_type);
 	
-	void setDir(int);
+	void setDir(int, int);
 	void setLeft(int);
 	void setDepth(float);
 	void setElevation(float);
+	void setVelocity(float, float);
 	void setState(inet::PlayerActionState);
 	
 	inet::id_type getId();
-	int getDir();
+	int *getDir();
 	int getLeft();
 	float getDepth();
 	float getElevation();
+	float *getVelocity();
 	std::string getCharacter();
 	
 	inet::Player getPlayer();

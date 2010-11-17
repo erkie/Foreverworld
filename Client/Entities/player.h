@@ -23,7 +23,6 @@ namespace Entities
 	{
 	protected:
 		sf::Vector2f _position;
-		sf::Vector2f _velocity;
 		
 		Gaem::AnimatedSprite *_sprite;
 		
@@ -34,12 +33,12 @@ namespace Entities
 		bool _can_jump;
 		std::string _name;
 		
-		int _dir;
+		int _dir[2];
 		int _pos_left;
 		float _pos_depth;
 		float _elevation;
+		sf::Vector2f _velocity;
 		inet::PlayerActionState _state;
-		bool _is_running;
 	public:
 		Player(const std::string &);
 		~Player();
@@ -51,9 +50,10 @@ namespace Entities
 		int getRight();
 		float getElevation();
 		
-		void setDir(int);
+		void setDir(int, int);
 		void setLeft(int);
 		void setElevation(float);
+		void setVelocity(float, float);
 		void setState(inet::PlayerActionState);
 		
 		bool isActivePlayer();

@@ -82,16 +82,7 @@ namespace Gaem
 	}
 	
 	void EntityManager::handleEvent(const sf::Event &event)
-	{
-		// sendEvent(KEYDOWN, K_UP, time());
-		NetworkManager *network = Gaem::Gaem::getInstance()->getNetworkManager();
-		
-		bool is_interesting = _current_player;
-		if ( is_interesting )
-		{
-			network->event(_current_player);
-		}
-		
+	{	
 		for ( entity_list::iterator iter = _entities.begin(); iter != _entities.end(); iter++ )
 		{
 			(*iter)->handleEvent(event);
@@ -104,7 +95,7 @@ namespace Gaem
 		Entities::Player *p = new Entities::Player("resources/players/" + std::string(player.character) + ".txt");
 		
 		// Set player stats
-		p->setDir(player.dir);
+		p->setDir(player.dir[0], player.dir[1]);
 		p->setLeft(player.left);
 		p->setDepth(player.depth);
 		p->setElevation(player.elevation);
@@ -136,11 +127,18 @@ namespace Gaem
 			return;
 		}
 		
-		player->setDir(state.dir);
+		player->setDir(state.dir[0], state.dir[1]);
 		player->setLeft(state.left);
 		player->setElevation(state.elevation);
 		player->setDepth(state.depth);
+		player->setVelocity(state.velocity[0], state.velocity[1]);
 		player->setState(state.state);
+	}
+	
+	void EntityManager::sendUpdates()
+	{
+		NetworkManager *network = Gaem::Gaem::getInstance()->getNetworkManager();
+		network->event(_current_player);
 	}
 	
 	void EntityManager::setCurrentPlayer(Entities::Player *player)

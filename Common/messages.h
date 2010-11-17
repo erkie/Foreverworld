@@ -55,19 +55,21 @@ namespace inet
 	
 	struct Player
 	{
-		int dir;
+		int dir[2];
 		int left;
 		float depth;
 		float elevation;
+		float velocity[2];
 		char character[50];
 	};
 	
 	struct PlayerState
 	{
-		int dir;
+		int dir[2];
 		int left;
 		float depth;
 		float elevation;
+		float velocity[2];
 		PlayerActionState state;
 	};
 	

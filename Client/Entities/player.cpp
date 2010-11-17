@@ -26,9 +26,12 @@ namespace Entities
 {
 	Player::Player(const std::string &path):
 		_speed(250), _speed_up(100), _can_jump(true),
-		_dir(1),_pos_left(0), _pos_depth(50),
-		_elevation(0), _state(inet::STATE_WAITING), _is_running(false)
+		_pos_left(0), _pos_depth(50),
+		_elevation(0), _state(inet::STATE_WAITING)
 	{
+		_dir[0] = 1;
+		_dir[1] = 0;
+		
 		_sprite = new Gaem::AnimatedSprite;
 		
 		Gaem::Config info(path);
@@ -88,9 +91,8 @@ namespace Entities
 	{
 		if ( _elevation == 0 )
 			_sprite->setAnimation("running");
-		_is_running = true;
 		_sprite->flip(true);
-		_dir = -1;
+		_dir[0] = -1;
 		_pos_left -= _speed * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
@@ -98,9 +100,8 @@ namespace Entities
 	{
 		if ( _elevation == 0 )
 			_sprite->setAnimation("running");
-		_is_running = true;
 		_sprite->flip(false);
-		_dir = 1;
+		_dir[0] = 1;
 		_pos_left += _speed * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
@@ -153,6 +154,7 @@ namespace Entities
 				if ( event.Key.Code == sf::Key::Space )
 				{
 					jump();
+					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				break;
 			}
@@ -179,42 +181,79 @@ namespace Entities
 				|| input.IsKeyDown(sf::Key::Down) || input.IsKeyDown(sf::Key::Up)
 			) {
 				// Set left running sprite and move player
-				if ( input.IsKeyDown(sf::Key::Left) )
-					runLeft();
+				if ( input.IsKeyDown(sf::Key::Left) && _dir[0] != -1 )
+				{
+					_dir[0] = -1;
+					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+				}
 				
 				// Set right running sprite and move player
-				if ( input.IsKeyDown(sf::Key::Right) )
-					runRight();
+				if ( input.IsKeyDown(sf::Key::Right) && _dir[0] != 1 )
+				{
+					_dir[0] = 1;
+					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+				}
 				
 				// Move up
-				if ( input.IsKeyDown(sf::Key::Up) )
-					moveUp();
+				if ( input.IsKeyDown(sf::Key::Up) && _dir[1] != 1 )
+				{
+					_dir[1] = 1;
+					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+				}
 				
 				// Move down
-				if ( input.IsKeyDown(sf::Key::Down) )
-					moveDown();
+				if ( input.IsKeyDown(sf::Key::Down) && _dir[1] != -1 )
+				{
+					_dir[1] = -1;
+					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+				}
+				
+				if ( ! input.IsKeyDown(sf::Key::Down) && ! input.IsKeyDown(sf::Key::Up) && _dir[1] != 0 )
+				{
+					_dir[1] = 0;
+					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+				}
+				
+				if ( ! input.IsKeyDown(sf::Key::Left) && ! input.IsKeyDown(sf::Key::Right) && _dir[0] != 0 )
+				{
+					_dir[0] = 0;
+					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+				}
 			}
-			else if ( _elevation == 0 )
+			else if ( _dir[0] != 0 || _dir[1] != 0 )
 			{
-				_sprite->setAnimation("waiting");
-				_is_running = false;
+				_dir[0] = 0;
+				_dir[1] = 0;
+				Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 			}
 		}
-		else if ( ! isActivePlayer() )
+		
+		if ( _dir[0] != 0 )
 		{
-			if ( _state == inet::STATE_RUNNING )
-			{
-				if ( _dir == -1 )
-					runLeft();
-				else
-					runRight();
-			}
+			if ( _dir[0] == -1 )
+				runLeft();
+			else
+				runRight();
+		}
+		
+		if ( _dir[1] == 1 )
+		{
+			moveUp();
+		}
+		else if ( _dir[1] == -1 )
+		{
+			moveDown();
+		}
+		
+		if ( _dir[0] == 0 && _dir[1] == 0 && _elevation <= 0 && _velocity.y <= 0 )
+		{
+			_sprite->setAnimation("waiting");
 		}
 		
 		clampPos();
 		
 		// Update velocity
-		if ( _elevation != 0 )
+		if ( _elevation > 0 || _velocity.y > 0 )
 		{
 			_sprite->setAnimation("jumping");
 			_velocity.y -= 1000 * tdelta;
@@ -258,9 +297,10 @@ namespace Entities
 		_sprite->setX(old_x);
 	}
 	
-	void Player::setDir(int dir)
+	void Player::setDir(int dir_x, int dir_y)
 	{
-		_dir = dir;
+		_dir[0] = dir_x;
+		_dir[1] = dir_y;
 	}
 	
 	void Player::setLeft(int left)
@@ -273,9 +313,17 @@ namespace Entities
 		_elevation = elevation;
 	}
 	
+	void Player::setVelocity(float x, float y)
+	{
+		_velocity.x = x;
+		_velocity.y = y;
+	}
+	
 	void Player::setState(inet::PlayerActionState state)
 	{
 		_state = state;
+		if ( _state == inet::STATE_JUMPING )
+			std::cout << "WE HAVE A JUMPER\n";
 	}
 	
 	float Player::getElevation()
@@ -301,14 +349,17 @@ namespace Entities
 	inet::PlayerState Player::getPlayerStruct()
 	{
 		inet::PlayerState player;
-		player.dir = _dir;
+		player.dir[0] = _dir[0];
+		player.dir[1] = _dir[1];
 		player.left = _pos_left;
 		player.depth = _pos_depth;
 		player.elevation = _elevation;
+		player.velocity[0] = _velocity.x;
+		player.velocity[1] = _velocity.y;
 		
-		if ( player.elevation > 0 )
+		if ( player.elevation > 0 || _velocity.y > 0 )
 			player.state = inet::STATE_JUMPING;
-		else if ( _is_running )
+		else if ( _dir[0] != 0 || _dir[1] != 0 )
 			player.state = inet::STATE_RUNNING;
 		else
 			player.state = inet::STATE_WAITING;

@@ -131,11 +131,12 @@ void Server::run()
 					Player *player = _players[id];
 					
 					// Update my definition of the player
-					player->setDir(event->state.dir);
+					player->setDir(event->state.dir[0], event->state.dir[1]);
 					player->setLeft(event->state.left);
 					player->setElevation(event->state.elevation);
 					player->setDepth(event->state.depth);
 					player->setState(event->state.state);
+					player->setVelocity(event->state.velocity[0], event->state.velocity[1]);
 					
 					// Send out my definition of the players stats to other players
 					_updated_players.push(packet->guid);
@@ -191,7 +192,8 @@ void Server::run()
 		// Send updates about players who claim to have updated themselves
 		while ( ! _updated_players.empty() )
 		{
-			Player *player = getPlayerByGUID(_updated_players.front());
+			RakNet::RakNetGUID guid = _updated_players.front();
+			Player *player = getPlayerByGUID(guid);
 			_updated_players.pop();
 			
 			if ( ! player )
@@ -202,7 +204,7 @@ void Server::run()
 			ev.state = player->getState();
 			ev.id = player->getId();
 			
-			_peer->Send((char *)&ev, sizeof(ev), MEDIUM_PRIORITY, UNRELIABLE, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
+			_peer->Send((char *)&ev, sizeof(ev), MEDIUM_PRIORITY, UNRELIABLE, 0, guid, true);
 		}
 		
 		sf::Sleep(0.001f);

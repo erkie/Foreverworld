@@ -14,10 +14,13 @@ Player::Player(const std::string &name)
 {
 	_username = name;
 	
-	_pos_left = 100;
-	_pos_depth = 50;
-	_elevation = 0;
-	_dir = 1;
+	_state.left = 100;
+	_state.depth = 50;
+	_state.elevation = 0;
+	_state.dir[0] = 1;
+	_state.dir[1] = 0;
+	_state.velocity[0] = 0;
+	_state.velocity[1] = 0;
 }
 
 void Player::setCharacter(const std::string &name)
@@ -31,29 +34,36 @@ void Player::setId(inet::id_type id)
 	_id = id;
 }
 
-void Player::setDir(int dir)
+void Player::setDir(int dir_x, int dir_y)
 {
-	_dir = dir;
+	_state.dir[0] = dir_x;
+	_state.dir[1] = dir_y;
 }
 
 void Player::setLeft(int left)
 {
-	_pos_left = left;
+	_state.left = left;
 }
 
 void Player::setElevation(float el)
 {
-	_elevation = el;
+	_state.elevation = el;
 }
 
 void Player::setDepth(float depth)
 {
-	_pos_depth = depth;
+	_state.depth = depth;
+}
+
+void Player::setVelocity(float x, float y)
+{
+	_state.velocity[0] = x;
+	_state.velocity[1] = y;
 }
 
 void Player::setState(inet::PlayerActionState state)
 {
-	_state = state;
+	_state.state = state;
 }
 
 inet::id_type Player::getId()
@@ -61,24 +71,29 @@ inet::id_type Player::getId()
 	return _id;
 }
 
-int Player::getDir()
+int* Player::getDir()
 {
-	return _dir;
+	return _state.dir;
 }
 
 int Player::getLeft()
 {
-	return _pos_left;
+	return _state.left;
 }
 
 float Player::getDepth()
 {
-	return _pos_depth;
+	return _state.depth;
 }
 
 float Player::getElevation()
 {
-	return _elevation;
+	return _state.elevation;
+}
+
+float *Player::getVelocity()
+{
+	return _state.velocity;
 }
 
 std::string Player::getCharacter()
@@ -92,7 +107,8 @@ inet::Player Player::getPlayer()
 	memcpy(character, getCharacter().c_str(), 50);
 	
 	inet::Player p;
-	p.dir = getDir();
+	p.dir[0] = *(getDir());
+	p.dir[1] = *(getDir()+1);
 	p.left = getLeft();
 	p.depth = getDepth();
 	p.elevation = getElevation();
@@ -103,10 +119,13 @@ inet::Player Player::getPlayer()
 inet::PlayerState Player::getState()
 {
 	inet::PlayerState p;
-	p.dir = getDir();
+	p.dir[0] = *(getDir());
+	p.dir[1] = *(getDir()+1);
 	p.left = getLeft();
 	p.depth = getDepth();
 	p.elevation = getElevation();
-	p.state = _state;
+	p.velocity[0] = *(getVelocity());
+	p.velocity[1] = *(getVelocity()+1);
+	p.state = _state.state;
 	return p;
 }

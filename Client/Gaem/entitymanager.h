@@ -53,6 +53,8 @@ namespace Gaem
 		void removePlayer(inet::id_type id);
 		void updatePlayer(inet::id_type, const inet::PlayerState state);
 		
+		void sendUpdates();
+		
 		void setCurrentPlayer(Entities::Player *);
 		Entities::Player *getCurrentPlayer();
 		
