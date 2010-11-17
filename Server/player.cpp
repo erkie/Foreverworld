@@ -31,6 +31,31 @@ void Player::setId(inet::id_type id)
 	_id = id;
 }
 
+void Player::setDir(int dir)
+{
+	_dir = dir;
+}
+
+void Player::setLeft(int left)
+{
+	_pos_left = left;
+}
+
+void Player::setElevation(float el)
+{
+	_elevation = el;
+}
+
+void Player::setDepth(float depth)
+{
+	_pos_depth = depth;
+}
+
+void Player::setState(inet::PlayerActionState state)
+{
+	_state = state;
+}
+
 inet::id_type Player::getId()
 {
 	return _id;
@@ -72,5 +97,16 @@ inet::Player Player::getPlayer()
 	p.depth = getDepth();
 	p.elevation = getElevation();
 	memcpy(p.character, character, 50);
+	return p;
+}
+
+inet::PlayerState Player::getState()
+{
+	inet::PlayerState p;
+	p.dir = getDir();
+	p.left = getLeft();
+	p.depth = getDepth();
+	p.elevation = getElevation();
+	p.state = _state;
 	return p;
 }

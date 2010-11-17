@@ -17,6 +17,8 @@
 #include "Gaem/entitymanager.h"
 #include "Gaem/menumanager.h"
 
+#include "Common/messages.h"
+
 #include "Entities/world.h"
 #include "Entities/player.h"
 
@@ -25,7 +27,7 @@ namespace Entities
 	Player::Player(const std::string &path):
 		_speed(250), _speed_up(100), _can_jump(true),
 		_dir(1),_pos_left(0), _pos_depth(50),
-		_elevation(0)
+		_elevation(0), _state(inet::STATE_WAITING), _is_running(false)
 	{
 		_sprite = new Gaem::AnimatedSprite;
 		
@@ -86,6 +88,7 @@ namespace Entities
 	{
 		if ( _elevation == 0 )
 			_sprite->setAnimation("running");
+		_is_running = true;
 		_sprite->flip(true);
 		_dir = -1;
 		_pos_left -= _speed * Gaem::Gaem::getInstance()->getTDelta();
@@ -95,6 +98,7 @@ namespace Entities
 	{
 		if ( _elevation == 0 )
 			_sprite->setAnimation("running");
+		_is_running = true;
 		_sprite->flip(false);
 		_dir = 1;
 		_pos_left += _speed * Gaem::Gaem::getInstance()->getTDelta();
@@ -166,7 +170,8 @@ namespace Entities
 		
 		float tdelta = game->getTDelta();
 		
-		if ( ! game->getMenuManager()->hasMenus() && isActivePlayer() )
+		// If I am the player (and the menus are down)
+		if ( isActivePlayer() && ! game->getMenuManager()->hasMenus() )
 		{
 			// If any move key is pressed set the running sprite and move the player
 			if (
@@ -192,6 +197,17 @@ namespace Entities
 			else if ( _elevation == 0 )
 			{
 				_sprite->setAnimation("waiting");
+				_is_running = false;
+			}
+		}
+		else if ( ! isActivePlayer() )
+		{
+			if ( _state == inet::STATE_RUNNING )
+			{
+				if ( _dir == -1 )
+					runLeft();
+				else
+					runRight();
 			}
 		}
 		
@@ -200,7 +216,6 @@ namespace Entities
 		// Update velocity
 		if ( _elevation != 0 )
 		{
-			_sprite->setAnimation("jumping");
 			_sprite->setAnimation("jumping");
 			_velocity.y -= 1000 * tdelta;
 		}
@@ -258,6 +273,16 @@ namespace Entities
 		_elevation = elevation;
 	}
 	
+	void Player::setState(inet::PlayerActionState state)
+	{
+		_state = state;
+	}
+	
+	float Player::getElevation()
+	{
+		return _elevation;
+	}
+	
 	int Player::getLeft()
 	{
 		return _pos_left;
@@ -271,5 +296,23 @@ namespace Entities
 	float Player::getDepth()
 	{
 		return _pos_depth;
+	}
+	
+	inet::PlayerState Player::getPlayerStruct()
+	{
+		inet::PlayerState player;
+		player.dir = _dir;
+		player.left = _pos_left;
+		player.depth = _pos_depth;
+		player.elevation = _elevation;
+		
+		if ( player.elevation > 0 )
+			player.state = inet::STATE_JUMPING;
+		else if ( _is_running )
+			player.state = inet::STATE_RUNNING;
+		else
+			player.state = inet::STATE_WAITING;
+		
+		return player;
 	}
 }

@@ -32,7 +32,10 @@ class Server
 	std::map<RakNet::RakNetGUID, unsigned long> _player_id_table;
 	
 	std::queue<Player*> _new_players;
+	
+	// GUID:s are used because the user may have already disconnected when it is time to update
 	std::queue<RakNet::RakNetGUID> _removed_players;
+	std::queue<RakNet::RakNetGUID> _updated_players;
 	
 	RakNet::RakPeerInterface *_peer;
 public:
@@ -44,6 +47,8 @@ public:
 	
 	Player *addPlayer(const std::string &name, RakNet::RakNetGUID guid);
 	void removePlayer(RakNet::RakNetGUID guid);
+	
+	Player *getPlayerByGUID(RakNet::RakNetGUID guid);
 };
 
 #endif

@@ -117,6 +117,30 @@ void Server::run()
 					
 					} break;
 				
+				case inet::MESS_EVENT: {
+					inet::EventBasic *event = (inet::EventBasic*)packet->data;
+
+					inet::id_type id = _player_id_table[packet->guid];
+					if ( ! id )
+					{
+						// That user is not connected. Connect him?
+						std::cout << "A user who is not connected is sending updates to me. Help, I'm scared\n";
+						break;
+					}
+					
+					Player *player = _players[id];
+					
+					// Update my definition of the player
+					player->setDir(event->state.dir);
+					player->setLeft(event->state.left);
+					player->setElevation(event->state.elevation);
+					player->setDepth(event->state.depth);
+					player->setState(event->state.state);
+					
+					// Send out my definition of the players stats to other players
+					_updated_players.push(packet->guid);
+				} break;
+				
 				default:
 					std::cout << "Wat? " << packet->data[0] << "\n";
 				break;
@@ -138,6 +162,7 @@ void Server::run()
 			_new_players.pop();
 		}
 		
+		// Removed players who have disconnected/dropped out
 		while ( ! _removed_players.empty() )
 		{
 			std::cout << "Removing player ";
@@ -146,9 +171,7 @@ void Server::run()
 			_removed_players.pop();
 			
 			if ( ! _player_id_table[guid] )
-			{
 				continue;
-			}
 			
 			unsigned long id = _player_id_table[guid];
 			
@@ -165,7 +188,24 @@ void Server::run()
 			_peer->Send((char *)&response, sizeof(response), HIGH_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
 		}
 		
-		sf::Sleep(0.01f);
+		// Send updates about players who claim to have updated themselves
+		while ( ! _updated_players.empty() )
+		{
+			Player *player = getPlayerByGUID(_updated_players.front());
+			_updated_players.pop();
+			
+			if ( ! player )
+				continue;
+			
+			inet::EventUpdate ev;
+			ev.type = inet::MESS_EVENT;
+			ev.state = player->getState();
+			ev.id = player->getId();
+			
+			_peer->Send((char *)&ev, sizeof(ev), MEDIUM_PRIORITY, UNRELIABLE, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
+		}
+		
+		sf::Sleep(0.001f);
 	}
 }
 
@@ -181,7 +221,11 @@ Player *Server::addPlayer(const std::string &name, RakNet::RakNetGUID guid)
 	return player;
 }
 
-void Server::handlePacket()
+Player *Server::getPlayerByGUID(RakNet::RakNetGUID guid)
 {
+	if ( ! _player_id_table[guid] )
+		return NULL;
 	
+	unsigned long id = _player_id_table[guid];	
+	return _players[id];
 }

@@ -15,6 +15,8 @@
 #include "Gaem/entity.h"
 #include "Gaem/animatedsprite.h"
 
+#include "Common/messages.h"
+
 namespace Entities
 {
 	class Player: public Gaem::Entity
@@ -36,6 +38,8 @@ namespace Entities
 		int _pos_left;
 		float _pos_depth;
 		float _elevation;
+		inet::PlayerActionState _state;
+		bool _is_running;
 	public:
 		Player(const std::string &);
 		~Player();
@@ -45,10 +49,12 @@ namespace Entities
 		
 		int getLeft();
 		int getRight();
+		float getElevation();
 		
 		void setDir(int);
 		void setLeft(int);
 		void setElevation(float);
+		void setState(inet::PlayerActionState);
 		
 		bool isActivePlayer();
 		
@@ -63,6 +69,8 @@ namespace Entities
 		void handleEvent(const sf::Event &);
 		void logic();
 		void draw(sf::RenderWindow &);
+		
+		inet::PlayerState getPlayerStruct();
 	};
 }
 

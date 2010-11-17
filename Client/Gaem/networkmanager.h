@@ -15,7 +15,10 @@
 
 #include "Common/messages.h"
 
-#include "Entities/player.h"
+namespace Entities
+{
+	class Player;
+}
 
 namespace Gaem
 {
@@ -42,6 +45,7 @@ namespace Gaem
 		
 		// An event, running, jumping, hitting, defending, anything involving the keyboard
 		void event(Entities::Player *player);
+		void handleEvent(inet::EventUpdate *);
 		
 		void sendChatMessage();
 		void registerNewMember();

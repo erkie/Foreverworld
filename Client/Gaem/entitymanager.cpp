@@ -84,13 +84,12 @@ namespace Gaem
 	void EntityManager::handleEvent(const sf::Event &event)
 	{
 		// sendEvent(KEYDOWN, K_UP, time());
-		//NetworkManager *network = Gaem::Gaem::getInstance()->getNetworkManager();
+		NetworkManager *network = Gaem::Gaem::getInstance()->getNetworkManager();
 		
-		bool is_interesting = false;
+		bool is_interesting = _current_player;
 		if ( is_interesting )
 		{
-			//network->sendUpdate();
-			//network->;
+			network->event(_current_player);
 		}
 		
 		for ( entity_list::iterator iter = _entities.begin(); iter != _entities.end(); iter++ )
@@ -126,6 +125,22 @@ namespace Gaem
 		Entities::Player *player = _players[id];
 		_players.erase(id);
 		_remove_list.push_back(player);
+	}
+	
+	void EntityManager::updatePlayer(inet::id_type id, const inet::PlayerState state)
+	{
+		Entities::Player *player = _players[id];
+		if ( ! player )
+		{
+			std::cout << "This player did not exist (EntityManager::updatePlayer)\n";
+			return;
+		}
+		
+		player->setDir(state.dir);
+		player->setLeft(state.left);
+		player->setElevation(state.elevation);
+		player->setDepth(state.depth);
+		player->setState(state.state);
 	}
 	
 	void EntityManager::setCurrentPlayer(Entities::Player *player)

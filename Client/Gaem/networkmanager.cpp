@@ -22,6 +22,8 @@
 #include "Gaem/user.h"
 #include "Gaem/entitymanager.h"
 
+#include "Entities/player.h"
+
 #include "Gaem/networkmanager.h"
 
 namespace Gaem
@@ -60,6 +62,30 @@ namespace Gaem
 		memcpy(data.character, character.c_str(), 50);
 		
 		_peer->Send((char*)&data, sizeof(data), HIGH_PRIORITY, RELIABLE_ORDERED, 0, _hostaddr, false);
+	}
+	
+	void NetworkManager::event(Entities::Player *player)
+	{
+		// They be trollin'?
+		if ( ! player ) return;
+		
+		inet::EventBasic ev;
+		ev.type = inet::MESS_EVENT;
+		ev.state = player->getPlayerStruct();
+		
+		_peer->Send((char*)&ev, sizeof(ev), HIGH_PRIORITY, UNRELIABLE, 0, _hostaddr, false);
+	}
+	
+	void NetworkManager::handleEvent(inet::EventUpdate *event)
+	{
+		if ( event->id == _id )
+		{
+			std::cout << "This is me\n";
+		}
+		else
+		{
+			Gaem::Gaem::getInstance()->getEntityManager()->updatePlayer(event->id, event->state);
+		}
 	}
 	
 	void NetworkManager::addPlayer(const inet::PlayerAdded *player)
@@ -105,6 +131,10 @@ namespace Gaem
 					std::cout << "A player has left\n";
 					removePlayer((inet::PlayerRemoved*)packet->data);
 				break;
+				
+				case inet::MESS_EVENT:
+					handleEvent((inet::EventUpdate*)packet->data);
+					break;
 				
 				// Failures
 				case ID_CONNECTION_ATTEMPT_FAILED:

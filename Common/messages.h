@@ -37,6 +37,16 @@ namespace inet
 		EVENT_ATTACK2
 	};
 	
+	enum PlayerActionState
+	{
+		STATE_WAITING,
+		STATE_RUNNING,
+		STATE_JUMPING,
+		STATE_DEFENDING,
+		STATE_ATTACKING1,
+		STATE_ATTACKING2
+	};
+	
 #pragma pack(push, 1)
 	struct Packet
 	{
@@ -50,6 +60,15 @@ namespace inet
 		float depth;
 		float elevation;
 		char character[50];
+	};
+	
+	struct PlayerState
+	{
+		int dir;
+		int left;
+		float depth;
+		float elevation;
+		PlayerActionState state;
 	};
 	
 	// Tell the server what player I am so I can get my unique ID back
@@ -78,13 +97,12 @@ namespace inet
 		id_type id;
 	};
 	
-	struct EventBase: Packet
+	struct EventBasic: Packet
 	{
-		unsigned char event_type;
-		Player player;
+		PlayerState state;
 	};
 	
-	struct EventResponse: EventBase
+	struct EventUpdate: EventBasic
 	{
 		id_type id;
 	};
