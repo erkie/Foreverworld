@@ -322,8 +322,6 @@ namespace Entities
 	void Player::setState(inet::PlayerActionState state)
 	{
 		_state = state;
-		if ( _state == inet::STATE_JUMPING )
-			std::cout << "WE HAVE A JUMPER\n";
 	}
 	
 	float Player::getElevation()
