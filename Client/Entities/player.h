@@ -41,9 +41,14 @@ namespace Entities
 		~Player();
 		
 		void setDepth(float);
+		float getDepth();
+		
 		int getLeft();
 		int getRight();
-		float getDepth();
+		
+		void setDir(int);
+		void setLeft(int);
+		void setElevation(float);
 		
 		bool isActivePlayer();
 		

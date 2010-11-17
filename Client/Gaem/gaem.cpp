@@ -16,13 +16,17 @@
 #include "Gaem/config.h"
 #include "Gaem/exception.h"
 
+#include "Gaem/config.h"
+#include "Gaem/user.h"
+#include "Gaem/resourcemanager.h"
+#include "Gaem/menumanager.h"
+#include "Gaem/entitymanager.h"
+#include "Gaem/networkmanager.h"
+
 #include "Menus/main.h"
 #include "Menus/developer.h"
 #include "Menus/alert.h"
 #include "Menus/loading.h"
-
-#include "Entities/world.h"
-#include "Entities/player.h"
 
 namespace Gaem
 {
@@ -55,12 +59,21 @@ namespace Gaem
 
 		// World entity manager
 		_entity_manager = new EntityManager();
+		
+		// Network manager, connect to server, send/receive updates
+		_network_manager = new NetworkManager();
+		
+		// Information about me
+		_user = new User();
 	}
 
 	Gaem::~Gaem()
 	{
 		delete _config;
 		delete _menu_manager;
+		delete _entity_manager;
+		delete _resource_manager;
+		delete _user;
 	}
 
 	void Gaem::initWindow(int w, int h)
@@ -86,43 +99,39 @@ namespace Gaem
 
 	void Gaem::init()
 	{
-		// Add ever-present game entities
-		Entities::World *world = new Entities::World();
-		_entity_manager->add(world);
-		_entity_manager->setWorld(world);
-
-		Entities::Player *player = new Entities::Player("resources/players/player_1.txt");
-		_entity_manager->add(player);
-		_entity_manager->setCurrentPlayer(player);
-
-		_entity_manager->you = new Entities::Player("resources/players/player_1.txt");
-		_entity_manager->add(_entity_manager->you);
-
+		_entity_manager->init();
+		
 		// Load menus
 		_menu_manager->add("main", new ::Menus::Main());
 		_menu_manager->add("developer", new ::Menus::Developer());
 		_menu_manager->add("loading", new ::Menus::Loading());
 
 		// Show main menu
-		_menu_manager->show("main");
+		//_menu_manager->show("main");
+		
+		_network_manager->connect();
 	}
 
 	void Gaem::main()
 	{
+		sf::Event event;
 		while (_app.IsOpened())
 		{
 			_tdelta = _app.GetFrameTime();
-
-			sf::Event event;
+			
+			// Get updates for network code
+			_network_manager->getUpdates();
+			
+			// Handle user events
 			while (_app.GetEvent(event))
 			{
 				// Global events
-				if ( event.Type == sf::Event::Closed )
-					_app.Close();
+				
+				// Quit
+				if ( event.Type == sf::Event::Closed || (event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q) )
+					return quit();
 
-				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q )
-					_app.Close();
-
+				// Go into fullscreen mode
 				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::F )
 				{
 					_config->set("window_fullscreen", "yes");
@@ -130,21 +139,29 @@ namespace Gaem
 					resize(_app.GetWidth(), _app.GetHeight());
 				}
 
-				// Open main menu on <esc>
+				// Open main menu on [esc]
 				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Escape )
 				{
 					if ( ! _menu_manager->hasMenus() )
 						_menu_manager->show("main");
 					else
+					{
 						_menu_manager->hide();
+						
+						if ( ! _menu_manager->hasMenus() )
+						{
+							_network_manager->joinGame("player_1");
+						}
+					}
 				}
 
-				// Open developer menu on <D>
+				// Open developer menu on [D]
 				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::D )
 				{
 					_menu_manager->show("developer");
 				}
-
+				
+				// Resize window
 				if ( event.Type == sf::Event::Resized )
 				{
 					resize(event.Size.Width, event.Size.Height);
@@ -196,7 +213,7 @@ namespace Gaem
 			{
 				// Global events
 				if ( event.Type == sf::Event::Closed )
-					_app.Close();
+					return quit();
 
 				// Handle menu events
 				_menu_manager->handleEvent(event);
@@ -217,6 +234,11 @@ namespace Gaem
 
 			_app.Display();
 		}
+	}
+	
+	void Gaem::quit()
+	{
+		delete _network_manager;
 	}
 
 	Gaem *Gaem::getInstance()
@@ -248,6 +270,11 @@ namespace Gaem
 	{
 		return _config;
 	}
+	
+	User *Gaem::getUser()
+	{
+		return _user;
+	}
 
 	MenuManager *Gaem::getMenuManager()
 	{
@@ -262,5 +289,10 @@ namespace Gaem
 	ResourceManager *Gaem::getResourceManager()
 	{
 		return _resource_manager;
+	}
+	
+	NetworkManager *Gaem::getNetworkManager()
+	{
+		return _network_manager;
 	}
 }

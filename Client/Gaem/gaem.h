@@ -15,13 +15,15 @@
 
 #include "Gaem/exception.h"
 
-#include "Gaem/config.h"
-#include "Gaem/resourcemanager.h"
-#include "Gaem/menumanager.h"
-#include "Gaem/entitymanager.h"
-
 namespace Gaem
 {
+	class Config;
+	class User;
+	class ResourceManager;
+	class MenuManager;
+	class EntityManager;
+	class NetworkManager;
+	
 	class Gaem
 	{
 		static Gaem *_instance;
@@ -29,9 +31,11 @@ namespace Gaem
 		sf::RenderWindow _app;
 
 		Config *_config;
+		User *_user;
 		MenuManager *_menu_manager;
 		EntityManager *_entity_manager;
 		ResourceManager *_resource_manager;
+		NetworkManager *_network_manager;
 
 		float _tdelta;
 
@@ -41,6 +45,7 @@ namespace Gaem
 		~Gaem();
 
 		void init();
+		void quit();
 		void main();
 		void errorMain(const std::string &msg);
 
@@ -53,9 +58,11 @@ namespace Gaem
 
 		sf::RenderWindow *getWindow();
 		Config *getConfig();
+		User *getUser();
 		MenuManager *getMenuManager();
 		EntityManager *getEntityManager();
 		ResourceManager *getResourceManager();
+		NetworkManager *getNetworkManager();
 
 		static Gaem *getInstance();
 	};

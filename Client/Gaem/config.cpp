@@ -23,8 +23,10 @@ namespace Gaem
 	{
 		if ( name == "master" )
 		{
-			// Change to read from file
-
+			// --
+			// Change to read from file?
+			// --
+			
 			_values["use_vsync"] = "true";
 			_values["max_framerate"] = "60";
 
@@ -33,6 +35,9 @@ namespace Gaem
 			// Ignored if using fullscreen
 			_values["window_width"] = "700";
 			_values["window_height"] = "500";
+			
+			_values["server_host"] = "localhost";
+			_values["server_port"] = "6010";
 		}
 		else
 		{

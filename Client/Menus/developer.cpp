@@ -13,6 +13,7 @@
 #include "Gaem/gaem.h"
 #include "Gaem/config.h"
 #include "Gaem/resourcemanager.h"
+#include "Gaem/entitymanager.h"
 
 #include "Entities/player.h"
 #include "Menus/developer.h"

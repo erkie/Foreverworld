@@ -16,6 +16,7 @@
 
 #include "Gaem/gaem.h"
 #include "Gaem/exception.h"
+#include "Gaem/entitymanager.h"
 
 #include "Entities/world.h"
 #include "Entities/player.h"
@@ -109,6 +110,11 @@ namespace Entities
 		
 		// Get position of player
 		Player *player = Gaem::Gaem::getInstance()->getEntityManager()->getCurrentPlayer();
+		
+		if ( ! player )
+		{
+			return;
+		}
 		
 		// Goes outside the screen to the right
 		if ( player->getRight() - _scroll_left > viewport_w - 100 )

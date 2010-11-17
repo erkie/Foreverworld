@@ -14,6 +14,8 @@
 
 #include "Gaem/gaem.h"
 #include "Gaem/config.h"
+#include "Gaem/entitymanager.h"
+#include "Gaem/menumanager.h"
 
 #include "Entities/world.h"
 #include "Entities/player.h"
@@ -224,15 +226,6 @@ namespace Entities
 	{
 		window.Draw(*_sprite->getSprite());
 		
-		// Draw pos of player(s) in top right corner
-		/*std::stringstream str;
-		str << _pos_left;
-		sf::String pos(str.str());
-		pos.SetColor(sf::Color(0x0E, 0x81, 0xED));
-		pos.SetX(Gaem::Gaem::getInstance()->getWidth() - pos.GetRect().GetWidth() - 10);
-		pos.SetY(isActivePlayer() ? 10 : (20 + pos.GetRect().GetHeight()));
-		window.Draw(pos);*/
-		
 		// Draw two more versions of the player, one outside the field to the left
 		// and one outside to the right, this so it does not disappear when the position
 		// is clamped
@@ -248,6 +241,21 @@ namespace Entities
 		_sprite->setX(_pos_left + width - scroll);
 		window.Draw(*_sprite->getSprite());
 		_sprite->setX(old_x);
+	}
+	
+	void Player::setDir(int dir)
+	{
+		_dir = dir;
+	}
+	
+	void Player::setLeft(int left)
+	{
+		_pos_left = left;
+	}
+	
+	void Player::setElevation(float elevation)
+	{
+		_elevation = elevation;
 	}
 	
 	int Player::getLeft()

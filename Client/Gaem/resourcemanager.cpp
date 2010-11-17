@@ -22,7 +22,30 @@ namespace Gaem
 	
 	ResourceManager::~ResourceManager()
 	{
-		
+		// Clean up
+	}
+	
+	sf::Font *ResourceManager::getFont(const std::string &filename, unsigned int charsize)
+	{
+		if ( ! _fonts[filename][charsize] )
+		{
+			sf::Font *font = new sf::Font();
+			if ( ! font->LoadFromFile(filename, charsize) )
+			{
+				throw GAEM_NONFATAL_EXCEPTION("ResourceManager could not load font: " + filename);
+			}
+			_fonts[filename][charsize] = font;
+		}
+		return _fonts[filename][charsize];
+	}
+	
+	void ResourceManager::removeFont(const std::string &filename, unsigned int charsize)
+	{
+		if ( _fonts[filename][charsize] )
+		{
+			delete _fonts[filename][charsize];
+			_fonts[filename].erase(charsize);
+		}
 	}
 	
 	sf::Image *ResourceManager::getImage(const std::string &filename)
@@ -33,7 +56,7 @@ namespace Gaem
 			img->SetSmooth(false);
 			if ( ! img->LoadFromFile(filename) )
 			{
-				throw GAEM_NONFATAL_EXCEPTION("Could not load image resource: " + filename);
+				throw GAEM_NONFATAL_EXCEPTION("ResourceManager could not load image resource: " + filename);
 			}
 			_images[filename] = img;
 		}
