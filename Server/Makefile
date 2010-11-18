@@ -6,4 +6,7 @@ OBJS=main.o server.o player.o
 app: $(OBJS)
 	$(CC) $(OBJS) $(CFLAGS)  -o Server
 
+clean:
+	rm *.o
+
 all: Server
