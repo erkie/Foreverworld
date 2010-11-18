@@ -10,12 +10,12 @@
 #ifndef __COMMON_MESSAGES_H__
 #define __COMMON_MESSAGES_H__
 
-#include <SFML/System.hpp>
+#include <stdint.h>
 #include "MessageIdentifiers.h"
 
 namespace inet
 {
-	typedef unsigned int id_type;
+	typedef uint32_t id_type;
 
 	enum Message
 	{
@@ -55,8 +55,8 @@ namespace inet
 	
 	struct Player
 	{
-		int dir[2];
-		int left;
+		int32_t dir[2];
+		int32_t left;
 		float depth;
 		float elevation;
 		float velocity[2];
@@ -66,8 +66,8 @@ namespace inet
 	
 	struct PlayerState
 	{
-		int dir[2];
-		int left;
+		int32_t dir[2];
+		int32_t left;
 		float depth;
 		float elevation;
 		float velocity[2];
