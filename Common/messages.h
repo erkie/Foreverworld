@@ -10,7 +10,6 @@
 #ifndef __COMMON_MESSAGES_H__
 #define __COMMON_MESSAGES_H__
 
-#include <SFML/System.hpp>
 #include "MessageIdentifiers.h"
 
 namespace inet

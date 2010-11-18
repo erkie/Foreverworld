@@ -7,15 +7,12 @@
  *
  */
 
-#include <SFML/System.hpp>
-#include <SFML/Network.hpp>
-
 #include "server.h"
 
 int main(int argc, char *argv[])
 {
-	Server server(6010, 1000);
+	Server server(20, 1000);
 	server.run();
 	
-	return EXIT_SUCCESS;
+	return 0;
 }
