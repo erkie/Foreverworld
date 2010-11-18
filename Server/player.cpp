@@ -120,6 +120,8 @@ inet::Player Player::getPlayer()
 	p.left = getLeft();
 	p.depth = getDepth();
 	p.elevation = getElevation();
+	memset(p.character, 0, 50);
+	memset(p.username, 0, 50);
 	memcpy(p.character, getCharacter().c_str(), 50);
 	memcpy(p.username, getUsername().c_str(), 50);
 	return p;

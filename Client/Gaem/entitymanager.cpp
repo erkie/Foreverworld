@@ -91,8 +91,11 @@ namespace Gaem
 	
 	void EntityManager::addPlayer(inet::id_type id, const inet::Player player)
 	{
+		std::cout << "Loading character " << std::string(player.character).size() << " \n";
 		// Create player
 		Entities::Player *p = new Entities::Player("resources/players/" + std::string(player.character) + ".txt");
+		std::cout  << "Done\n";
+		
 		
 		// Set player stats
 		p->setDir(player.dir[0], player.dir[1]);
@@ -114,7 +117,7 @@ namespace Gaem
 		else
 		{
 			User *user = new User;
-			user->setUsername(player.username);
+			user->setUsername(std::string(player.username));
 		}
 	}
 	
