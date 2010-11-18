@@ -213,7 +213,7 @@ void Server::run()
 
 Player *Server::addPlayer(const std::string &name, RakNet::RakNetGUID guid)
 {
-	Player *player = new Player("ErikPerik");
+	Player *player = new Player("ErikPerik 2");
 	player->setCharacter(name);
 	player->setId(_current_id++);
 	

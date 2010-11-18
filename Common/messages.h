@@ -60,6 +60,7 @@ namespace inet
 		float elevation;
 		float velocity[2];
 		char character[50];
+		char username[50];
 	};
 	
 	struct PlayerState

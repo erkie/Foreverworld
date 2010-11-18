@@ -17,6 +17,11 @@
 
 #include "Common/messages.h"
 
+namespace Gaem
+{
+	class User;
+}
+
 namespace Entities
 {
 	class Player: public Gaem::Entity
@@ -33,6 +38,8 @@ namespace Entities
 		bool _can_jump;
 		std::string _name;
 		
+		Gaem::User *_user;
+		
 		int _dir[2];
 		int _pos_left;
 		float _pos_depth;
@@ -42,6 +49,8 @@ namespace Entities
 	public:
 		Player(const std::string &);
 		~Player();
+		
+		void setUser(Gaem::User *);
 		
 		void setDepth(float);
 		float getDepth();

@@ -108,6 +108,13 @@ namespace Gaem
 		if ( Gaem::Gaem::getInstance()->getUser()->getId() == id )
 		{
 			setCurrentPlayer(p);
+			Gaem::Gaem::getInstance()->getUser()->setUsername(player.username);
+			p->setUser(Gaem::Gaem::getInstance()->getUser());
+		}
+		else
+		{
+			User *user = new User;
+			user->setUsername(player.username);
 		}
 	}
 	

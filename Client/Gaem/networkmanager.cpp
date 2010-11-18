@@ -45,7 +45,7 @@ namespace Gaem
 	void NetworkManager::connect()
 	{
 		const std::string host = Gaem::Gaem::getInstance()->getConfig()->get("server_host");
-		unsigned short port = Gaem::Gaem::getInstance()->getConfig()->getInt("port", 6010);
+		unsigned short port = Gaem::Gaem::getInstance()->getConfig()->getInt("server_port", 6010);
 		
 		_peer->Connect(host.c_str(), port, 0, 0);
 		
@@ -113,13 +113,14 @@ namespace Gaem
 					break;
 				
 				// Response after I sent a START_GAME message
-				case inet::MESS_SUCCESSFULLY_ADDED:
+				case inet::MESS_SUCCESSFULLY_ADDED: {
 					// Got my ID back, and they have it stored too
 					// I should now receive a player-added notification
-					_id = ((inet::SuccessfullyAdded*)packet->data)->id;
+					inet::SuccessfullyAdded* data = (inet::SuccessfullyAdded*)packet->data;
+					_id = data->id;
 					Gaem::Gaem::getInstance()->getUser()->setId(_id);
 					std::cout << "My ID is " << _id << "\n";
-					break;
+					} break;
 				
 				// A new player has been added
 				case inet::MESS_NEW_PLAYER:

@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-	Server server(20, 1000);
+	Server server(6010, 1000);
 	server.run();
 	
 	return 0;

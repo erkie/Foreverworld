@@ -30,6 +30,11 @@ void Player::setCharacter(const std::string &name)
 	_character = name;
 }
 
+void Player::setUsername(const std::string &name)
+{
+	_username = name;
+}
+
 void Player::setId(inet::id_type id)
 {
 	_id = id;
@@ -97,6 +102,11 @@ float *Player::getVelocity()
 	return _state.velocity;
 }
 
+std::string Player::getUsername()
+{
+	return _username;
+}
+
 std::string Player::getCharacter()
 {
 	return _character;
@@ -104,16 +114,14 @@ std::string Player::getCharacter()
 
 inet::Player Player::getPlayer()
 {
-	char character[50];
-	memcpy(character, getCharacter().c_str(), 50);
-	
 	inet::Player p;
 	p.dir[0] = *(getDir());
 	p.dir[1] = *(getDir()+1);
 	p.left = getLeft();
 	p.depth = getDepth();
 	p.elevation = getElevation();
-	memcpy(p.character, character, 50);
+	memcpy(p.character, getCharacter().c_str(), 50);
+	memcpy(p.username, getUsername().c_str(), 50);
 	return p;
 }
 

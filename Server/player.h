@@ -15,14 +15,13 @@
 
 class Player
 {
-	std::string _username;
-	
 	inet::id_type _id;
 	
 	inet::PlayerState _state;
 	
 	// Specs
 	std::string _character;
+	std::string _username;
 public:
 	Player(const std::string &);
 	
@@ -31,6 +30,7 @@ public:
 	
 	void loadSpecs();
 	void setCharacter(const std::string &);
+	void setUsername(const std::string &);
 	void setId(inet::id_type);
 	
 	void setDir(int, int);
@@ -47,6 +47,7 @@ public:
 	float getElevation();
 	float *getVelocity();
 	std::string getCharacter();
+	std::string getUsername();
 	
 	inet::Player getPlayer();
 	inet::PlayerState getState();

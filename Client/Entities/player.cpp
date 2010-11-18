@@ -14,8 +14,10 @@
 
 #include "Gaem/gaem.h"
 #include "Gaem/config.h"
+#include "Gaem/user.h"
 #include "Gaem/entitymanager.h"
 #include "Gaem/menumanager.h"
+#include "Gaem/resourcemanager.h"
 
 #include "Common/messages.h"
 
@@ -59,6 +61,11 @@ namespace Entities
 	Player::~Player()
 	{
 		delete _sprite;
+	}
+	
+	void Player::setUser(Gaem::User *user)
+	{
+		_user = user;
 	}
 	
 	void Player::setDepth(float depth)
@@ -278,6 +285,12 @@ namespace Entities
 	
 	void Player::draw(sf::RenderWindow &window)
 	{
+		// Draw name string
+		sf::String name(_user->getUsername(), *Gaem::Gaem::getInstance()->getResourceManager()->getFont("resources/main_font.ttf", 15), 15);
+		name.SetX(_sprite->getX() - name.GetRect().GetWidth()/2 + _sprite->getWidth()/2);
+		name.SetY(_sprite->getY() - name.GetRect().GetHeight());
+		
+		window.Draw(name);
 		window.Draw(*_sprite->getSprite());
 		
 		// Draw two more versions of the player, one outside the field to the left
@@ -287,11 +300,13 @@ namespace Entities
 		int width = Gaem::Gaem::getInstance()->getEntityManager()->getWorld()->getWidth();
 		
 		float old_x = _sprite->getX();
+		// Offset to the left
 		_sprite->setX(_pos_left - width - scroll);
 		window.Draw(*_sprite->getSprite());
 		_sprite->setX(old_x);
 		
 		old_x = _sprite->getX();
+		// Offset to the right
 		_sprite->setX(_pos_left + width - scroll);
 		window.Draw(*_sprite->getSprite());
 		_sprite->setX(old_x);
