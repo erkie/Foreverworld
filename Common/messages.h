@@ -10,11 +10,12 @@
 #ifndef __COMMON_MESSAGES_H__
 #define __COMMON_MESSAGES_H__
 
+#include <SFML/System.hpp>
 #include "MessageIdentifiers.h"
 
 namespace inet
 {
-	typedef unsigned long id_type;
+	typedef unsigned int id_type;
 
 	enum Message
 	{
