@@ -11,7 +11,7 @@
 
 namespace Gaem
 {
-	User::User(): _id(0)
+	User::User(): _id(0), _username("")
 	{
 		
 	}

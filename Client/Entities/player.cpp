@@ -28,7 +28,7 @@ namespace Entities
 {
 	Player::Player(const std::string &path):
 		_speed(250), _speed_up(100), _can_jump(true),
-		_pos_left(0), _pos_depth(50),
+		_user(NULL), _pos_left(0), _pos_depth(50),
 		_elevation(0), _state(inet::STATE_WAITING)
 	{
 		_dir[0] = 1;
@@ -286,11 +286,15 @@ namespace Entities
 	void Player::draw(sf::RenderWindow &window)
 	{
 		// Draw name string
-		sf::String name(_user->getUsername(), *Gaem::Gaem::getInstance()->getResourceManager()->getFont("resources/main_font.ttf", 15), 15);
-		name.SetX(_sprite->getX() - name.GetRect().GetWidth()/2 + _sprite->getWidth()/2);
-		name.SetY(_sprite->getY() - name.GetRect().GetHeight());
+		if ( _user )
+		{
+			sf::String name(_user->getUsername(), *Gaem::Gaem::getInstance()->getResourceManager()->getFont("resources/main_font.ttf", 15), 15);
+			name.SetX(_sprite->getX() - name.GetRect().GetWidth()/2 + _sprite->getWidth()/2);
+			name.SetY(_sprite->getY() - name.GetRect().GetHeight());
 		
-		window.Draw(name);
+			window.Draw(name);
+		}
+		
 		window.Draw(*_sprite->getSprite());
 		
 		// Draw two more versions of the player, one outside the field to the left
