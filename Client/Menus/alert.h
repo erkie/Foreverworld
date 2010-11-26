@@ -18,7 +18,7 @@
 
 namespace Menus
 {
-	class Alert: public ::Gaem::Menu
+	class Alert: public Gaem::Menu
 	{
 		std::string _message;
 		

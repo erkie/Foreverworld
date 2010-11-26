@@ -13,6 +13,7 @@
 #include "Menus/main.h"
 
 #include "Gaem/gaem.h"
+#include "Gaem/user.h"
 
 #include "My/myutilities.h"
 
@@ -26,8 +27,12 @@ namespace Menus
 	{
 		void action(const gcn::ActionEvent &event)
 		{
-			Gaem::Gaem::getInstance()->getMenuManager()->alert("Sending the credentials over an unsecure connection, please wait.");
-			//Gaem::Gaem::getInstance()->getUserManager()->login(username, password);
+			Gaem::Gaem::getInstance()->getMenuManager()->showLoading("Sending the credentials over an unsecure connection, please wait.");
+			
+			std::string username, password;
+			username = static_cast<gcn::TextField*>(Main::instance->get("login_username"))->getText();
+			password = static_cast<Widgets::PasswordField*>(Main::instance->get("login_password"))->getText();
+			Gaem::Gaem::getInstance()->getUser()->login(username, password);
 		}
 	};
 	
@@ -42,9 +47,27 @@ namespace Menus
 	class MainSignupSubmit: public gcn::ActionListener, public Gaem::Listener
 	{
 		void action(const gcn::ActionEvent &event)
-		{
-			Gaem::Gaem::getInstance()->getMenuManager()->alert("Welcome, you douche!");
-			// Gaem::Gaem::getInstance()->getUserManager()->signup(username, password, email);
+		{	
+			std::string username, password, password2, email;
+			username = static_cast<gcn::TextField*>(Main::instance->get("reg_username"))->getText();
+			password = static_cast<Widgets::PasswordField*>(Main::instance->get("reg_password"))->getText();
+			password2 = static_cast<Widgets::PasswordField*>(Main::instance->get("reg_password2"))->getText();
+			email = static_cast<gcn::TextField*>(Main::instance->get("reg_email"))->getText();
+			
+			if ( password != password2 )
+			{
+				Gaem::Gaem::getInstance()->getMenuManager()->alert("The passwords don't match");
+				return;
+			}
+			
+			if ( ! is_valid_email(email) )
+			{
+				Gaem::Gaem::getInstance()->getMenuManager()->alert("That is not a valid e-mail");
+				return;
+			}
+			
+			Gaem::Gaem::getInstance()->getMenuManager()->showLoading("Welcome, you douche!");
+			Gaem::Gaem::getInstance()->getUser()->signup(username, password, email);
 		}
 	};
 	
@@ -97,18 +120,18 @@ namespace Menus
 		
 		// Username
 		gcn::Label *username = newWidget<gcn::Label>("Username:");
-		username->setPosition(10, welcome->getY() + welcome->getHeight() + 10);
+		username->setPosition(10, welcome->getBottom() + 10);
 		
-		gcn::TextField *inp_username = newWidget<gcn::TextField>("");
-		inp_username->setPosition(10, username->getY() + username->getHeight() + 5);
+		gcn::TextField *inp_username = newNamedWidget<gcn::TextField>("login_username", "");
+		inp_username->setPosition(10, username->getBottom() + 5);
 		inp_username->setWidth(field_width);
 		
 		// Password
 		gcn::Label *password = newWidget<gcn::Label>("Password:");
-		password->setPosition(10, inp_username->getY() + inp_username->getHeight() + 10);
+		password->setPosition(10, inp_username->getBottom() + 10);
 		
-		Widgets::PasswordField *inp_password = newWidget<Widgets::PasswordField>("");
-		inp_password->setPosition(10, password->getY() + password->getHeight() + 5);
+		Widgets::PasswordField *inp_password = newNamedWidget<Widgets::PasswordField>("login_password", "");
+		inp_password->setPosition(10, password->getBottom() + 5);
 		inp_password->setWidth(field_width);
 		
 		// Submit
@@ -116,16 +139,17 @@ namespace Menus
 		button->setX(login_container->getWidth() - button->getWidth() - 10);
 		button->setY(login_container->getHeight() - button->getHeight() - 10);
 		
+		button->addActionListener(newListener<MainLoginSubmit>());
+		
 		// Hide button
-		gcn::Button *hide = newWidget<gcn::Button>("Hide");
+		/*gcn::Button *hide = newWidget<gcn::Button>("Hide");
 		hide->setX(button->getX() - hide->getWidth() - 10);
 		hide->setY(button->getY());
 		
-		button->addActionListener(newListener<MainLoginSubmit>());
-		hide->addActionListener(newListener<MainHideMenu>());
+		hide->addActionListener(newListener<MainHideMenu>());*/
 		
 		login_container->add(button);
-		login_container->add(hide);
+		//login_container->add(hide);
 		login_container->add(inp_password);
 		login_container->add(inp_username);
 		
@@ -150,32 +174,32 @@ namespace Menus
 		gcn::Label *username = newWidget<gcn::Label>("Username:");
 		username->setPosition(10, 10);
 
-		gcn::TextField *inp_username = newWidget<gcn::TextField>("");
-		inp_username->setPosition(10, username->getY() + username->getHeight() + 5);
+		gcn::TextField *inp_username = newNamedWidget<gcn::TextField>("reg_username", "");
+		inp_username->setPosition(10, username->getBottom() + 5);
 		inp_username->setWidth(field_width);
 		
 		// Password
 		gcn::Label *password = newWidget<gcn::Label>("Password:");
-		password->setPosition(10, inp_username->getY() + inp_username->getHeight() + 10);
+		password->setPosition(10, inp_username->getBottom() + 10);
 		
-		Widgets::PasswordField *inp_password = newWidget<Widgets::PasswordField>("");
-		inp_password->setPosition(10, password->getY() + password->getHeight() + 5);
+		Widgets::PasswordField *inp_password = newNamedWidget<Widgets::PasswordField>("reg_password", "");
+		inp_password->setPosition(10, password->getBottom() + 5);
 		inp_password->setWidth(field_width);
 		
 		// Repeat password
 		gcn::Label *repeat_password = newWidget<gcn::Label>("Repeat password:");
-		repeat_password->setPosition(10, inp_password->getY() + inp_password->getHeight() + 10);
+		repeat_password->setPosition(10, inp_password->getBottom() + 10);
 		
-		Widgets::PasswordField *inp_repeat_password = newWidget<Widgets::PasswordField>("");
-		inp_repeat_password->setPosition(10, repeat_password->getY() + repeat_password->getHeight() + 5);
+		Widgets::PasswordField *inp_repeat_password = newNamedWidget<Widgets::PasswordField>("reg_password2", "");
+		inp_repeat_password->setPosition(10, repeat_password->getBottom() + 5);
 		inp_repeat_password->setWidth(field_width);
 		
 		// Email
 		gcn::Label *email = newWidget<gcn::Label>("Email");
 		email->setPosition(10, inp_repeat_password->getY() + inp_repeat_password->getHeight() + 10);
 		
-		gcn::TextField *inp_email = newWidget<gcn::TextField>("");
-		inp_email->setPosition(10, email->getY() + email->getHeight() + 5);
+		gcn::TextField *inp_email = newNamedWidget<gcn::TextField>("reg_email", "");
+		inp_email->setPosition(10, email->getBottom() + 5);
 		inp_email->setWidth(field_width);
 		
 		// Submit

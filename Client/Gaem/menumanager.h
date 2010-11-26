@@ -92,7 +92,7 @@ namespace Gaem
 		{
 			T *w = new T(a);
 			_widgets.push_back(w);
-			_table[name] = a;
+			_table[name] = w;
 			return w;
 		}
 		
@@ -138,12 +138,13 @@ namespace Gaem
 		void show(const std::string&);
 		void show(Menu *);
 		void hide();
+		void hideAll();
 		
 		void handleEvent(sf::Event &);
 		void logic();
 		void draw();
 		
-		void showLoading();
+		void showLoading(const std::string &message);
 		void hideLoading();
 		void alert(const std::string &message);
 		

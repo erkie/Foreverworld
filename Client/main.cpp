@@ -1,9 +1,7 @@
 #include <iostream>
 
-#include <guichan/guichan.hpp>
-#include <guichan/sfml.hpp>
-
 #include "Gaem/gaem.h"
+#include "Common/messages.h"
 
 using namespace std;
 

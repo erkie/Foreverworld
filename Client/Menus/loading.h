@@ -16,8 +16,12 @@ namespace Menus
 {
 	class Loading: public Gaem::Menu
 	{
+		gcn::Label *_indicator;
+		
+		std::string _message;
 	public:
 		void init();
+		void setMessage(const std::string& message);
 	};
 }
 

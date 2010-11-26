@@ -271,6 +271,11 @@ namespace Menus
 		setRoot(base);
 		centerRoot();
 	}
+	
+	void Developer::show()
+	{
+		centerRoot();
+	}
 
 	void Developer::initHome()
 	{
@@ -456,11 +461,6 @@ namespace Menus
 		players_container->add(table);
 
 		_tabs->addTab("Players", players_container);
-	}
-
-	void Developer::show()
-	{
-		centerRoot();
 	}
 	
 	void Developer::setCurrentPlayer(const std::string &path)

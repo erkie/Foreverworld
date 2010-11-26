@@ -11,7 +11,9 @@
 #define __PLAYER_H__
 
 #include <string>
+
 #include "Common/messages.h"
+#include "usermanager.h"
 
 class Player
 {
@@ -20,18 +22,16 @@ class Player
 	inet::PlayerState _state;
 	
 	// Specs
-	std::string _character;
-	std::string _username;
+	inet::LoggedInMemberData _member;
 public:
-	Player(const std::string &);
+	Player(inet::id_type id);
+	
+	static UserManager *user_manager;
 	
 	// Update player stats every second
 	void tick();
 	
 	void loadSpecs();
-	void setCharacter(const std::string &);
-	void setUsername(const std::string &);
-	void setId(inet::id_type);
 	
 	void setDir(int, int);
 	void setLeft(int);
@@ -49,8 +49,8 @@ public:
 	std::string getCharacter();
 	std::string getUsername();
 	
-	inet::Player getPlayer();
 	inet::PlayerState getState();
+	inet::LoggedInMemberData getMember();
 };
 
 #endif

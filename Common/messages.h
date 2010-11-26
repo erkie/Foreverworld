@@ -17,6 +17,8 @@ namespace inet
 {
 	typedef uint32_t id_type;
 
+#define STR2USERNAME(x, y) memset(x, 0, 21); memcpy(x, std::string(y).c_str(), 20);
+
 	enum Message
 	{
 		MESS_START_GAME = ID_USER_PACKET_ENUM+1,
@@ -24,7 +26,13 @@ namespace inet
 		MESS_NEW_PLAYER,
 		MESS_REMOVED_PLAYER,
 		MESS_PLAYER_STATE_PING,
-		MESS_EVENT
+		MESS_EVENT,
+		MESS_REGISTER_PLAYER,
+		MESS_LOGIN_PLAYER,
+		MESS_REGISTER_STATUS,
+		MESS_LOGIN_STATUS,
+		MESS_VERSION_CHECK,
+		MESS_CHARACTER_DATA
 	};
 	
 	enum Event
@@ -48,20 +56,20 @@ namespace inet
 	};
 	
 #pragma pack(push, 1)
-	struct Packet
+	
+	// A member's public data
+	struct LoggedInMemberData
 	{
-		unsigned char type;
+		id_type id;
+		char username[21];
+		int32_t character_id;
 	};
 	
-	struct Player
+	struct Version
 	{
-		int32_t dir[2];
-		int32_t left;
-		float depth;
-		float elevation;
-		float velocity[2];
-		char character[50];
-		char username[50];
+		short major;
+		short minor;
+		char type; // 'b' == beta, 's' == stable
 	};
 	
 	struct PlayerState
@@ -74,24 +82,79 @@ namespace inet
 		PlayerActionState state;
 	};
 	
-	// Tell the server what player I am so I can get my unique ID back
-	struct StartGame: Packet
+	struct Character
 	{
-		char character[50];
+		int32_t id;
+		char name[21];
+		float scale;
+		bool can_jump;
+		int32_t speed;
+		int32_t up_speed;
 	};
 	
-	// I have been added to the game and my ID is back
-	struct SuccessfullyAdded: Packet
+	// Register me as a member
+	// In the future this might also contain the player I want to be
+	struct MemberCredentials
+	{
+		char username[21];
+		char password[41];
+		char email[101];
+	};
+	
+	// Log in using username password
+	struct LoginCredentials
+	{
+		char username[21];
+		char password[41];
+	};
+	
+	// PACKETS
+	// --
+	
+	struct Packet
+	{
+		unsigned char type;
+	};
+	
+	struct VersionCheck: Packet
+	{
+		Version version;
+	};
+	
+	// Generic packet for a YES/NO answer
+	struct StatusResponse: Packet
+	{
+		bool status;
+	};
+	
+	// Login a member with a username/password
+	// Responds with a LoginStatus containing my id
+	// If if failed the id will be 0
+	struct LoginPlayer: Packet
+	{
+		LoginCredentials login;
+	};
+	
+	// Response to a login, id will be 0 on failure
+	// This will be shortly followed by a PlayerAdded message
+	// If the IDs are the same I know it is my data
+	struct LoginStatus: Packet
 	{
 		id_type id;
-		Player player;
+	};
+	
+	// Information about a character
+	struct CharacterData: Packet
+	{
+		Character character;
 	};
 	
 	// A player has joined the game (it could even be me!)
 	struct PlayerAdded: Packet
 	{
 		id_type id;
-		Player player;
+		PlayerState player;
+		LoggedInMemberData member;
 	};
 	
 	// A player has left the game
@@ -109,8 +172,23 @@ namespace inet
 	{
 		id_type id;
 	};
+	
+	// Register a new member/player
+	// Responds with a MESS_REGISTER_STATUS
+	struct RegisterPlayer: Packet
+	{
+		MemberCredentials member;
+	};
+	
+	// I registered OK, now I can log on
+	struct SuccessfullyRegistered: Packet
+	{
+		bool succeeded;
+	};
 #pragma pack(pop)
-
+	
+	inet::Version getVersion();
+	std::string getVersionString(const inet::Version &);
 }
 
 #endif

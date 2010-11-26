@@ -19,6 +19,7 @@
 #include "Gaem/menumanager.h"
 
 #include "Menus/alert.h"
+#include "Menus/loading.h"
 
 #include "Widgets/passwordfield.h"
 
@@ -145,8 +146,9 @@ namespace Gaem
 		_menu_queue.push(menu);
 	}
 
-	void MenuManager::showLoading()
+	void MenuManager::showLoading(const std::string &message)
 	{
+		static_cast<Menus::Loading*>(_menus["loading"])->setMessage(message);
 		show("loading");
 	}
 
@@ -183,6 +185,12 @@ namespace Gaem
 			Menu *next = _menu_queue.top();
 			next->setActive();
 		}
+	}
+	
+	void MenuManager::hideAll()
+	{
+		while ( hasMenus() )
+			hide();
 	}
 
 	void MenuManager::handleEvent(sf::Event &event)

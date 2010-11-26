@@ -41,6 +41,7 @@ namespace Entities
 		}
 		else
 		{
+			return;
 			std::stringstream ss;
 			ss << "Ping: " << Gaem::Gaem::getInstance()->getNetworkManager()->getPing();
 			

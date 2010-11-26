@@ -24,6 +24,7 @@
 #include "Gaem/networkmanager.h"
 
 #include "Menus/main.h"
+#include "Menus/dashboard.h"
 #include "Menus/developer.h"
 #include "Menus/alert.h"
 #include "Menus/loading.h"
@@ -102,12 +103,13 @@ namespace Gaem
 		_entity_manager->init();
 		
 		// Load menus
-		_menu_manager->add("main", new ::Menus::Main());
-		_menu_manager->add("developer", new ::Menus::Developer());
-		_menu_manager->add("loading", new ::Menus::Loading());
+		_menu_manager->add("main", new Menus::Main());
+		_menu_manager->add("dashboard", new Menus::Dashboard());
+		_menu_manager->add("developer", new Menus::Developer());
+		_menu_manager->add("loading", new Menus::Loading());
 
 		// Show main menu
-		//_menu_manager->show("main");
+		_menu_manager->show("main");
 		
 		_network_manager->connect();
 	}
@@ -128,11 +130,11 @@ namespace Gaem
 				// Global events
 				
 				// Quit
-				if ( event.Type == sf::Event::Closed || (event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q) )
+				if ( event.Type == sf::Event::Closed || (! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q) )
 					return quit();
 
 				// Go into fullscreen mode
-				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::F )
+				if ( ! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::F )
 				{
 					_config->set("window_fullscreen", "yes");
 					initWindow(-1, -1);
@@ -142,21 +144,15 @@ namespace Gaem
 				// Open main menu on [esc]
 				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Escape )
 				{
+					std::string menu_to_show = _user->isLoggedIn() ? "dashboard" : "main";
 					if ( ! _menu_manager->hasMenus() )
-						_menu_manager->show("main");
+						_menu_manager->show(menu_to_show);
 					else
-					{
 						_menu_manager->hide();
-						
-						if ( ! _menu_manager->hasMenus() )
-						{
-							_network_manager->joinGame("player_1");
-						}
-					}
 				}
 
 				// Open developer menu on [D]
-				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::D )
+				if ( ! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::D )
 				{
 					_menu_manager->show("developer");
 				}
@@ -201,9 +197,7 @@ namespace Gaem
 	void Gaem::errorMain(const std::string &error)
 	{
 		// Clear menu queue so the user can't hide the alert and continue everything
-		while ( _menu_manager->hasMenus() )
-			_menu_manager->hide();
-
+		_menu_manager->hideAll();
 		_menu_manager->alert(error);
 
 		while (_app.IsOpened())

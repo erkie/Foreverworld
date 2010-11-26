@@ -22,6 +22,8 @@ namespace Entities
 
 namespace Gaem
 {
+	class User;
+	
 	class NetworkManager
 	{
 		RakNet::RakPeerInterface *_peer;
@@ -39,7 +41,8 @@ namespace Gaem
 		void connect();
 		
 		// Add my character to the playing field and start playing
-		void joinGame(const std::string &player);
+		void login(User *);
+		
 		void addPlayer(const inet::PlayerAdded *);
 		void removePlayer(const inet::PlayerRemoved *player);
 		
@@ -48,8 +51,7 @@ namespace Gaem
 		void handleEvent(inet::EventUpdate *);
 		
 		void sendChatMessage();
-		void registerNewMember();
-		void login();
+		void signup(User *);
 		
 		// Get all updates sent to me since the latest frame
 		void getUpdates();

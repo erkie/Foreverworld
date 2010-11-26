@@ -9,9 +9,13 @@
 
 #include <iostream>
 #include <SFML/System.hpp>
+#include <mysql++.h>
 
 #include "RakString.h"
 #include "BitStream.h"
+
+#define MYSQLPP_SSQLS_NO_STATICS
+#include "types.h"
 
 #include "server.h"
 #include "player.h"
@@ -20,20 +24,41 @@ Server::Server(unsigned short port, unsigned int max_players): _port(port), _max
 {
 	RakNet::SocketDescriptor socket(port, 0);
 	
+	std::cout << "... Creating network interface\n";
+	
 	// Bind to port
 	_peer = RakNet::RakPeerInterface::GetInstance();
 	_peer->Startup(max_players, &socket, 1);
 	_peer->SetMaximumIncomingConnections(max_players);
+	
+	std::cout << "... Connecting to database\n";
+	
+	_db_conn = new mysqlpp::Connection("foreverworld", "localhost", "root", "");
+	mysqlpp::Query query = _db_conn->query();
+	query << "SELECT * FROM players";
+	
+	mysqlpp::StoreQueryResult res = query.store();
+	std::cout << "Number of players: " << res.num_rows() << std::endl;
+	
+	std::cout << "... Loading characters\n";
+	
+	_character_manager = new CharacterManager(_db_conn);
+	_characters = _character_manager->fetchAll();
+	
+	_user_manager = new UserManager(_db_conn);
+	Player::user_manager = _user_manager;
 }
 
 Server::~Server()
 {
 	RakNet::RakPeerInterface::DestroyInstance(_peer);
+	delete _db_conn;
+	delete _user_manager;
 }
 
 void Server::run()
 {
-	std::cout << "Listening for clients...\n";
+	std::cout << "... Listening for clients\n";
 	
 	RakNet::Packet *packet;
 	while (true)
@@ -66,6 +91,36 @@ void Server::run()
 				case ID_NEW_INCOMING_CONNECTION:
 					// an incoming connection
 					std::cout << "A connection is incoming\n";
+					
+					// Send all characters to the client
+					for ( std::vector<sql::character>::iterator iter = _characters.begin(); iter != _characters.end(); ++iter )
+					{
+						const sql::character &c = (*iter);
+						
+						inet::CharacterData mess;
+						mess.type = inet::MESS_CHARACTER_DATA;
+						mess.character.id = c.id;
+						mess.character.scale = c.scale;
+						mess.character.can_jump = c.can_jump;
+						mess.character.speed = c.speed;
+						mess.character.up_speed = c.up_speed;
+						
+						_peer->Send((char *)&mess, sizeof(mess), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+					}
+					
+					// Send a list of all players to the newly added player
+					for ( player_map::iterator iter = _players.begin(); iter != _players.end(); ++iter )
+					{
+						Player *p = (*iter).second;
+						
+						inet::PlayerAdded mess;
+						mess.type = inet::MESS_NEW_PLAYER;
+						mess.id = p->getId();
+						mess.player = p->getState();
+						mess.member = p->getMember();
+						
+						_peer->Send((char *)&mess, sizeof(mess), MEDIUM_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+					}
 					break;
 				
 				case ID_NO_FREE_INCOMING_CONNECTIONS:
@@ -85,37 +140,50 @@ void Server::run()
 					_removed_players.push(packet->guid);
 					break;
 				
-				case inet::MESS_START_GAME: {
-					inet::StartGame *mess = (inet::StartGame*)packet->data;
+				case inet::MESS_VERSION_CHECK: {
+					inet::VersionCheck response;
+					response.type = inet::MESS_VERSION_CHECK;
+					response.version = inet::getVersion();
 					
-					// Add player and...
-					// Send message back to user that she was successfully added, together with her id
-					// And then the players already on the playing field
-					Player *player = addPlayer(mess->character, packet->guid);
+					_peer->Send((char *)&response, sizeof(response), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+					} break;
+				
+				case inet::MESS_LOGIN_PLAYER: {
+					inet::LoginPlayer *mess = (inet::LoginPlayer*)packet->data;
 					
-					inet::SuccessfullyAdded response;
-					response.type = inet::MESS_SUCCESSFULLY_ADDED;
-					response.id = player->getId();
-					response.player = player->getPlayer();
+					inet::id_type id = _user_manager->login(mess->login.username, mess->login.password);
 					
-					_new_players.push(player);
+					// Send a message to the user how it went
+					inet::LoginStatus response;
+					response.type = inet::MESS_LOGIN_STATUS;
+					response.id = id;
+					
 					_peer->Send((char *)&response, sizeof(response), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 					
-					// Send a list of all players to the newly added player
-					for ( player_map::iterator iter = _players.begin(); iter != _players.end(); iter++ )
+					// If it was successful, send a PlayerAdded-message to everyone
+					if ( id )
 					{
-						Player *p = (*iter).second;
-						if ( player == p ) continue;
-						
-						inet::PlayerAdded mess;
-						mess.type = inet::MESS_NEW_PLAYER;
-						mess.id = p->getId();
-						mess.player = p->getPlayer();
-						
-						_peer->Send((char *)&mess, sizeof(response), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+						Player *player = addPlayer(id, packet->guid);
+						_new_players.push(player);
 					}
+				} break;
+				
+				case inet::MESS_REGISTER_PLAYER: {
+					inet::RegisterPlayer *mess = (inet::RegisterPlayer*)packet->data;
 					
-					} break;
+					std::cout << mess->member.username << " wants to register\n";
+					
+					// Add player to database (if everything is OK)
+					inet::id_type id = _user_manager->registerPlayer(mess->member.username, mess->member.password, mess->member.email);
+					
+					std::cout << "Registered him and got the id " << id << " back\n";
+					
+					inet::SuccessfullyRegistered response;
+					response.type = inet::MESS_REGISTER_STATUS;
+					response.succeeded = id > 0;
+					
+					_peer->Send((char *)&response, sizeof(response), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+				} break;
 				
 				case inet::MESS_EVENT: {
 					inet::EventBasic *event = (inet::EventBasic*)packet->data;
@@ -149,6 +217,9 @@ void Server::run()
 		}
 		
 		// Send out packets that need to be sent
+		// --
+		
+		// New players
 		while ( ! _new_players.empty() )
 		{
 			Player *player = _new_players.front();
@@ -156,7 +227,8 @@ void Server::run()
 			inet::PlayerAdded response;
 			response.type = inet::MESS_NEW_PLAYER;
 			response.id = player->getId();
-			response.player = player->getPlayer();
+			response.player = player->getState();
+			response.member = player->getMember();
 			
 			_peer->Send((char *)&response, sizeof(response), HIGH_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
 			
@@ -166,8 +238,6 @@ void Server::run()
 		// Removed players who have disconnected/dropped out
 		while ( ! _removed_players.empty() )
 		{
-			std::cout << "Removing player ";
-			
 			RakNet::RakNetGUID guid = _removed_players.front();
 			_removed_players.pop();
 			
@@ -175,8 +245,6 @@ void Server::run()
 				continue;
 			
 			unsigned long id = _player_id_table[guid];
-			
-			std::cout << " at " << id << '\n';
 			
 			inet::PlayerRemoved response;
 			response.type = inet::MESS_REMOVED_PLAYER;
@@ -211,14 +279,12 @@ void Server::run()
 	}
 }
 
-Player *Server::addPlayer(const std::string &name, RakNet::RakNetGUID guid)
+Player *Server::addPlayer(inet::id_type id, RakNet::RakNetGUID guid)
 {
-	Player *player = new Player("ErikPerik 2");
-	player->setCharacter(name);
-	player->setId(_current_id++);
+	Player *player = new Player(id);
 	
-	_players[player->getId()] = player;
-	_player_id_table[guid] = player->getId();
+	_players[id] = player;
+	_player_id_table[guid] = id;
 	
 	return player;
 }

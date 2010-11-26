@@ -26,15 +26,27 @@
 
 namespace Entities
 {
-	Player::Player(const std::string &path):
-		_speed(250), _speed_up(100), _can_jump(true),
-		_user(NULL), _pos_left(0), _pos_depth(50),
-		_elevation(0), _state(inet::STATE_WAITING)
+	void Player::init()
 	{
+		_speed = 250;
+		_speed_up = 100;
+		_can_jump = true;
+		_user = NULL;
+		_pos_left = 0;
+		_pos_depth = 50;
+		_elevation = 0;
+		_state = inet::STATE_WAITING;
 		_dir[0] = 1;
 		_dir[1] = 0;
+		_velocity.x = 0;
+		_velocity.y = 0;
 		
 		_sprite = new Gaem::AnimatedSprite;
+	}
+
+	Player::Player(const std::string &path)
+	{
+		init();
 		
 		Gaem::Config info(path);
 		
@@ -49,13 +61,33 @@ namespace Entities
 		_name = info.get("name");
 		
 		_sprite->setAnimation("waiting");
-		
 		_sprite->setX(Gaem::Gaem::getInstance()->getWidth()/2 - _sprite->getWidth()/2);
 		
 		setDepth(_pos_depth);
+	}
+	
+	Player::Player(const inet::Character &character)
+	{
+		init();
 		
-		_velocity.x = 0;
-		_velocity.y = 0;
+		_scale = character.scale;
+		_speed = character.speed;
+		_speed_up = character.up_speed;
+		_can_jump = character.can_jump;
+		_name = std::string(character.name);
+		
+		std::stringstream ss;
+		ss << character.id;
+		std::string the_id = ss.str();
+		
+		_sprite->loadAnimation("running", "resources/players/player_" + the_id + "_running/info.txt");
+		_sprite->loadAnimation("waiting", "resources/players/player_" + the_id + "_waiting/info.txt");
+		_sprite->loadAnimation("jumping", "resources/players/player_" + the_id + "_jumping/info.txt");
+		
+		_sprite->setAnimation("waiting");
+		_sprite->setX(Gaem::Gaem::getInstance()->getWidth()/2 - _sprite->getWidth()/2);
+		
+		setDepth(_pos_depth);
 	}
 	
 	Player::~Player()

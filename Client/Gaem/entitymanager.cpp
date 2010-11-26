@@ -89,13 +89,10 @@ namespace Gaem
 		}
 	}
 	
-	void EntityManager::addPlayer(inet::id_type id, const inet::Player player)
+	void EntityManager::addPlayer(inet::id_type id, const inet::PlayerState player, const inet::LoggedInMemberData member)
 	{
-		std::cout << "Loading character " << std::string(player.character).size() << " \n";
 		// Create player
-		Entities::Player *p = new Entities::Player("resources/players/" + std::string(player.character) + ".txt");
-		std::cout  << "Done\n";
-		
+		Entities::Player *p = new Entities::Player(getCharacter(member.character_id));
 		
 		// Set player stats
 		p->setDir(player.dir[0], player.dir[1]);
@@ -111,13 +108,14 @@ namespace Gaem
 		if ( Gaem::Gaem::getInstance()->getUser()->getId() == id )
 		{
 			setCurrentPlayer(p);
-			Gaem::Gaem::getInstance()->getUser()->setUsername(player.username);
+			Gaem::Gaem::getInstance()->getUser()->setUsername(member.username);
 			p->setUser(Gaem::Gaem::getInstance()->getUser());
 		}
 		else
 		{
 			User *user = new User;
-			user->setUsername(std::string(player.username));
+			user->setUsername(std::string(member.username));
+			p->setUser(user);
 		}
 	}
 	
@@ -143,6 +141,16 @@ namespace Gaem
 		player->setDepth(state.depth);
 		player->setVelocity(state.velocity[0], state.velocity[1]);
 		player->setState(state.state);
+	}
+	
+	void EntityManager::addCharacter(inet::Character character)
+	{
+		_characters[character.id] = character;
+	}
+	
+	inet::Character EntityManager::getCharacter(int32_t id)
+	{
+		return _characters[id];
 	}
 	
 	void EntityManager::sendUpdates()

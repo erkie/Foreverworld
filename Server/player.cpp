@@ -9,11 +9,18 @@
 
 #include <cstdlib>
 #include <cstring>
-#include "player.h"
 
-Player::Player(const std::string &name)
+#include "player.h"
+#include "usermanager.h"
+
+UserManager *Player::user_manager = NULL;
+
+Player::Player(inet::id_type id)
 {
-	_username = name;
+	_id = id;
+
+	// Load user credentials into
+	 _member = Player::user_manager->loadMember(id);
 	
 	_state.left = 100;
 	_state.depth = 50;
@@ -22,22 +29,8 @@ Player::Player(const std::string &name)
 	_state.dir[1] = 0;
 	_state.velocity[0] = 0;
 	_state.velocity[1] = 0;
-}
-
-void Player::setCharacter(const std::string &name)
-{
-	// Load specs
-	_character = name;
-}
-
-void Player::setUsername(const std::string &name)
-{
-	_username = name;
-}
-
-void Player::setId(inet::id_type id)
-{
-	_id = id;
+	
+	// Get my character's specs
 }
 
 void Player::setDir(int dir_x, int dir_y)
@@ -104,27 +97,12 @@ float *Player::getVelocity()
 
 std::string Player::getUsername()
 {
-	return _username;
+	return "USERNAMEFIXME";
 }
 
 std::string Player::getCharacter()
 {
-	return _character;
-}
-
-inet::Player Player::getPlayer()
-{
-	inet::Player p;
-	p.dir[0] = *(getDir());
-	p.dir[1] = *(getDir()+1);
-	p.left = getLeft();
-	p.depth = getDepth();
-	p.elevation = getElevation();
-	memset(p.character, 0, 50);
-	memset(p.username, 0, 50);
-	memcpy(p.character, getCharacter().c_str(), 50);
-	memcpy(p.username, getUsername().c_str(), 50);
-	return p;
+	return "CHARACTERFIXME";
 }
 
 inet::PlayerState Player::getState()
@@ -139,4 +117,9 @@ inet::PlayerState Player::getState()
 	p.velocity[1] = *(getVelocity()+1);
 	p.state = _state.state;
 	return p;
+}
+
+inet::LoggedInMemberData Player::getMember()
+{
+	return _member;
 }

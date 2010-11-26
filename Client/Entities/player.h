@@ -47,7 +47,10 @@ namespace Entities
 		sf::Vector2f _velocity;
 		inet::PlayerActionState _state;
 	public:
+		void init();
+	
 		Player(const std::string &);
+		Player(const inet::Character &);
 		~Player();
 		
 		void setUser(Gaem::User *);

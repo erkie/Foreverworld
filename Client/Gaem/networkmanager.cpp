@@ -21,6 +21,7 @@
 #include "Gaem/config.h"
 #include "Gaem/user.h"
 #include "Gaem/entitymanager.h"
+#include "Gaem/menumanager.h"
 
 #include "Entities/player.h"
 
@@ -35,6 +36,7 @@ namespace Gaem
 		_peer = RakNet::RakPeerInterface::GetInstance();
 		_peer->Startup(1, &socket, 1);
 		_peer->SetMaximumIncomingConnections(1);
+		_peer->SetOccasionalPing(true);
 	}
 	
 	NetworkManager::~NetworkManager()
@@ -50,16 +52,30 @@ namespace Gaem
 		_peer->Connect(host.c_str(), port, 0, 0);
 		
 		_hostaddr = RakNet::SystemAddress(host.c_str(), port);
-		_peer->Ping(_hostaddr);
 	}
 	
-	void NetworkManager::joinGame(const std::string &character)
+	void NetworkManager::login(User *user)
 	{
 		if ( _id ) return;
 		
-		inet::StartGame data;
-		data.type = inet::MESS_START_GAME;
-		memcpy(data.character, character.c_str(), 50);
+		inet::LoginPlayer data;
+		data.type = inet::MESS_LOGIN_PLAYER;
+		user->getNetworkUsername(data.login.username);
+		user->getNetworkPassword(data.login.password);
+		
+		_peer->Send((char*)&data, sizeof(data), HIGH_PRIORITY, RELIABLE_ORDERED, 0, _hostaddr, false);
+	}
+	
+	void NetworkManager::signup(User *user)
+	{
+		if ( _id ) return;
+		
+		inet::RegisterPlayer data;
+		data.type = inet::MESS_REGISTER_PLAYER;
+		
+		user->getNetworkUsername(data.member.username);
+		user->getNetworkPassword(data.member.password);
+		user->getNetworkEmail(data.member.email);
 		
 		_peer->Send((char*)&data, sizeof(data), HIGH_PRIORITY, RELIABLE_ORDERED, 0, _hostaddr, false);
 	}
@@ -90,7 +106,7 @@ namespace Gaem
 	
 	void NetworkManager::addPlayer(const inet::PlayerAdded *player)
 	{
-		Gaem::Gaem::getInstance()->getEntityManager()->addPlayer(player->id, player->player);
+		Gaem::Gaem::getInstance()->getEntityManager()->addPlayer(player->id, player->player, player->member);
 	}
 	
 	void NetworkManager::removePlayer(const inet::PlayerRemoved *player)
@@ -106,32 +122,90 @@ namespace Gaem
 		{
 			switch (packet->data[0])
 			{
-				case ID_CONNECTION_REQUEST_ACCEPTED:
-					std::cout << "We are offically connected to " << packet->systemAddress.ToString() << "\n";
+				case ID_CONNECTION_REQUEST_ACCEPTED: {
+					std::cout << "We are connected to " << packet->systemAddress.ToString() << "\n";
 					_is_connected = true;
-					joinGame("player_1");
-					break;
+					
+					// Send version test
+					inet::VersionCheck version;
+					version.type = inet::MESS_VERSION_CHECK;
+					version.version = inet::getVersion();
+					
+					_peer->Send((char*)&version, sizeof(version), HIGH_PRIORITY, RELIABLE_ORDERED, 0, _hostaddr, false);
+					} break;
 				
-				// Response after I sent a START_GAME message
-				case inet::MESS_SUCCESSFULLY_ADDED: {
+				// Got the version the server is running back
+				// They have to match
+				case inet::MESS_VERSION_CHECK: {
+					inet::VersionCheck *response = (inet::VersionCheck*)packet->data;
+					inet::Version current = inet::getVersion();
+					
+					if ( response->version.major != current.major || response->version.minor != current.minor )
+					{
+						throw GAEM_NONFATAL_EXCEPTION("The latest version is " + inet::getVersionString(response->version) + " and you are running " + inet::getVersionString(current) + ". Please visit the website and upgrade your client.");
+					}
+				} break;
+				
+				// Response after I sent a login message
+				case inet::MESS_LOGIN_STATUS: {
 					// Got my ID back, and they have it stored too
 					// I should now receive a player-added notification
-					inet::SuccessfullyAdded* data = (inet::SuccessfullyAdded*)packet->data;
-					_id = data->id;
-					Gaem::Gaem::getInstance()->getUser()->setId(_id);
-					std::cout << "My ID is " << _id << "\n";
+					inet::LoginStatus* data = (inet::LoginStatus*)packet->data;
+					
+					Gaem::Gaem::getInstance()->getMenuManager()->hideLoading();
+					
+					// Successfully logged in
+					if ( data->id )
+					{
+						Gaem::Gaem::getInstance()->getMenuManager()->hideAll();
+						_id = data->id;
+						
+						Gaem::Gaem::getInstance()->getUser()->setId(_id);
+						Gaem::Gaem::getInstance()->getUser()->setIsLoggedIn(true);
+					}
+					// Failed login attempt
+					else
+					{
+						Gaem::Gaem::getInstance()->getMenuManager()->alert("Failed login. Please try again.");
+					}
 					} break;
+				
+				// Response after a register attempt
+				case inet::MESS_REGISTER_STATUS: {
+					// Just a bool back wether I did it or not
+					inet::SuccessfullyRegistered *data = (inet::SuccessfullyRegistered*)packet->data;
+					
+					Gaem::Gaem::getInstance()->getMenuManager()->hideLoading();
+					
+					if ( data->succeeded )
+					{
+						Gaem::Gaem::getInstance()->getMenuManager()->alert("Welcome! We love you. Let's log on");
+						login(Gaem::Gaem::getInstance()->getUser());
+					}
+					else
+					{
+						Gaem::Gaem::getInstance()->getMenuManager()->alert("The username requested was already taken");
+					}
+				} break;
 				
 				// A new player has been added
 				case inet::MESS_NEW_PLAYER:
-					std::cout << "New player!\n";
 					addPlayer((inet::PlayerAdded*)packet->data);
 					break;
 				
+				// A player has disconnected/left
 				case inet::MESS_REMOVED_PLAYER:
 					std::cout << "A player has left\n";
 					removePlayer((inet::PlayerRemoved*)packet->data);
-				break;
+					break;
+				
+				// Information about a character
+				case inet::MESS_CHARACTER_DATA: {
+					std::cout << "Got some character data\n";
+					
+					inet::CharacterData *data = (inet::CharacterData*)packet->data;
+					Gaem::Gaem::getInstance()->getEntityManager()->addCharacter(data->character);
+					} break;
 				
 				case inet::MESS_EVENT:
 					handleEvent((inet::EventUpdate*)packet->data);
@@ -167,7 +241,7 @@ namespace Gaem
 	
 	int NetworkManager::getPing()
 	{
-		return _peer->GetAveragePing(_hostaddr);
+		return _peer->GetLastPing(_hostaddr);
 	}
 	
 	inet::id_type NetworkManager::getId()

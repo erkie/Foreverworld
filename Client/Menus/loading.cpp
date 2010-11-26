@@ -20,12 +20,23 @@ namespace Menus
 		r->setSize(300, 100);
 		setRoot(r);
 		
-		gcn::Label *indicator = newWidget<gcn::Label>("Loading a lot of things...");
-		indicator->adjustSize();
-		indicator->setX(_root->getChildrenArea().width/2 - indicator->getWidth()/2);
-		indicator->setY(_root->getChildrenArea().height/2 - indicator->getHeight()/2);
+		_indicator = newWidget<gcn::Label>();
+		setMessage("Loading a lot of things");
 		
-		_root->add(indicator);
+		_root->add(_indicator);
+		
+		centerRoot();
+	}
+	
+	void Loading::setMessage(const std::string &message)
+	{
+		_message = message;
+		
+		_indicator->setCaption(message);
+		_indicator->adjustSize();
+		_root->setWidth(_indicator->getWidth() + 20);
+		_indicator->setX(_root->getChildrenArea().width/2 - _indicator->getWidth()/2);
+		_indicator->setY(_root->getChildrenArea().height/2 - _indicator->getHeight()/2);
 		
 		centerRoot();
 	}
