@@ -7,12 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35045BC1129F00BB0085F423 /* dashboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35045BC0129F00BB0085F423 /* dashboard.cpp */; };
+		3545F6B9129FB59100ED38D6 /* messages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3545F6B8129FB59100ED38D6 /* messages.cpp */; };
+		3545F6D7129FB78900ED38D6 /* messages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3545F6B8129FB59100ED38D6 /* messages.cpp */; };
 		354702EE1271E04400885A04 /* guichan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354702DC1271E03200885A04 /* guichan.framework */; };
+		356418E1129DAB6B00446DBE /* libmysqlpp_d.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 356418E0129DAB6B00446DBE /* libmysqlpp_d.dylib */; };
+		3564193C129DB42B00446DBE /* usermanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3564193B129DB42B00446DBE /* usermanager.cpp */; };
+		356419D3129DBE3C00446DBE /* libmysqlclient.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 356419D2129DBE3C00446DBE /* libmysqlclient.dylib */; };
+		35729804129E4ADC00778193 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35729803129E4ADC00778193 /* sha1.cpp */; };
+		3573EF49128BC3FF00CA25DB /* RakNetFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */; };
+		357B8D6D12884EFC007A2E03 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3ABAB128456750080187E /* main.cpp */; };
 		358AE0BA1250BE34007AA254 /* SFML.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A01FB6CD0F07CFF2000AAC7B /* SFML.framework */; };
 		358AE0BB1250BE34007AA254 /* sfml-audio.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E956120016D1000FB887 /* sfml-audio.framework */; };
-		358AE0BC1250BE34007AA254 /* sfml-network.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E957120016D1000FB887 /* sfml-network.framework */; };
+		35AE0983128C487000923BBB /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 35AE095A128C486F00923BBB /* resources */; };
+		35AE09E5128C62B700923BBB /* RakNetFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */; };
+		35B217D112A0096C00065C51 /* charactermanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B217CF12A0096100065C51 /* charactermanager.cpp */; };
+		35B4240812927BE8003ECA3C /* user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B423F81292799E003ECA3C /* user.cpp */; };
 		35B6E958120016D1000FB887 /* sfml-audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E956120016D1000FB887 /* sfml-audio.framework */; };
-		35B6E959120016D1000FB887 /* sfml-network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E957120016D1000FB887 /* sfml-network.framework */; };
+		35BC97311291ED1200852DEF /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35BC97301291ED1200852DEF /* player.cpp */; };
+		35C8379D128DAA3C0037AEED /* networkmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35C8379C128DAA3C0037AEED /* networkmanager.cpp */; };
 		35D3AB52128454C50080187E /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AAFE128454C50080187E /* player.cpp */; };
 		35D3AB53128454C50080187E /* world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB00128454C50080187E /* world.cpp */; };
 		35D3AB54128454C50080187E /* animatedsprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB03128454C50080187E /* animatedsprite.cpp */; };
@@ -23,7 +36,6 @@
 		35D3AB59128454C50080187E /* exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB0D128454C50080187E /* exception.cpp */; };
 		35D3AB5A128454C50080187E /* gaem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB0F128454C50080187E /* gaem.cpp */; };
 		35D3AB5B128454C50080187E /* menumanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB11128454C50080187E /* menumanager.cpp */; };
-		35D3AB5C128454C50080187E /* README in Resources */ = {isa = PBXBuildFile; fileRef = 35D3AB13128454C50080187E /* README */; };
 		35D3AB5D128454C50080187E /* resourcemanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB14128454C50080187E /* resourcemanager.cpp */; };
 		35D3AB5E128454C50080187E /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB16128454C50080187E /* sprite.cpp */; };
 		35D3AB60128454C50080187E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB19128454C50080187E /* main.cpp */; };
@@ -37,9 +49,9 @@
 		35D3AB7F128454C50080187E /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB4C128454C50080187E /* image.cpp */; };
 		35D3AB80128454C50080187E /* informationtable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB4E128454C50080187E /* informationtable.cpp */; };
 		35D3AB81128454C50080187E /* passwordfield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3AB50128454C50080187E /* passwordfield.cpp */; };
-		35D3ABAC128456750080187E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3ABAB128456750080187E /* main.cpp */; };
 		35D3ABBD128459430080187E /* sfml-system.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01FB6CB0F07CFF2000AAC7B /* sfml-system.framework */; };
-		35D3ABBE128459490080187E /* sfml-network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E957120016D1000FB887 /* sfml-network.framework */; };
+		35D3ACD1128491440080187E /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3ACD0128491440080187E /* server.cpp */; };
+		35F84A2012915F4900E42D1C /* connectionstatus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35F84A1F12915F4900E42D1C /* connectionstatus.cpp */; };
 		A0072ADE0F1D0EC500B4A594 /* sfml-system.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A01FB6CB0F07CFF2000AAC7B /* sfml-system.framework */; };
 		A0072ADF0F1D0EC500B4A594 /* sfml-window.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A01FB6CC0F07CFF2000AAC7B /* sfml-window.framework */; };
 		A0072AE00F1D0EC500B4A594 /* sfml-graphics.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A01FB6CA0F07CFF2000AAC7B /* sfml-graphics.framework */; };
@@ -57,7 +69,6 @@
 			files = (
 				358AE0BA1250BE34007AA254 /* SFML.framework in Copy Frameworks */,
 				358AE0BB1250BE34007AA254 /* sfml-audio.framework in Copy Frameworks */,
-				358AE0BC1250BE34007AA254 /* sfml-network.framework in Copy Frameworks */,
 				A0072ADE0F1D0EC500B4A594 /* sfml-system.framework in Copy Frameworks */,
 				A0072ADF0F1D0EC500B4A594 /* sfml-window.framework in Copy Frameworks */,
 				A0072AE00F1D0EC500B4A594 /* sfml-graphics.framework in Copy Frameworks */,
@@ -68,9 +79,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		35045BBF129F00BB0085F423 /* dashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dashboard.h; sourceTree = "<group>"; };
+		35045BC0129F00BB0085F423 /* dashboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dashboard.cpp; sourceTree = "<group>"; };
+		3545F6B8129FB59100ED38D6 /* messages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = messages.cpp; sourceTree = "<group>"; };
 		354702DC1271E03200885A04 /* guichan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = guichan.framework; path = /Library/Frameworks/guichan.framework; sourceTree = "<absolute>"; };
+		356418E0129DAB6B00446DBE /* libmysqlpp_d.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmysqlpp_d.dylib; path = /usr/local/lib/libmysqlpp_d.dylib; sourceTree = "<absolute>"; };
+		3564193A129DB42B00446DBE /* usermanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usermanager.h; sourceTree = "<group>"; };
+		3564193B129DB42B00446DBE /* usermanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usermanager.cpp; sourceTree = "<group>"; };
+		35641948129DB63C00446DBE /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		356419D2129DBE3C00446DBE /* libmysqlclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmysqlclient.dylib; path = /opt/local/lib/mysql5/mysql/libmysqlclient.dylib; sourceTree = "<absolute>"; };
+		35729802129E4ADC00778193 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
+		35729803129E4ADC00778193 /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sha1.cpp; sourceTree = "<group>"; };
+		3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RakNetFramework.framework; path = /Library/Frameworks/RakNetFramework.framework; sourceTree = "<absolute>"; };
+		35AE095A128C486F00923BBB /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = resources; path = Client/resources; sourceTree = "<group>"; };
+		35B217CE12A0096100065C51 /* charactermanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = charactermanager.h; sourceTree = "<group>"; };
+		35B217CF12A0096100065C51 /* charactermanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = charactermanager.cpp; sourceTree = "<group>"; };
+		35B423F71292799E003ECA3C /* user.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user.h; sourceTree = "<group>"; };
+		35B423F81292799E003ECA3C /* user.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = user.cpp; sourceTree = "<group>"; };
 		35B6E956120016D1000FB887 /* sfml-audio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-audio.framework"; path = "/Library/Frameworks/sfml-audio.framework"; sourceTree = "<absolute>"; };
-		35B6E957120016D1000FB887 /* sfml-network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-network.framework"; path = "/Library/Frameworks/sfml-network.framework"; sourceTree = "<absolute>"; };
+		35BC972F1291ED1200852DEF /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
+		35BC97301291ED1200852DEF /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
+		35C8379B128DAA3C0037AEED /* networkmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = networkmanager.h; sourceTree = "<group>"; };
+		35C8379C128DAA3C0037AEED /* networkmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = networkmanager.cpp; sourceTree = "<group>"; };
 		35D3AAFE128454C50080187E /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
 		35D3AAFF128454C50080187E /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
 		35D3AB00128454C50080187E /* world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = world.cpp; sourceTree = "<group>"; };
@@ -91,7 +121,6 @@
 		35D3AB10128454C50080187E /* gaem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gaem.h; sourceTree = "<group>"; };
 		35D3AB11128454C50080187E /* menumanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = menumanager.cpp; sourceTree = "<group>"; };
 		35D3AB12128454C50080187E /* menumanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menumanager.h; sourceTree = "<group>"; };
-		35D3AB13128454C50080187E /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		35D3AB14128454C50080187E /* resourcemanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resourcemanager.cpp; sourceTree = "<group>"; };
 		35D3AB15128454C50080187E /* resourcemanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resourcemanager.h; sourceTree = "<group>"; };
 		35D3AB16128454C50080187E /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
@@ -121,6 +150,11 @@
 		35D3AB51128454C50080187E /* passwordfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = passwordfield.h; sourceTree = "<group>"; };
 		35D3ABA4128456380080187E /* Server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Server; sourceTree = BUILT_PRODUCTS_DIR; };
 		35D3ABAB128456750080187E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		35D3ACCF128491440080187E /* server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = server.h; sourceTree = "<group>"; };
+		35D3ACD0128491440080187E /* server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = server.cpp; sourceTree = "<group>"; };
+		35D3ADA61284A5340080187E /* messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
+		35F84A1E12915F4900E42D1C /* connectionstatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connectionstatus.h; sourceTree = "<group>"; };
+		35F84A1F12915F4900E42D1C /* connectionstatus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connectionstatus.cpp; sourceTree = "<group>"; };
 		A01FB6A90F07CF6E000AAC7B /* Spel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01FB6CA0F07CFF2000AAC7B /* sfml-graphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-graphics.framework"; path = "/Library/Frameworks/sfml-graphics.framework"; sourceTree = "<absolute>"; };
 		A01FB6CB0F07CFF2000AAC7B /* sfml-system.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-system.framework"; path = "/Library/Frameworks/sfml-system.framework"; sourceTree = "<absolute>"; };
@@ -134,7 +168,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				35D3ABBD128459430080187E /* sfml-system.framework in Frameworks */,
-				35D3ABBE128459490080187E /* sfml-network.framework in Frameworks */,
+				3573EF49128BC3FF00CA25DB /* RakNetFramework.framework in Frameworks */,
+				356418E1129DAB6B00446DBE /* libmysqlpp_d.dylib in Frameworks */,
+				356419D3129DBE3C00446DBE /* libmysqlclient.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,8 +182,8 @@
 				A01FB6CF0F07CFF2000AAC7B /* sfml-system.framework in Frameworks */,
 				A01FB6D00F07CFF2000AAC7B /* sfml-window.framework in Frameworks */,
 				35B6E958120016D1000FB887 /* sfml-audio.framework in Frameworks */,
-				35B6E959120016D1000FB887 /* sfml-network.framework in Frameworks */,
 				354702EE1271E04400885A04 /* guichan.framework in Frameworks */,
+				35AE09E5128C62B700923BBB /* RakNetFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,8 +194,8 @@
 			isa = PBXGroup;
 			children = (
 				35D3AB19128454C50080187E /* main.cpp */,
-				35D3AAFD128454C50080187E /* Entities */,
 				35D3AB02128454C50080187E /* Gaem */,
+				35D3AAFD128454C50080187E /* Entities */,
 				35D3AB1A128454C50080187E /* Menus */,
 				35D3AB23128454C50080187E /* My */,
 				35D3AB47128454C50080187E /* Widgets */,
@@ -170,10 +206,12 @@
 		35D3AAFD128454C50080187E /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				35D3AAFE128454C50080187E /* player.cpp */,
-				35D3AAFF128454C50080187E /* player.h */,
 				35D3AB00128454C50080187E /* world.cpp */,
 				35D3AB01128454C50080187E /* world.h */,
+				35D3AAFE128454C50080187E /* player.cpp */,
+				35D3AAFF128454C50080187E /* player.h */,
+				35F84A1E12915F4900E42D1C /* connectionstatus.h */,
+				35F84A1F12915F4900E42D1C /* connectionstatus.cpp */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -181,25 +219,28 @@
 		35D3AB02128454C50080187E /* Gaem */ = {
 			isa = PBXGroup;
 			children = (
+				35D3AB0F128454C50080187E /* gaem.cpp */,
+				35D3AB10128454C50080187E /* gaem.h */,
+				35D3AB07128454C50080187E /* config.cpp */,
+				35D3AB08128454C50080187E /* config.h */,
+				35B423F71292799E003ECA3C /* user.h */,
+				35B423F81292799E003ECA3C /* user.cpp */,
+				35C8379C128DAA3C0037AEED /* networkmanager.cpp */,
+				35C8379B128DAA3C0037AEED /* networkmanager.h */,
+				35D3AB0B128454C50080187E /* entitymanager.cpp */,
+				35D3AB0C128454C50080187E /* entitymanager.h */,
+				35D3AB11128454C50080187E /* menumanager.cpp */,
+				35D3AB12128454C50080187E /* menumanager.h */,
+				35D3AB14128454C50080187E /* resourcemanager.cpp */,
+				35D3AB15128454C50080187E /* resourcemanager.h */,
 				35D3AB03128454C50080187E /* animatedsprite.cpp */,
 				35D3AB04128454C50080187E /* animatedsprite.h */,
 				35D3AB05128454C50080187E /* animation.cpp */,
 				35D3AB06128454C50080187E /* animation.h */,
-				35D3AB07128454C50080187E /* config.cpp */,
-				35D3AB08128454C50080187E /* config.h */,
 				35D3AB09128454C50080187E /* entity.cpp */,
 				35D3AB0A128454C50080187E /* entity.h */,
-				35D3AB0B128454C50080187E /* entitymanager.cpp */,
-				35D3AB0C128454C50080187E /* entitymanager.h */,
 				35D3AB0D128454C50080187E /* exception.cpp */,
 				35D3AB0E128454C50080187E /* exception.h */,
-				35D3AB0F128454C50080187E /* gaem.cpp */,
-				35D3AB10128454C50080187E /* gaem.h */,
-				35D3AB11128454C50080187E /* menumanager.cpp */,
-				35D3AB12128454C50080187E /* menumanager.h */,
-				35D3AB13128454C50080187E /* README */,
-				35D3AB14128454C50080187E /* resourcemanager.cpp */,
-				35D3AB15128454C50080187E /* resourcemanager.h */,
 				35D3AB16128454C50080187E /* sprite.cpp */,
 				35D3AB17128454C50080187E /* sprite.h */,
 			);
@@ -209,14 +250,16 @@
 		35D3AB1A128454C50080187E /* Menus */ = {
 			isa = PBXGroup;
 			children = (
-				35D3AB1B128454C50080187E /* alert.cpp */,
-				35D3AB1C128454C50080187E /* alert.h */,
-				35D3AB1D128454C50080187E /* developer.cpp */,
-				35D3AB1E128454C50080187E /* developer.h */,
-				35D3AB1F128454C50080187E /* loading.cpp */,
-				35D3AB20128454C50080187E /* loading.h */,
 				35D3AB21128454C50080187E /* main.cpp */,
 				35D3AB22128454C50080187E /* main.h */,
+				35045BC0129F00BB0085F423 /* dashboard.cpp */,
+				35045BBF129F00BB0085F423 /* dashboard.h */,
+				35D3AB1D128454C50080187E /* developer.cpp */,
+				35D3AB1E128454C50080187E /* developer.h */,
+				35D3AB1B128454C50080187E /* alert.cpp */,
+				35D3AB1C128454C50080187E /* alert.h */,
+				35D3AB1F128454C50080187E /* loading.cpp */,
+				35D3AB20128454C50080187E /* loading.h */,
 			);
 			path = Menus;
 			sourceTree = "<group>";
@@ -227,6 +270,8 @@
 				35D3AB24128454C50080187E /* mydirent.h */,
 				35D3AB25128454C50080187E /* myutilities.cpp */,
 				35D3AB26128454C50080187E /* myutilities.h */,
+				35729802129E4ADC00778193 /* sha1.h */,
+				35729803129E4ADC00778193 /* sha1.cpp */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -252,8 +297,26 @@
 			isa = PBXGroup;
 			children = (
 				35D3ABAB128456750080187E /* main.cpp */,
+				35641948129DB63C00446DBE /* types.h */,
+				35D3ACCF128491440080187E /* server.h */,
+				35D3ACD0128491440080187E /* server.cpp */,
+				35BC972F1291ED1200852DEF /* player.h */,
+				35BC97301291ED1200852DEF /* player.cpp */,
+				3564193A129DB42B00446DBE /* usermanager.h */,
+				3564193B129DB42B00446DBE /* usermanager.cpp */,
+				35B217CE12A0096100065C51 /* charactermanager.h */,
+				35B217CF12A0096100065C51 /* charactermanager.cpp */,
 			);
 			path = Server;
+			sourceTree = "<group>";
+		};
+		35D3ADA41284A4E10080187E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				35D3ADA61284A5340080187E /* messages.h */,
+				3545F6B8129FB59100ED38D6 /* messages.cpp */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		A01FB69A0F07CF63000AAC7B = {
@@ -263,6 +326,7 @@
 				A01FB6B10F07CF7C000AAC7B /* Resources */,
 				A01FB6B00F07CF75000AAC7B /* Frameworks */,
 				A01FB6AA0F07CF6E000AAC7B /* Products */,
+				356419D2129DBE3C00446DBE /* libmysqlclient.dylib */,
 			);
 			sourceTree = "<group>";
 		};
@@ -278,13 +342,14 @@
 		A01FB6B00F07CF75000AAC7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				356418E0129DAB6B00446DBE /* libmysqlpp_d.dylib */,
 				A01FB6CD0F07CFF2000AAC7B /* SFML.framework */,
 				35B6E956120016D1000FB887 /* sfml-audio.framework */,
-				35B6E957120016D1000FB887 /* sfml-network.framework */,
 				A01FB6CB0F07CFF2000AAC7B /* sfml-system.framework */,
 				A01FB6CC0F07CFF2000AAC7B /* sfml-window.framework */,
 				A01FB6CA0F07CFF2000AAC7B /* sfml-graphics.framework */,
 				354702DC1271E03200885A04 /* guichan.framework */,
+				3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -293,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				35D3AB18128454C50080187E /* Info.plist */,
+				35AE095A128C486F00923BBB /* resources */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -302,6 +368,7 @@
 			children = (
 				35D3AAFC128454C50080187E /* Client */,
 				35D3ABAA128456610080187E /* Server */,
+				35D3ADA41284A4E10080187E /* Common */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -374,7 +441,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35D3AB5C128454C50080187E /* README in Resources */,
+				35AE0983128C487000923BBB /* resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,7 +452,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35D3ABAC128456750080187E /* main.cpp in Sources */,
+				35D3ACD1128491440080187E /* server.cpp in Sources */,
+				357B8D6D12884EFC007A2E03 /* main.cpp in Sources */,
+				35BC97311291ED1200852DEF /* player.cpp in Sources */,
+				3564193C129DB42B00446DBE /* usermanager.cpp in Sources */,
+				3545F6D7129FB78900ED38D6 /* messages.cpp in Sources */,
+				35B217D112A0096C00065C51 /* charactermanager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +488,12 @@
 				35D3AB7F128454C50080187E /* image.cpp in Sources */,
 				35D3AB80128454C50080187E /* informationtable.cpp in Sources */,
 				35D3AB81128454C50080187E /* passwordfield.cpp in Sources */,
+				35C8379D128DAA3C0037AEED /* networkmanager.cpp in Sources */,
+				35F84A2012915F4900E42D1C /* connectionstatus.cpp in Sources */,
+				35B4240812927BE8003ECA3C /* user.cpp in Sources */,
+				35729804129E4ADC00778193 /* sha1.cpp in Sources */,
+				35045BC1129F00BB0085F423 /* dashboard.cpp in Sources */,
+				3545F6B9129FB59100ED38D6 /* messages.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,13 +505,26 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../RakNetFramework/build/Debug\"";
+				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "_GLIBCXX_FULLY_DYNAMIC_STRING=1";
 				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/opt/local/lib/mysql5/mysql,
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../Downloads/RakNet-3.81/Source\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -451,11 +542,23 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../RakNetFramework/build/Debug\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "_GLIBCXX_FULLY_DYNAMIC_STRING=1";
 				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/opt/local/lib/mysql5/mysql,
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../Downloads/RakNet-3.81/Source\"";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -474,10 +577,16 @@
 				COPY_PHASE_STRIP = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_TREAT_NONCONFORMANT_CODE_ERRORS_AS_WARNINGS = YES;
 				GCC_VERSION = "";
 				GCC_WARN_PEDANTIC = YES;
-				HEADER_SEARCH_PATHS = "./**";
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/mysql/include//**",
+					"/Users/erikandersson/Documents/Programming/mysql++/lib//**",
+					"/Users/erikandersson/Documents/Programming/RakNet/Source//**",
+					"./**",
+				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-Wall",
@@ -490,7 +599,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/mysql/include//**",
+					"/Users/erikandersson/Documents/Programming/mysql++/lib//**",
+					"/Users/erikandersson/Documents/Programming/RakNet/Source//**",
+					"./**",
+				);
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
