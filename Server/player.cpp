@@ -65,6 +65,11 @@ void Player::setState(inet::PlayerActionState state)
 	_state.state = state;
 }
 
+void Player::setCharacter(int32_t id)
+{
+	_member.character_id = id;
+}
+
 inet::id_type Player::getId()
 {
 	return _id;
@@ -98,11 +103,6 @@ float *Player::getVelocity()
 std::string Player::getUsername()
 {
 	return "USERNAMEFIXME";
-}
-
-std::string Player::getCharacter()
-{
-	return "CHARACTERFIXME";
 }
 
 inet::PlayerState Player::getState()

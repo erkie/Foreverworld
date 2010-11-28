@@ -26,13 +26,26 @@ namespace Gaem
 	
 	void AnimatedSprite::loadAnimation(const std::string &key, const std::string &path)
 	{
+		bool was_new = true;
+		if ( _animations[key] )
+		{
+			delete _animations[key];
+			_animations[key] = NULL;
+			was_new = false;
+		}
 		_animations[key] = new Gaem::Animation(path);
+		
+		// If we updated the current animation, update its pointer
+		if ( ! was_new && _current == key )
+		{
+			setAnimation(key, true);
+		}
 	}
 	
-	void AnimatedSprite::setAnimation(const std::string &key)
+	void AnimatedSprite::setAnimation(const std::string &key, bool force)
 	{
 		// We don't have to reset everything if it is already active
-		if ( _current == key ) return;
+		if ( _current == key && ! force ) return;
 		
 		_current_animation = _animations[key];
 		_current = key;

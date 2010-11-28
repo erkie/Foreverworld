@@ -80,6 +80,17 @@ namespace Gaem
 		_peer->Send((char*)&data, sizeof(data), HIGH_PRIORITY, RELIABLE_ORDERED, 0, _hostaddr, false);
 	}
 	
+	void NetworkManager::saveCharacter(User *user, int32_t id)
+	{
+		inet::CharacterUpdate mess;
+		mess.type = inet::MESS_CHARACTER_UPDATE;
+		mess.member.id = user->getId();
+		mess.member.username[0] = '\0';
+		mess.member.character_id = id;
+		
+		_peer->Send((char*)&mess, sizeof(mess), HIGH_PRIORITY, RELIABLE_ORDERED, 0, _hostaddr, false);
+	}
+	
 	void NetworkManager::event(Entities::Player *player)
 	{
 		// They be trollin'?
@@ -112,6 +123,11 @@ namespace Gaem
 	void NetworkManager::removePlayer(const inet::PlayerRemoved *player)
 	{
 		Gaem::Gaem::getInstance()->getEntityManager()->removePlayer(player->id);
+	}
+	
+	void NetworkManager::characterUpdated(const inet::LoggedInMemberData data)
+	{
+		Gaem::Gaem::getInstance()->getEntityManager()->updateCharacter(data.id, data.character_id);
 	}
 	
 	void NetworkManager::getUpdates()
@@ -201,14 +217,17 @@ namespace Gaem
 				
 				// Information about a character
 				case inet::MESS_CHARACTER_DATA: {
-					std::cout << "Got some character data\n";
-					
 					inet::CharacterData *data = (inet::CharacterData*)packet->data;
 					Gaem::Gaem::getInstance()->getEntityManager()->addCharacter(data->character);
 					} break;
 				
 				case inet::MESS_EVENT:
 					handleEvent((inet::EventUpdate*)packet->data);
+					break;
+				
+				// Someone update his/her character
+				case inet::MESS_CHARACTER_UPDATE:
+					characterUpdated(((inet::CharacterUpdate*)packet->data)->member);
 					break;
 				
 				// Failures

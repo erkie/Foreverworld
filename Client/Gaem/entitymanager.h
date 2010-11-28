@@ -12,6 +12,7 @@
 
 #include <list>
 #include <map>
+#include <vector>
 #include <SFML/Graphics.hpp>
 
 #include "Common/messages.h"
@@ -26,6 +27,9 @@ namespace Gaem
 {
 	class Entity;
 	
+	typedef std::map<int32_t, inet::Character> character_map;
+	typedef std::vector<inet::Character> character_vector;
+	
 	class EntityManager
 	{
 	protected:
@@ -34,10 +38,10 @@ namespace Gaem
 		entity_list _remove_list;
 		
 		typedef std::map<inet::id_type, Entities::Player*> player_map;
-		typedef std::map<int32_t, inet::Character> character_map;
 		
 		player_map _players;
 		character_map _characters;
+		character_vector _character_list;
 		
 		Entities::Player *_current_player;
 		Entities::World *_world;
@@ -55,9 +59,11 @@ namespace Gaem
 		void addPlayer(inet::id_type id, const inet::PlayerState player, const inet::LoggedInMemberData member);
 		void removePlayer(inet::id_type id);
 		void updatePlayer(inet::id_type, const inet::PlayerState state);
+		void updateCharacter(inet::id_type id, int32_t c_id);
 		
 		void addCharacter(inet::Character);
 		inet::Character getCharacter(int32_t id);
+		character_vector getCharacters();
 		
 		void sendUpdates();
 		

@@ -30,6 +30,8 @@ public:
 	inet::id_type registerPlayer(const std::string &username, const std::string &password, const std::string &email);
 	inet::id_type login(const std::string &username, const std::string &password);
 	
+	void setCharacter(inet::id_type u_id, int32_t c_id);
+	
 	inet::LoggedInMemberData loadMember(inet::id_type id);
 };
 

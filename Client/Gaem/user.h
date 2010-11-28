@@ -24,6 +24,8 @@ namespace Gaem
 		std::string _password;
 		std::string _email;
 		
+		inet::LoggedInMemberData _member;
+		
 		bool _is_logged_in;
 	public:
 		User();
@@ -43,8 +45,12 @@ namespace Gaem
 		std::string getEmail();
 		void getNetworkEmail(char o[101]);
 		
+		void setMember(inet::LoggedInMemberData);
+		inet::LoggedInMemberData getMember();
+		
 		void login(const std::string &username, const std::string &password);
 		void signup(const std::string &username, const std::string &password, const std::string &email);
+		void saveCharacter(int32_t id);
 		
 		void setIsLoggedIn(bool);
 		bool isLoggedIn();

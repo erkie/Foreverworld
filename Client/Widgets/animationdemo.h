@@ -21,6 +21,8 @@ namespace Widgets
 		Gaem::AnimatedSprite *_sprite;
 		float _scale;
 		
+		bool _show_frames;
+		
 		int _offset_x, _offset_y;
 		int _last_x, _last_y;
 	public:
@@ -28,6 +30,7 @@ namespace Widgets
 		~AnimationDemo();
 		
 		void setAnimation(const std::string &name);
+		void setShowFrames(bool);
 		
 		void setScale(float);
 		float getScale();

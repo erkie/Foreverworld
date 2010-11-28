@@ -45,6 +45,7 @@ namespace Gaem
 		
 		void addPlayer(const inet::PlayerAdded *);
 		void removePlayer(const inet::PlayerRemoved *player);
+		void characterUpdated(const inet::LoggedInMemberData);
 		
 		// An event, running, jumping, hitting, defending, anything involving the keyboard
 		void event(Entities::Player *player);
@@ -52,6 +53,7 @@ namespace Gaem
 		
 		void sendChatMessage();
 		void signup(User *);
+		void saveCharacter(User *, int32_t id);
 		
 		// Get all updates sent to me since the latest frame
 		void getUpdates();

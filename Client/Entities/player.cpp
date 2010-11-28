@@ -70,19 +70,7 @@ namespace Entities
 	{
 		init();
 		
-		_scale = character.scale;
-		_speed = character.speed;
-		_speed_up = character.up_speed;
-		_can_jump = character.can_jump;
-		_name = std::string(character.name);
-		
-		std::stringstream ss;
-		ss << character.id;
-		std::string the_id = ss.str();
-		
-		_sprite->loadAnimation("running", "resources/players/player_" + the_id + "_running/info.txt");
-		_sprite->loadAnimation("waiting", "resources/players/player_" + the_id + "_waiting/info.txt");
-		_sprite->loadAnimation("jumping", "resources/players/player_" + the_id + "_jumping/info.txt");
+		setCharacter(character);
 		
 		_sprite->setAnimation("waiting");
 		_sprite->setX(Gaem::Gaem::getInstance()->getWidth()/2 - _sprite->getWidth()/2);
@@ -93,6 +81,11 @@ namespace Entities
 	Player::~Player()
 	{
 		delete _sprite;
+	}
+	
+	Gaem::User *Player::getUser()
+	{
+		return _user;
 	}
 	
 	void Player::setUser(Gaem::User *user)
@@ -113,6 +106,23 @@ namespace Entities
 		float factor = 0.3 * (world_height - depth) / world_height;
 		float scale = (1 - factor) * _scale;
 		_sprite->getSprite()->SetScale(sf::Vector2f(scale, scale));
+	}
+	
+	void Player::setCharacter(const inet::Character &character)
+	{
+		_scale = character.scale;
+		_speed = character.speed;
+		_speed_up = character.up_speed;
+		_can_jump = character.can_jump;
+		_name = std::string(character.name);
+		
+		std::stringstream ss;
+		ss << character.id;
+		std::string the_id = ss.str();
+		
+		_sprite->loadAnimation("running", "resources/players/player_" + the_id + "_running/info.txt");
+		_sprite->loadAnimation("waiting", "resources/players/player_" + the_id + "_waiting/info.txt");
+		_sprite->loadAnimation("jumping", "resources/players/player_" + the_id + "_jumping/info.txt");
 	}
 	
 	bool Player::isActivePlayer()

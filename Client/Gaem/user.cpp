@@ -97,6 +97,16 @@ namespace Gaem
 		o[100] = '\0';
 	}
 
+	void User::setMember(inet::LoggedInMemberData data)
+	{
+		_member = data;
+	}
+	
+	inet::LoggedInMemberData User::getMember()
+	{
+		return _member;
+	}
+
 	void User::login(const std::string &username, const std::string &password)
 	{
 		setUsername(username);
@@ -112,6 +122,11 @@ namespace Gaem
 		setEmail(email);
 		
 		Gaem::Gaem::getInstance()->getNetworkManager()->signup(this);
+	}
+	
+	void User::saveCharacter(int32_t id)
+	{
+		Gaem::Gaem::getInstance()->getNetworkManager()->saveCharacter(this, id);
 	}
 	
 	void User::setIsLoggedIn(bool is)

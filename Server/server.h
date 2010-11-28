@@ -47,6 +47,7 @@ class Server
 	// GUID:s are used because the user may have already disconnected when it is time to update
 	std::queue<RakNet::RakNetGUID> _removed_players;
 	std::queue<RakNet::RakNetGUID> _updated_players;
+	std::queue<RakNet::RakNetGUID> _character_updates;
 	
 	RakNet::RakPeerInterface *_peer;
 	

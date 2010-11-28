@@ -21,7 +21,7 @@
 
 namespace Widgets
 {
-	AnimationDemo::AnimationDemo(): _sprite(NULL), _scale(1.0), _offset_x(0), _offset_y(0)
+	AnimationDemo::AnimationDemo(): _sprite(NULL), _scale(1.0), _offset_x(0), _offset_y(0), _show_frames(true)
 	{
 		addMouseListener(this);
 	}
@@ -41,6 +41,11 @@ namespace Widgets
 		_sprite->getSprite()->SetScale(_scale, _scale);
 		_sprite->loadAnimation("my", name);
 		_sprite->setAnimation("my");
+	}
+	
+	void AnimationDemo::setShowFrames(bool show)
+	{
+		_show_frames = show;
 	}
 	
 	void AnimationDemo::logic()
@@ -156,7 +161,7 @@ namespace Widgets
 		graphics->setFont(getFont());
 		graphics->setColor(getBaseColor());
 		
-		if ( _sprite )
+		if ( _sprite && _show_frames )
 		{
 			std::stringstream num;
 			num << "#" << _sprite->getAnimation()->getFrameNum();

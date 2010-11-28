@@ -10,7 +10,9 @@
 #ifndef __MENUS_DASHBOARD_H__
 #define __MENUS_DASHBOARD_H__
 
+#include <vector>
 #include <guichan/guichan.hpp>
+
 #include "Gaem/menumanager.h"
 
 namespace Menus
@@ -28,6 +30,8 @@ namespace Menus
 		void initStats();
 		void initSettings();
 		void initAbout();
+		
+		gcn::Container *makeContainer();
 	};
 }
 

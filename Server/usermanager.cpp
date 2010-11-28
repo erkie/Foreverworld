@@ -71,6 +71,17 @@ inet::id_type UserManager::login(const std::string &username, const std::string 
 	return res[0][0];
 }
 
+void UserManager::setCharacter(inet::id_type u_id, int32_t c_id)
+{
+	mysqlpp::Query query = _db_conn->query();
+	query << "UPDATE players SET character_id = "
+		<< mysqlpp::quote << c_id
+		<< " WHERE id = "
+		<< mysqlpp::quote << u_id << " LIMIT 1";
+	
+	query.execute();
+}
+
 inet::LoggedInMemberData UserManager::loadMember(inet::id_type id)
 {
 	mysqlpp::Query query = _db_conn->query();

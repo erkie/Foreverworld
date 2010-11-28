@@ -107,14 +107,18 @@ namespace Gaem
 		// This is me (the player)
 		if ( Gaem::Gaem::getInstance()->getUser()->getId() == id )
 		{
+			User *user = Gaem::Gaem::getInstance()->getUser();
 			setCurrentPlayer(p);
-			Gaem::Gaem::getInstance()->getUser()->setUsername(member.username);
-			p->setUser(Gaem::Gaem::getInstance()->getUser());
+			
+			user->setUsername(member.username);
+			user->setMember(member);
+			p->setUser(user);
 		}
 		else
 		{
 			User *user = new User;
 			user->setUsername(std::string(member.username));
+			user->setMember(member);
 			p->setUser(user);
 		}
 	}
@@ -143,14 +147,35 @@ namespace Gaem
 		player->setState(state.state);
 	}
 	
+	void EntityManager::updateCharacter(inet::id_type id, int32_t c_id)
+	{
+		Entities::Player *player = _players[id];
+		if ( ! player )
+		{
+			std::cout << "This player did not exist (EntityManager::updateCharacter)\n";
+			return;
+		}
+		inet::LoggedInMemberData member = player->getUser()->getMember();
+		member.character_id = c_id;
+		player->getUser()->setMember(member);
+		
+		player->setCharacter(_characters[c_id]);
+	}
+	
 	void EntityManager::addCharacter(inet::Character character)
 	{
 		_characters[character.id] = character;
+		_character_list.push_back(character);
 	}
 	
 	inet::Character EntityManager::getCharacter(int32_t id)
 	{
 		return _characters[id];
+	}
+	
+	character_vector EntityManager::getCharacters()
+	{
+		return _character_list;
 	}
 	
 	void EntityManager::sendUpdates()

@@ -39,6 +39,7 @@ public:
 	void setElevation(float);
 	void setVelocity(float, float);
 	void setState(inet::PlayerActionState);
+	void setCharacter(int32_t);
 	
 	inet::id_type getId();
 	int *getDir();
@@ -46,7 +47,6 @@ public:
 	float getDepth();
 	float getElevation();
 	float *getVelocity();
-	std::string getCharacter();
 	std::string getUsername();
 	
 	inet::PlayerState getState();

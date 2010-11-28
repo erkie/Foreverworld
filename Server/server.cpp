@@ -104,6 +104,8 @@ void Server::run()
 						mess.character.can_jump = c.can_jump;
 						mess.character.speed = c.speed;
 						mess.character.up_speed = c.up_speed;
+						memset(mess.character.name, 0, 21);
+						memcpy(mess.character.name, c.name.c_str(), 20);
 						
 						_peer->Send((char *)&mess, sizeof(mess), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 					}
@@ -210,8 +212,24 @@ void Server::run()
 					_updated_players.push(packet->guid);
 				} break;
 				
+				case inet::MESS_CHARACTER_UPDATE: {
+					inet::CharacterUpdate *mess = (inet::CharacterUpdate*)packet->data;
+					
+					inet::id_type id = _player_id_table[packet->guid];
+					if ( ! id )
+					{
+						std::cout << "A user who is not connected wants to update his character. " << packet->guid.ToString() << '\n';
+						break;
+					}
+					
+					_user_manager->setCharacter(id, mess->member.character_id);
+					_players[id]->setCharacter(mess->member.character_id);
+					
+					_character_updates.push(packet->guid);
+				} break;
+				
 				default:
-					std::cout << "Wat? " << packet->data[0] << "\n";
+					std::cout << "Wat? " << (char)packet->data[0] << "\n";
 				break;
 			}
 		}
@@ -273,6 +291,23 @@ void Server::run()
 			ev.id = player->getId();
 			
 			_peer->Send((char *)&ev, sizeof(ev), MEDIUM_PRIORITY, UNRELIABLE, 0, guid, true);
+		}
+		
+		// Send updates about updated characters
+		while ( ! _character_updates.empty() )
+		{
+			RakNet::RakNetGUID guid = _character_updates.front();
+			Player *player = getPlayerByGUID(guid);
+			_character_updates.pop();
+			
+			if ( ! player )
+				continue;
+			
+			inet::CharacterUpdate mess;
+			mess.type = inet::MESS_CHARACTER_UPDATE;
+			mess.member = player->getMember();
+			
+			_peer->Send((char *)&mess, sizeof(mess), MEDIUM_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
 		}
 		
 		sf::Sleep(0.001f);

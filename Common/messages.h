@@ -32,7 +32,8 @@ namespace inet
 		MESS_REGISTER_STATUS,
 		MESS_LOGIN_STATUS,
 		MESS_VERSION_CHECK,
-		MESS_CHARACTER_DATA
+		MESS_CHARACTER_DATA,
+		MESS_CHARACTER_UPDATE
 	};
 	
 	enum Event
@@ -184,6 +185,12 @@ namespace inet
 	struct SuccessfullyRegistered: Packet
 	{
 		bool succeeded;
+	};
+	
+	// Update character
+	struct CharacterUpdate: Packet
+	{
+		LoggedInMemberData member;
 	};
 #pragma pack(pop)
 	

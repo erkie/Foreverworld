@@ -53,20 +53,21 @@ namespace Entities
 		Player(const inet::Character &);
 		~Player();
 		
-		void setUser(Gaem::User *);
-		
 		void setDepth(float);
 		float getDepth();
 		
 		int getLeft();
 		int getRight();
 		float getElevation();
+		Gaem::User *getUser();
 		
+		void setUser(Gaem::User *);
 		void setDir(int, int);
 		void setLeft(int);
 		void setElevation(float);
 		void setVelocity(float, float);
 		void setState(inet::PlayerActionState);
+		void setCharacter(const inet::Character &);
 		
 		bool isActivePlayer();
 		
