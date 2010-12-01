@@ -29,9 +29,11 @@ std::vector<T> string_split(T str)
 	
 	copy(istream_iterator<T, C, char_traits<C> >(iss), // I DO NOT GET THE ERROR HERE
 		 istream_iterator<T, C, char_traits<C> >(),
-		 back_inserter< vector<T> >(tokens));
+		 back_inserter<vector<T> >(tokens));
 	return tokens;
 }
+
+void str_replace(std::string& value, std::string const& search,std::string const& replace);
 
 bool file_exists(const std::string &f);
 std::string trim(const std::string &str, const std::string &chars = " \n\r\t");

@@ -32,6 +32,9 @@ namespace Gaem
 		bool _is_connected;
 		inet::id_type _id;
 		
+		std::string _latest_news_text;
+		std::string _latest_news_posted;
+		
 		void sendPacket(char *data, std::size_t size);
 	public:
 		NetworkManager();
@@ -57,6 +60,10 @@ namespace Gaem
 		
 		// Get all updates sent to me since the latest frame
 		void getUpdates();
+		
+		void setNews(std::string posted, std::string text);
+		std::string getNewsText();
+		std::string getNewsPosted();
 		
 		void sendUpdate();
 		

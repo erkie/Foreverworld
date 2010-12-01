@@ -11,6 +11,7 @@
 #include "Gaem/user.h"
 #include "Gaem/menumanager.h"
 #include "Gaem/entitymanager.h"
+#include "Gaem/networkmanager.h"
 
 #include "Common/messages.h"
 
@@ -122,6 +123,9 @@ namespace Menus
 		DashboardSelectModel *model = static_cast<DashboardSelectModel*>(listbox->getListModel());
 		listbox->setSelected(model->getIndexById(Gaem::Gaem::getInstance()->getUser()->getMember().character_id));
 		
+		Widgets::FixedLabel *news = static_cast<Widgets::FixedLabel*>(get("news_box"));
+		news->setCaption(Gaem::Gaem::getInstance()->getNetworkManager()->getNewsText());
+		news->adjustHeight();
 	}
 	
 	void Dashboard::initHome()
@@ -130,7 +134,7 @@ namespace Menus
 		
 		int field_width = container->getChildrenArea().width - 10 * 2;
 			
-		Widgets::FixedLabel *intro = newWidget<Widgets::FixedLabel>("Welcome back! There is currently 59 players online. Have fun!");
+		Widgets::FixedLabel *intro = newWidget<Widgets::FixedLabel>("Welcome back!");
 		intro->setWidth(field_width);
 		intro->adjustHeight();
 		intro->setPosition(10, 10);
@@ -166,7 +170,7 @@ namespace Menus
 		button->addActionListener(newListener<DashboardSaveCharacter>());
 		
 		// News box
-		gcn::ScrollArea *newsbox = newWidget<gcn::ScrollArea>();
+		gcn::ScrollArea *newsbox = newNamedWidget<gcn::ScrollArea>("news_scroll");
 		newsbox->setX(10);
 		newsbox->setY(demo->getBottom() + 10);
 		newsbox->setWidth(field_width);
@@ -175,8 +179,8 @@ namespace Menus
 		newsbox->setHeight(container->getChildrenArea().height - newsbox->getBottom() - 10);
 		
 		// News
-		Widgets::FixedLabel *news = newWidget<Widgets::FixedLabel>();
-		news->setCaption("V1.12\nThe latest update contains a more stable server and helps synchronize the game much better.\n\nOh, and we have kittens.");
+		Widgets::FixedLabel *news = newNamedWidget<Widgets::FixedLabel>("news_box");
+		news->setCaption("hej");
 		news->setWidth(field_width - 2*20);
 		news->setX(10);
 		news->setY(10);
@@ -198,6 +202,9 @@ namespace Menus
 		gcn::Container *container = makeContainer();
 		
 		//int field_width = container->getChildrenArea().width - 10 * 2;
+		gcn::Label *label = newWidget<gcn::Label>("Not yet, sorry");
+		label->setPosition(10, 10);
+		container->add(label);
 		
 		_tabs->addTab("Statistics", container);
 	}
@@ -205,6 +212,10 @@ namespace Menus
 	void Dashboard::initSettings()
 	{
 		gcn::Container *container = makeContainer();
+		
+		gcn::Label *label = newWidget<gcn::Label>("*chirp chirp*");
+		label->setPosition(10, 10);
+		container->add(label);
 		
 		//int field_width = container->getChildrenArea().width - 10 * 2;
 		
@@ -214,6 +225,10 @@ namespace Menus
 	void Dashboard::initAbout()
 	{
 		gcn::Container *container = makeContainer();
+		
+		gcn::Label *label = newWidget<gcn::Label>("Guess again sweetheart.");
+		label->setPosition(10, 10);
+		container->add(label);
 		
 		//int field_width = container->getChildrenArea().width - 10 * 2;
 		

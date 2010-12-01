@@ -33,7 +33,8 @@ namespace inet
 		MESS_LOGIN_STATUS,
 		MESS_VERSION_CHECK,
 		MESS_CHARACTER_DATA,
-		MESS_CHARACTER_UPDATE
+		MESS_CHARACTER_UPDATE,
+		MESS_NEWS
 	};
 	
 	enum Event
@@ -191,6 +192,13 @@ namespace inet
 	struct CharacterUpdate: Packet
 	{
 		LoggedInMemberData member;
+	};
+	
+	// News message
+	struct News: Packet
+	{
+		char posted[20];
+		char text[1000];
 	};
 #pragma pack(pop)
 	

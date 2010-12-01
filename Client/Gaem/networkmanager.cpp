@@ -230,6 +230,12 @@ namespace Gaem
 					characterUpdated(((inet::CharacterUpdate*)packet->data)->member);
 					break;
 				
+				// Latest news update
+				case inet::MESS_NEWS: {
+					inet::News *news = (inet::News*)packet->data;
+					setNews(news->posted, news->text);
+					} break;
+				
 				// Failures
 				case ID_CONNECTION_ATTEMPT_FAILED:
 					std::cout << "Failed to connect to server\n";
@@ -251,6 +257,22 @@ namespace Gaem
 					break;
 			}
 		}
+	}
+	
+	void NetworkManager::setNews(std::string posted, std::string text)
+	{
+		_latest_news_text = text;
+		_latest_news_posted = posted;
+	}
+	
+	std::string NetworkManager::getNewsText()
+	{
+		return _latest_news_text;
+	}
+	
+	std::string NetworkManager::getNewsPosted()
+	{
+		return _latest_news_posted;
 	}
 	
 	bool NetworkManager::isConnected()

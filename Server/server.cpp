@@ -8,14 +8,12 @@
  */
 
 #include <iostream>
+#include <vector>
 #include <SFML/System.hpp>
 #include <mysql++.h>
 
 #include "RakString.h"
 #include "BitStream.h"
-
-#define MYSQLPP_SSQLS_NO_STATICS
-#include "types.h"
 
 #include "server.h"
 #include "player.h"
@@ -47,6 +45,9 @@ Server::Server(unsigned short port, unsigned int max_players): _port(port), _max
 	
 	_user_manager = new UserManager(_db_conn);
 	Player::user_manager = _user_manager;
+	
+	// Set the latest news' id to 0 to say it is the first run 
+	_latest_news.id = 0;
 }
 
 Server::~Server()
@@ -63,6 +64,27 @@ void Server::run()
 	RakNet::Packet *packet;
 	while (true)
 	{
+		// Do we need to ping the database?
+		// Otherwise MySQL will drop the connection every couple of hours
+		if ( _last_db_ping.GetElapsedTime() > 60 * 60 )
+		{
+			std::cout << "... Pinging database\n";
+			_last_db_ping.Reset();
+			_db_conn->ping();
+		}
+		
+		// Fetch the latest news every 15 minutes (or if it is the first run)
+		if ( _last_news_fetch.GetElapsedTime() > 60 * 15 || _latest_news.id == 0 )
+		{
+			std::cout << "... Fetching news\n";
+			_last_news_fetch.Reset();
+			mysqlpp::Query query = _db_conn->query("SELECT * FROM news ORDER BY id DESC LIMIT 1");
+			std::vector<sql::news> res;
+			query.storein(res);
+			
+			_latest_news = res[0];
+		}
+	
 		// Get new messages and handle them
 		
 		for ( packet = _peer->Receive(); packet; _peer->DeallocatePacket(packet), packet = _peer->Receive())
@@ -88,7 +110,7 @@ void Server::run()
 					std::cout << "Our connection request has been accepted\n";
 					break;
 				
-				case ID_NEW_INCOMING_CONNECTION:
+				case ID_NEW_INCOMING_CONNECTION: {
 					// an incoming connection
 					std::cout << "A connection is incoming\n";
 					
@@ -123,7 +145,17 @@ void Server::run()
 						
 						_peer->Send((char *)&mess, sizeof(mess), MEDIUM_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 					}
-					break;
+					
+					// Send the latest news to the user
+					inet::News mess;
+					mess.type = inet::MESS_NEWS;
+					memcpy(mess.posted, std::string(_latest_news.posted).c_str(), 19);
+					memcpy(mess.text, _latest_news.text.c_str(), 1000);
+					
+					mess.text[999] = mess.posted[19] = '\0';
+					
+					_peer->Send((char *)&mess, sizeof(mess), LOW_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
+					} break;
 				
 				case ID_NO_FREE_INCOMING_CONNECTIONS:
 					// full as hell

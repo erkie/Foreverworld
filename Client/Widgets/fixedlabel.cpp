@@ -33,21 +33,32 @@ namespace Widgets
 	{
 		typedef std::vector<std::string> wordlist;
 		
-		wordlist words = string_split<std::string, char>(mCaption);
+		std::string cap = mCaption;
+		str_replace(cap, "\n", " **__BREAK__** ");
+		
+		wordlist words = string_split<std::string, char>(cap);
 		std::stringstream current_row;
 		
 		int space_size = getFont()->getWidth(" ");
 		int current_width = 0;
 		int newlines = 1;
 		
-		_rows.empty();
+		_rows.clear();
 		
 		for (wordlist::iterator word = words.begin(); word != words.end(); word++)
 		{
 			int width = getFont()->getWidth(*word);
 			
 			// New row!
-			if ( current_width + width + space_size > getWidth() )
+			if ( (*word) == "**__BREAK__**" )
+			{
+				_rows.push_back(current_row.str());
+				current_row.str("");
+				
+				current_width = 0;
+				newlines++;
+			}
+			else if ( current_width + width + space_size > getWidth() )
 			{
 				_rows.push_back(current_row.str());
 				current_row.str("");
@@ -58,7 +69,7 @@ namespace Widgets
 			}
 			else
 			{
-				if ( word != words.begin() )
+				if ( word != words.begin() && current_row.str() != "" )
 					current_row << ' ';
 				current_row << *word;
 				current_width += width + space_size;

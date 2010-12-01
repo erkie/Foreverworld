@@ -31,6 +31,12 @@ namespace sql
 		mysqlpp::sql_int, speed,
 		mysqlpp::sql_int, up_speed
 	)
+	
+	sql_create_3(news, 1, 3,
+		mysqlpp::sql_int, id,
+		mysqlpp::sql_timestamp, posted,
+		mysqlpp::sql_text, text
+	)
 }
 
 #endif

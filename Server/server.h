@@ -14,6 +14,7 @@
 #include <queue>
 #include <vector>
 #include <mysql++.h>
+#include <SFML/System.hpp>
 
 #include "RakPeerInterface.h"
 #include "MessageIdentifiers.h"
@@ -23,10 +24,8 @@
 #include "usermanager.h"
 #include "charactermanager.h"
 
-namespace sql
-{
-	class character;
-}
+#define MYSQLPP_SSQLS_NO_STATICS
+#include "types.h"
 
 class Server
 {
@@ -34,6 +33,11 @@ class Server
 	unsigned int _max_players;
 	
 	unsigned long _current_id;
+	
+	sf::Clock _last_db_ping;
+	
+	sf::Clock _last_news_fetch;
+	sql::news _latest_news;
 	
 	typedef std::map<unsigned long, Player*> player_map;
 	
