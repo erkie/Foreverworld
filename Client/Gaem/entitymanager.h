@@ -21,6 +21,7 @@ namespace Entities
 {
 	class Player;
 	class World;
+	class Chat;
 }
 
 namespace Gaem
@@ -45,6 +46,7 @@ namespace Gaem
 		
 		Entities::Player *_current_player;
 		Entities::World *_world;
+		Entities::Chat *_chat;
 	public:
 		EntityManager();
 		void init();
@@ -60,6 +62,7 @@ namespace Gaem
 		void removePlayer(inet::id_type id);
 		void updatePlayer(inet::id_type, const inet::PlayerState state);
 		void updateCharacter(inet::id_type id, int32_t c_id);
+		std::string getUsernameById(inet::id_type id);
 		
 		void addCharacter(inet::Character);
 		inet::Character getCharacter(int32_t id);
@@ -72,6 +75,8 @@ namespace Gaem
 		
 		void setWorld(Entities::World *);
 		Entities::World *getWorld();
+		
+		Entities::Chat *getChat();
 	};
 }
 

@@ -28,6 +28,7 @@
 #include "Menus/developer.h"
 #include "Menus/alert.h"
 #include "Menus/loading.h"
+#include "Menus/chat.h"
 
 namespace Gaem
 {
@@ -107,6 +108,7 @@ namespace Gaem
 		_menu_manager->add("dashboard", new Menus::Dashboard());
 		_menu_manager->add("developer", new Menus::Developer());
 		_menu_manager->add("loading", new Menus::Loading());
+		_menu_manager->add("chat", new Menus::Chat());
 
 		// Show main menu
 		_menu_manager->show("main");
@@ -130,11 +132,19 @@ namespace Gaem
 				// Global events
 				
 				// Quit
-				if ( event.Type == sf::Event::Closed || (! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q) )
+				if ( event.Type == sf::Event::Closed )
 					return quit();
-
+				
+				// ... If I press Q
+				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Q && ! _menu_manager->hasMenus() )
+					return quit();
+				
+				// ... If I press Escape on home screen
+				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Escape && _menu_manager->getCurrentMenu() == "main" )
+					return quit();
+				
 				// Go into fullscreen mode
-				if ( ! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::F )
+				if ( ! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::F && false )
 				{
 					_config->set("window_fullscreen", "yes");
 					initWindow(-1, -1);

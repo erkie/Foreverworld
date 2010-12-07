@@ -29,7 +29,7 @@ namespace Gaem
 	// Gaem::Menu
 	//
 
-	Menu::Menu(): _manager(NULL), _root(NULL), _inited(false) {}
+	Menu::Menu(): _manager(NULL), _root(NULL), _inited(false), _name("") {}
 
 	Menu::~Menu()
 	{
@@ -56,8 +56,8 @@ namespace Gaem
 
 	void Menu::setActive()
 	{
-		show();
 		setRoot(_root);
+		show();
 	}
 
 	void Menu::setManager(MenuManager *manager)
@@ -74,6 +74,16 @@ namespace Gaem
 	{
 		_root = root;
 		_manager->getGui()->setTop(root);
+	}
+	
+	void Menu::setName(const std::string &name)
+	{
+		_name = name;
+	}
+	
+	std::string Menu::getName()
+	{
+		return _name;
 	}
 
 	gcn::Widget *Menu::getRoot()
@@ -125,6 +135,7 @@ namespace Gaem
 	void MenuManager::add(const std::string &id, Menu *menu)
 	{
 		menu->setManager(this);
+		menu->setName(id);
 		_menus[id] = menu;
 	}
 
@@ -219,6 +230,11 @@ namespace Gaem
 	bool MenuManager::hasMenus()
 	{
 		return _menu_queue.size() > 0;
+	}
+	
+	std::string MenuManager::getCurrentMenu()
+	{
+		return hasMenus() ? _menu_queue.top()->getName() : "";
 	}
 
 	gcn::Gui *MenuManager::getGui()

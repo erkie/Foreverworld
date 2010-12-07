@@ -46,6 +46,7 @@ namespace Gaem
 		gcn::Container *_root;
 		
 		bool _inited;
+		std::string _name;
 	public:
 		Menu();
 		~Menu();
@@ -59,6 +60,9 @@ namespace Gaem
 		void setRoot(gcn::Container *);
 		gcn::Widget *getRoot();
 		gcn::Widget *get(const std::string& key);
+		
+		void setName(const std::string &);
+		std::string getName();
 		
 		void centerRoot();
 		
@@ -149,6 +153,7 @@ namespace Gaem
 		void alert(const std::string &message);
 		
 		bool hasMenus();
+		std::string getCurrentMenu();
 		gcn::Gui *getGui();
 	};
 }

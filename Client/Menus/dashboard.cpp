@@ -134,7 +134,7 @@ namespace Menus
 		
 		int field_width = container->getChildrenArea().width - 10 * 2;
 			
-		Widgets::FixedLabel *intro = newWidget<Widgets::FixedLabel>("Welcome back!");
+		Widgets::FixedLabel *intro = newWidget<Widgets::FixedLabel>("Welcome back! Who do you want to play as today?");
 		intro->setWidth(field_width);
 		intro->adjustHeight();
 		intro->setPosition(10, 10);

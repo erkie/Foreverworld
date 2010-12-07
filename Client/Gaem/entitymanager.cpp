@@ -21,6 +21,7 @@
 #include "Entities/world.h"
 #include "Entities/player.h"
 #include "Entities/connectionstatus.h"
+#include "Entities/chat.h"
 
 namespace Gaem
 {
@@ -37,6 +38,9 @@ namespace Gaem
 		setWorld(world);
 		
 		add(new Entities::ConnectionStatus);
+		
+		_chat = new Entities::Chat();
+		add(_chat);
 	}
 	
 	void EntityManager::add(Entity *entity)
@@ -175,6 +179,13 @@ namespace Gaem
 		return _character_list;
 	}
 	
+	std::string EntityManager::getUsernameById(inet::id_type id)
+	{
+		if ( ! _players[id] )
+			return "<unknown>";
+		return _players[id]->getUser()->getUsername();
+	}
+	
 	void EntityManager::sendUpdates()
 	{
 		NetworkManager *network = Gaem::Gaem::getInstance()->getNetworkManager();
@@ -199,5 +210,10 @@ namespace Gaem
 	Entities::World *EntityManager::getWorld()
 	{
 		return _world;
+	}
+	
+	Entities::Chat *EntityManager::getChat()
+	{
+		return _chat;
 	}
 }

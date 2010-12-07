@@ -33,6 +33,7 @@ namespace Menus
 		
 		void init();
 		void deinit();
+		void show();
 	};
 }
 

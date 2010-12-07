@@ -34,7 +34,8 @@ namespace inet
 		MESS_VERSION_CHECK,
 		MESS_CHARACTER_DATA,
 		MESS_CHARACTER_UPDATE,
-		MESS_NEWS
+		MESS_NEWS,
+		MESS_CHAT_MESSAGE
 	};
 	
 	enum Event
@@ -199,6 +200,13 @@ namespace inet
 	{
 		char posted[20];
 		char text[1000];
+	};
+	
+	// Chat message, both ingoing and outgoing
+	struct ChatMessage: Packet
+	{
+		char message[300];
+		id_type user_id;
 	};
 #pragma pack(pop)
 	

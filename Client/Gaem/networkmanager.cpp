@@ -24,6 +24,7 @@
 #include "Gaem/menumanager.h"
 
 #include "Entities/player.h"
+#include "Entities/chat.h"
 
 #include "Gaem/networkmanager.h"
 
@@ -89,6 +90,23 @@ namespace Gaem
 		mess.member.character_id = id;
 		
 		_peer->Send((char*)&mess, sizeof(mess), HIGH_PRIORITY, RELIABLE_ORDERED, 0, _hostaddr, false);
+	}
+	
+	void NetworkManager::sendChatMessage(const std::string &message)
+	{
+		inet::ChatMessage mess;
+		mess.type = inet::MESS_CHAT_MESSAGE;
+		strcpy(mess.message, message.c_str());
+		mess.message[sizeof(mess.message)-1] = '\0';
+		mess.user_id = Gaem::Gaem::getInstance()->getUser()->getId();
+		
+		_peer->Send((char*)&mess, sizeof(mess), MEDIUM_PRIORITY, RELIABLE_ORDERED, 0, _hostaddr, false);
+	}
+	
+	void NetworkManager::handleChatMessage(inet::ChatMessage *mess)
+	{
+		std::string username = Gaem::getInstance()->getEntityManager()->getUsernameById(mess->user_id);
+		Gaem::getInstance()->getEntityManager()->getChat()->addMessage(username, mess->message);
 	}
 	
 	void NetworkManager::event(Entities::Player *player)
@@ -233,6 +251,12 @@ namespace Gaem
 				case inet::MESS_NEWS: {
 					inet::News *news = (inet::News*)packet->data;
 					setNews(news->posted, news->text);
+					} break;
+				
+				// A chat message appeared!
+				case inet::MESS_CHAT_MESSAGE: {
+					inet::ChatMessage *mess = (inet::ChatMessage*)packet->data;
+					handleChatMessage(mess);
 					} break;
 				
 				// Failures
