@@ -16,6 +16,7 @@
 
 #include "Gaem/entity.h"
 #include "Gaem/sprite.h"
+#include "Gaem/lazysprite.h"
 
 namespace Entities
 {
@@ -23,7 +24,12 @@ namespace Entities
 	{
 		struct Layer {
 			float factor;
-			Gaem::Sprite *sprite;
+			int size;
+			int width;
+			int height;
+			int height_offset;
+			int last_width;
+			Gaem::LazySprite *sprites;
 		};
 		
 		typedef std::list<Layer*> layer_list;
@@ -31,11 +37,15 @@ namespace Entities
 		
 		int _scroll_left;
 		int _field_height;
+		int _field_width;
+		
+		int _last_scroll_left;
 	public:
 		World();
 		~World();
 		
 		void loadLayers(const std::string &path);
+		void readPieces(const std::string &path, Layer *);
 		
 		// Returns the width of the playing field
 		int getWidth();

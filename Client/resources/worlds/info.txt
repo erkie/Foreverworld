@@ -1,4 +1,0 @@
-resources/worlds/
-0.0 sky.png
-0.2 mountains.png
-1.0 front.png

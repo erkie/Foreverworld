@@ -172,8 +172,6 @@ namespace Gaem
 					_entity_manager->handleEvent(event);
 			}
 
-			_app.Clear(sf::Color::White);
-
 			// Logic for menus
 			// Draw sprites
 			_entity_manager->logic();

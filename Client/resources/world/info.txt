@@ -1,0 +1,4 @@
+0.0 2880x792 300 sky/
+0.2 2000x337 300 mountains/
+0.5 5000x384 150 woods/
+1.0 10000x556 0 foreground/

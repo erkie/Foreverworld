@@ -57,14 +57,11 @@ namespace Gaem
 	{
 		if ( _remove_list.size() )
 		{
-			std::cout << "Before " << _remove_list.size() << " total " << _entities.size();
 			for ( entity_list::iterator iter = _remove_list.begin(); iter != _remove_list.end(); iter++ )
 			{
 				remove(*iter);
 			}
 			_remove_list.erase(_remove_list.begin(), _remove_list.end());
-			
-			std::cout << " after " << _remove_list.size() << " total " << _entities.size() << " Removing done\n";
 		}
 	
 		for ( entity_list::iterator iter = _entities.begin(); iter != _entities.end(); iter++ )

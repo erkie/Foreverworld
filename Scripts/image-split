@@ -1,0 +1,51 @@
+#!/usr/bin/php
+<?php
+$width = 100;
+$height = 100;
+
+if ( $_SERVER['argc'] != 3 )
+{
+	printf("Usage: %s <file-to-split> <chunk-width>" . PHP_EOL, $_SERVER['argv'][0]);
+	exit;
+}
+
+$IMG = $_SERVER['argv'][1];
+$NAME = current(explode('.', $IMG));
+$width = (int)$_SERVER['argv'][2];
+
+$source = imagecreatefrompng( $IMG );
+$source_width = imagesx( $source );
+$source_height = imagesy( $source );
+
+$height = $source_height;
+
+for( $col = 0; $col < $source_width / $width; $col++)
+{
+	for( $row = 0; $row < $source_height / $height; $row++)
+	{
+		$fn = sprintf( "%s-%02d.png", $NAME, $col);
+		
+		echo "$fn\n";
+		
+		$width_left = $source_width - $width * $col;
+		if ( $width_left < $width )
+		{
+			$w = $width_left;
+		}
+		else
+		{
+			$w = $width;
+		}
+		
+		$im = @imagecreatetruecolor( $w, $height );
+		imagealphablending($im, false);
+		imagesavealpha($im, true);
+		imagecopyresized( $im, $source, 0, 0,
+			$col * $width, $row * $height, $width, $height,
+			$width, $height );
+		imagepng( $im, $fn );
+		imagedestroy( $im );
+	}
+}
+
+printf("Done. Total width %dpx\n", $source_width);

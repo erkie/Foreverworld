@@ -211,7 +211,6 @@ namespace Gaem
 				
 				// A player has disconnected/left
 				case inet::MESS_REMOVED_PLAYER:
-					std::cout << "A player has left\n";
 					removePlayer((inet::PlayerRemoved*)packet->data);
 					break;
 				
