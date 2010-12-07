@@ -23,7 +23,7 @@ namespace Entities
 {
 	bool Chat::removeOld(message_type *mess)
 	{
-		return mess->received.GetElapsedTime() > MESSAGE_TIME;
+		return mess == NULL || mess->received.GetElapsedTime() > MESSAGE_TIME;
 	}
 
 	Chat::Chat()
@@ -44,6 +44,13 @@ namespace Entities
 	void Chat::logic()
 	{
 		// Remove old messages
+		for ( message_list::iterator iter = _messages.begin(); iter != _messages.end(); ++iter )
+			if ( removeOld(*iter) )
+			{
+				delete *iter;
+				(*iter) = NULL;
+			}
+		
 		_messages.erase(std::remove_if(_messages.begin(), _messages.end(), removeOld), _messages.end());
 	}
 	
