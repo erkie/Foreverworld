@@ -1,0 +1,3 @@
+file: resources/players/maarn/maarn_walking/roll.png
+width: 81
+frame time: 0.07

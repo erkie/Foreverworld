@@ -29,6 +29,7 @@ namespace Gaem
 		bool _playing;
 		
 		float _last_time;
+		bool _has_run;
 	public:
 		Animation(const std::string &path);
 		void load();

@@ -1,0 +1,3 @@
+file: resources/players/warbird/warbird_jumping/roll.png
+width: 178
+frame time: 0.07

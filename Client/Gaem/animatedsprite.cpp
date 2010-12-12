@@ -62,6 +62,11 @@ namespace Gaem
 		return _current_animation;
 	}
 	
+	Animation *AnimatedSprite::getAnimtion(const std::string &key)
+	{
+		return _animations[key];
+	}
+	
 	void AnimatedSprite::step()
 	{
 		_current_animation->step();

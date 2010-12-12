@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 #include "Gaem/gaem.h"
 #include "Common/messages.h"
@@ -15,7 +16,9 @@ int main(int argc, char **argv)
 	}
 	catch (Gaem::NonFatalException e)
 	{
-		game->errorMain(e.getMessage());
+		std::stringstream ss;
+		ss << "(" << e.getFilename() << " " << e.getLine() << ")";
+		game->errorMain(e.getMessage() + " " + ss.str());
 	}
 	catch (Gaem::Exception e)
 	{

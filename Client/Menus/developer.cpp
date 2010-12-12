@@ -8,6 +8,7 @@
  */
 
 #include <algorithm>
+#include <vector>
 #include <guichan/guichan.hpp>
 
 #include "Gaem/gaem.h"
@@ -46,20 +47,41 @@ namespace Menus
 	{
 	public:
 		file_list _files;
+		std::vector<std::string> _info_txts;
 
 		bool operator()(const std::string &name)
 		{
 			return !file_exists("resources/players/" + name + "/info.txt");
 		}
 
-		DevAnimationModel(): gcn::ListModel()
+		void reload()
 		{
-			list_files("resources/players", _files);
-			_files.erase(std::remove_if(_files.begin(), _files.end(), *this), _files.end());
+			// Get all animations
+			Gaem::character_vector characters = Gaem::Gaem::getInstance()->getEntityManager()->getCharacters();
+			for ( Gaem::character_vector::iterator iter = characters.begin(); iter != characters.end(); ++iter )
+			{
+				// List animtions in character-folder
+				file_list files;
+				list_files("resources/players/" + std::string((*iter).slug) + "/", files);
+				
+				for ( file_list::iterator i = files.begin(); i != files.end(); ++i )
+					_info_txts.push_back(std::string((*iter).slug) + "/" + (*i));
+			}
 		}
 
-		std::string getElementAt(int i) { if ( i < 0 || i >= (int)_files.size() ) return ""; return _files[i]; }
-		int getNumberOfElements() { return _files.size(); }
+		DevAnimationModel(): gcn::ListModel()
+		{
+			reload();
+		}
+
+		std::string getElementAt(int i)
+		{
+			if ( i < 0 || i >= (int)_info_txts.size() )
+				return "";
+			return _info_txts[i];
+		}
+		
+		int getNumberOfElements() { return _info_txts.size(); }
 	};
 
 	// Change the animation demo when clicked the list
@@ -169,21 +191,31 @@ namespace Menus
 	class DevPlayerModel: public gcn::ListModel
 	{
 	public:
-		file_list _files;
+		DevPlayerModel(): gcn::ListModel() {}
 		
-		bool operator()(const std::string &name)
+		std::string getElementAt(int i)
 		{
-			return name.substr(name.length() - 4, name.length()) != ".txt";
+			return Gaem::Gaem::getInstance()->getEntityManager()->getCharacters()[i].name;
 		}
 		
-		DevPlayerModel(): gcn::ListModel()
+		inet::Character getCharacterAt(int i)
 		{
-			list_files("resources/players", _files);
-			_files.erase(std::remove_if(_files.begin(), _files.end(), *this), _files.end());
+			return Gaem::Gaem::getInstance()->getEntityManager()->getCharacters()[i];
 		}
 		
-		std::string getElementAt(int i) { if ( i < 0 || i >= (int)_files.size() ) return ""; return _files[i]; }
-		int getNumberOfElements() { return _files.size(); }
+		int getIndexById(int32_t id)
+		{
+			Gaem::character_vector v = Gaem::Gaem::getInstance()->getEntityManager()->getCharacters();
+			int i = 0;
+			for ( Gaem::character_vector::iterator iter = v.begin(); iter != v.end(); iter++, i++ )
+			{
+				if ( (*iter).id == id )
+					return i;
+			}
+			return -1;
+		}
+		
+		int getNumberOfElements() { return Gaem::Gaem::getInstance()->getEntityManager()->getCharacters().size(); }
 	};
 
 	// Change selected player when clicked the list
@@ -199,16 +231,23 @@ namespace Menus
 			if ( selected == "" )
 				return;
 			
-			Gaem::Config config("resources/players/" + selected);
+			inet::Character character = static_cast<DevPlayerModel*>(list->getListModel())->getCharacterAt(index);
+			
+			std::stringstream sscale, scan_jump, sspeed, sup_speed;
+			sscale << character.scale;
+			scan_jump << character.can_jump;
+			sspeed << character.speed;
+			sup_speed << character.up_speed << " px/sec";
+			
 			
 			Widgets::InformationTable *table = static_cast<Widgets::InformationTable*>(Developer::instance->get("player_info"));
-			table->setRow("Name", config.get("name"));
-			table->setRow("Scale", config.get("scale"));
-			table->setRow("Can jump?", config.get("can jump"));
-			table->setRow("Speed", config.get("speed") + " px/sec");
-			table->setRow("Up speed", config.get("up speed") + " px/sec");
+			table->setRow("Name", character.name);
+			table->setRow("Scale", sscale.str());
+			table->setRow("Can jump?", scan_jump.str());
+			table->setRow("Speed", sspeed.str());
+			table->setRow("Up speed", sup_speed.str());
 			
-			Developer::instance->setCurrentPlayer("resources/players/" + selected);
+			Developer::instance->setCurrentPlayer("resources/players/" + std::string(character.slug) + "/");
 		}
 	};
 	
@@ -275,6 +314,7 @@ namespace Menus
 	void Developer::show()
 	{
 		centerRoot();
+		static_cast<DevAnimationModel*>(_model)->reload();
 	}
 
 	void Developer::initHome()

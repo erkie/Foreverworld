@@ -57,6 +57,8 @@ namespace Entities
 		float getDepth();
 		
 		int getLeft();
+		
+		// Not really right
 		int getRight();
 		float getElevation();
 		Gaem::User *getUser();

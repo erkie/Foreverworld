@@ -1,0 +1,3 @@
+file: resources/players/warbird/warbird_waiting/1.png
+width: 129
+frame time: 0.07
