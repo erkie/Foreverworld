@@ -52,6 +52,7 @@ class Server
 	std::queue<RakNet::RakNetGUID> _removed_players;
 	std::queue<RakNet::RakNetGUID> _updated_players;
 	std::queue<RakNet::RakNetGUID> _character_updates;
+	std::queue<inet::ChatMessage> _chat_messages;
 	
 	RakNet::RakPeerInterface *_peer;
 	

@@ -260,6 +260,20 @@ void Server::run()
 					_character_updates.push(packet->guid);
 				} break;
 				
+				case inet::MESS_CHAT_MESSAGE: {
+					inet::ChatMessage *mess = (inet::ChatMessage*)packet->data;
+					
+					inet::id_type id = _player_id_table[packet->guid];
+					if ( ! id )
+					{
+						std::cout << "A user who is not connected whats to send a chat message. " << packet->guid.ToString() << "\n";
+						break;
+					}
+					
+					mess->user_id = id;
+					_chat_messages.push(*mess);
+				} break;
+				
 				default:
 					std::cout << "Wat? " << (char)packet->data[0] << "\n";
 				break;
@@ -340,6 +354,13 @@ void Server::run()
 			mess.member = player->getMember();
 			
 			_peer->Send((char *)&mess, sizeof(mess), MEDIUM_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
+		}
+		
+		// Send new chat messages, just echo them out to everybody
+		while ( ! _chat_messages.empty() )
+		{
+			_peer->Send((char *)&(_chat_messages.front()), sizeof(inet::ChatMessage), MEDIUM_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true);
+			_chat_messages.pop();
 		}
 		
 		sf::Sleep(0.001f);

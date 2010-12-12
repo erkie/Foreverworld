@@ -54,12 +54,16 @@ namespace Gaem
 		void event(Entities::Player *player);
 		void handleEvent(inet::EventUpdate *);
 		
-		void sendChatMessage();
+		void sendChatMessage(const std::string &);
+		void handleChatMessage(inet::ChatMessage *);
+		
 		void signup(User *);
 		void saveCharacter(User *, int32_t id);
 		
 		// Get all updates sent to me since the latest frame
 		void getUpdates();
+		
+		
 		
 		void setNews(std::string posted, std::string text);
 		std::string getNewsText();

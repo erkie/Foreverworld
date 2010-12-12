@@ -23,16 +23,30 @@
 
 namespace Menus
 {
-	class MainLoginSubmit: public gcn::ActionListener, public Gaem::Listener
+	class MainLoginSubmit: public gcn::ActionListener, public gcn::KeyListener, public Gaem::Listener
 	{
+		void keyPressed(gcn::KeyEvent &event)
+		{
+			if ( event.getKey() == gcn::Key::ENTER )
+				send();
+		}
+	
 		void action(const gcn::ActionEvent &event)
 		{
-			Gaem::Gaem::getInstance()->getMenuManager()->showLoading("Sending the credentials over an unsecure connection, please wait.");
-			
+			send();
+		}
+		
+		void send()
+		{
 			std::string username, password;
 			username = static_cast<gcn::TextField*>(Main::instance->get("login_username"))->getText();
 			password = static_cast<Widgets::PasswordField*>(Main::instance->get("login_password"))->getText();
-			Gaem::Gaem::getInstance()->getUser()->login(username, password);
+			
+			if ( username != "" && password != "" )
+			{
+				Gaem::Gaem::getInstance()->getMenuManager()->showLoading("Sending the credentials over an unsecure connection, please wait.");	
+				Gaem::Gaem::getInstance()->getUser()->login(username, password);
+			}
 		}
 	};
 	
@@ -44,10 +58,21 @@ namespace Menus
 		}
 	};
 	
-	class MainSignupSubmit: public gcn::ActionListener, public Gaem::Listener
+	class MainSignupSubmit: public gcn::ActionListener, public gcn::KeyListener, public Gaem::Listener
 	{
+		void keyPressed(gcn::KeyEvent &event)
+		{
+			if ( event.getKey() == gcn::Key::ENTER )
+				send();
+		}
+		
 		void action(const gcn::ActionEvent &event)
-		{	
+		{
+			send();
+		}
+		
+		void send()
+		{
 			std::string username, password, password2, email;
 			username = static_cast<gcn::TextField*>(Main::instance->get("reg_username"))->getText();
 			password = static_cast<Widgets::PasswordField*>(Main::instance->get("reg_password"))->getText();
@@ -75,7 +100,7 @@ namespace Menus
 	{
 		void action(const gcn::ActionEvent &event)
 		{
-			system("open http://trololololololololololo.com/");
+			Gaem::Gaem::getInstance()->getMenuManager()->alert("Trolololololol");
 		}
 	};
 	
@@ -139,7 +164,10 @@ namespace Menus
 		button->setX(login_container->getWidth() - button->getWidth() - 10);
 		button->setY(login_container->getHeight() - button->getHeight() - 10);
 		
-		button->addActionListener(newListener<MainLoginSubmit>());
+		MainLoginSubmit *submit_listener = newListener<MainLoginSubmit>();
+		button->addActionListener(submit_listener);
+		inp_password->addKeyListener(submit_listener);
+		inp_username->addKeyListener(submit_listener);
 		
 		// Hide button
 		/*gcn::Button *hide = newWidget<gcn::Button>("Hide");
@@ -207,7 +235,12 @@ namespace Menus
 		submit->setX(signup_container->getWidth() - submit->getWidth() - 10);
 		submit->setY(signup_container->getHeight() - submit->getHeight() - 10);
 		
-		submit->addActionListener(newListener<MainSignupSubmit>());
+		MainSignupSubmit *submit_listener = newListener<MainSignupSubmit>();
+		submit->addActionListener(submit_listener);
+		inp_email->addKeyListener(submit_listener);
+		inp_password->addKeyListener(submit_listener);
+		inp_repeat_password->addKeyListener(submit_listener);
+		inp_username->addKeyListener(submit_listener);
 		
 		signup_container->add(submit);
 		signup_container->add(inp_email);
@@ -264,6 +297,11 @@ namespace Menus
 		about_container->add(stupid);
 		
 		_tabs->addTab("About", about_container);
+	}
+	
+	void Main::show()
+	{
+		get("login_username")->requestFocus();
 	}
 	
 	gcn::Container *Main::makeContainer()
