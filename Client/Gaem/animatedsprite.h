@@ -33,6 +33,7 @@ namespace Gaem
 		void loadAnimation(const std::string &key, const std::string &path);
 		void setAnimation(const std::string &key, bool force = false);
 		Animation *getAnimation();
+		Animation *getAnimtion(const std::string &key);
 		
 		void step();
 		

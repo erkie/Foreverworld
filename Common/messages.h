@@ -89,6 +89,7 @@ namespace inet
 	{
 		int32_t id;
 		char name[21];
+		char slug[21];
 		float scale;
 		bool can_jump;
 		int32_t speed;

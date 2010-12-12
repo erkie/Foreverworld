@@ -21,7 +21,7 @@
 
 namespace Gaem
 {
-	Animation::Animation(const std::string &path): _path(path), _run_once(false), _playing(true), _last_time(0)
+	Animation::Animation(const std::string &path): _path(path), _run_once(false), _playing(true), _last_time(0), _has_run(false)
 	{
 		load();
 	}
@@ -42,6 +42,8 @@ namespace Gaem
 			_run_once = values.isTrue("run once");
 			
 			_image = Gaem::Gaem::getInstance()->getResourceManager()->getImage(image_name);
+			_image->SetSmooth(true);
+			
 			_height = _image->GetHeight();
 			
 			_rect = sf::IntRect(0, 0, _width, _image->GetHeight());
@@ -71,9 +73,15 @@ namespace Gaem
 	
 	void Animation::nextFrame()
 	{
-		_rect.Offset(_width, 0);
-		if ( _rect.Left >= (int)_image->GetWidth() )
+		if ( ! _run_once || (_run_once && ! _has_run) )
+			_rect.Offset(_width, 0);
+		
+		if ( _rect.Left >= (int)_image->GetWidth() && ! _run_once )
 			reset();
+		else if ( _run_once && ! _has_run )
+		{
+			_has_run = true;
+		}
 	}
 	
 	void Animation::prevFrame()
@@ -86,6 +94,8 @@ namespace Gaem
 	void Animation::reset()
 	{
 		_rect = sf::IntRect(0, 0, _width, _image->GetHeight());
+		_has_run = false;
+		_last_time = 0;
 	}
 	
 	void Animation::setPlaying(bool to)

@@ -1,0 +1,3 @@
+file: resources/players/ghost/ghost_waiting/1.png
+width: 103
+frame time: 0.07

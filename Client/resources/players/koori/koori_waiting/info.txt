@@ -1,0 +1,3 @@
+file: resources/players/koori/koori_waiting/1.png
+width: 65
+frame time: 0.07

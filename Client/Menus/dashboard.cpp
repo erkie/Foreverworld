@@ -33,9 +33,9 @@ namespace Menus
 			return Gaem::Gaem::getInstance()->getEntityManager()->getCharacters()[i].name;
 		}
 		
-		int32_t getIdAt(int i)
+		inet::Character getCharacterAt(int i)
 		{
-			return Gaem::Gaem::getInstance()->getEntityManager()->getCharacters()[i].id;
+			return Gaem::Gaem::getInstance()->getEntityManager()->getCharacters()[i];
 		}
 
 		int getIndexById(int32_t id)
@@ -62,10 +62,10 @@ namespace Menus
 			gcn::ListBox *list = static_cast<gcn::ListBox*>(event.getSource());
 			int index = list->getSelected();
 			
-			int32_t id = static_cast<DashboardSelectModel*>(list->getListModel())->getIdAt(index);
+			inet::Character character = static_cast<DashboardSelectModel*>(list->getListModel())->getCharacterAt(index);
 			
 			std::stringstream ss;
-			ss << "resources/players/player_" << id << "_running/info.txt";
+			ss << "resources/players/" << character.slug << "/" << character.slug << "_walking/info.txt";
 			std::string name = ss.str();
 			
 			static_cast<Widgets::AnimationDemo*>(Dashboard::instance->get("choose_player_demo"))->setAnimation(name);
@@ -81,7 +81,7 @@ namespace Menus
 			// Get the listbox for the character selection (and cast it to the correct type)
 			// Then get the selected character at the position which is selected
 			gcn::ListBox *listbox = static_cast<gcn::ListBox*>(Dashboard::instance->get("player_select"));
-			int32_t id = static_cast<DashboardSelectModel*>(listbox->getListModel())->getIdAt(listbox->getSelected());
+			int32_t id = static_cast<DashboardSelectModel*>(listbox->getListModel())->getCharacterAt(listbox->getSelected()).id;
 			
 			Gaem::Gaem::getInstance()->getUser()->saveCharacter(id);
 		}
@@ -145,7 +145,6 @@ namespace Menus
 		demo->setX(container->getChildrenArea().width - demo->getWidth() - 10);
 		demo->setY(intro->getBottom() + 10);
 		demo->setShowFrames(false);
-		demo->setAnimation("resources/players/player_1_running/info.txt");
 		
 		// Select player list box
 		gcn::ScrollArea *scroll = newWidget<gcn::ScrollArea>();

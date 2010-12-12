@@ -1,0 +1,4 @@
+file: resources/players/koori/koori_jumping/roll.png
+width: 114
+frame time: 0.20
+run once: yes

@@ -116,13 +116,11 @@ namespace Entities
 		_can_jump = character.can_jump;
 		_name = std::string(character.name);
 		
-		std::stringstream ss;
-		ss << character.id;
-		std::string the_id = ss.str();
+		std::string slug = character.slug;
 		
-		_sprite->loadAnimation("running", "resources/players/player_" + the_id + "_running/info.txt");
-		_sprite->loadAnimation("waiting", "resources/players/player_" + the_id + "_waiting/info.txt");
-		_sprite->loadAnimation("jumping", "resources/players/player_" + the_id + "_jumping/info.txt");
+		_sprite->loadAnimation("running", "resources/players/" + slug + "/" + slug + "_walking/info.txt");
+		_sprite->loadAnimation("waiting", "resources/players/" + slug + "/" + slug + "_waiting/info.txt");
+		_sprite->loadAnimation("jumping", "resources/players/" + slug + "/" + slug + "_jumping/info.txt");
 	}
 	
 	bool Player::isActivePlayer()
@@ -133,7 +131,11 @@ namespace Entities
 	void Player::jump()
 	{
 		if ( _elevation == 0 && _can_jump )
+		{
 			_velocity.y = 500;
+			_sprite->setAnimation("jumping");
+			_sprite->getAnimation()->reset();
+		}
 	}
 	
 	void Player::runLeft()
@@ -327,17 +329,20 @@ namespace Entities
 	
 	void Player::draw(sf::RenderWindow &window)
 	{
+		float real_old_x = _sprite->getX(), x;
+		x = real_old_x - _sprite->getWidth() / 2;
+		_sprite->setX(x);
+		window.Draw(*_sprite->getSprite());
+		
 		// Draw name string
 		if ( _user )
 		{
 			sf::String name(_user->getUsername(), *Gaem::Gaem::getInstance()->getResourceManager()->getFont("resources/main_font.ttf", 15), 15);
 			name.SetX(_sprite->getX() - name.GetRect().GetWidth()/2 + _sprite->getWidth()/2);
 			name.SetY(_sprite->getY() - name.GetRect().GetHeight());
-		
+			
 			window.Draw(name);
 		}
-		
-		window.Draw(*_sprite->getSprite());
 		
 		// Draw two more versions of the player, one outside the field to the left
 		// and one outside to the right, this so it does not disappear when the position
@@ -356,6 +361,8 @@ namespace Entities
 		_sprite->setX(_pos_left + width - scroll);
 		window.Draw(*_sprite->getSprite());
 		_sprite->setX(old_x);
+		
+		_sprite->setX(real_old_x);
 	}
 	
 	void Player::setDir(int dir_x, int dir_y)
@@ -397,7 +404,7 @@ namespace Entities
 	
 	int Player::getRight()
 	{
-		return _pos_left + _sprite->getWidth();
+		return _pos_left + 100;
 	}
 	
 	float Player::getDepth()

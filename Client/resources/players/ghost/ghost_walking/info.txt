@@ -1,0 +1,3 @@
+file: resources/players/ghost/ghost_walking/roll.png
+width: 94
+frame time: 0.07

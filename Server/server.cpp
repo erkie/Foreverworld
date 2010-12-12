@@ -128,6 +128,8 @@ void Server::run()
 						mess.character.up_speed = c.up_speed;
 						memset(mess.character.name, 0, 21);
 						memcpy(mess.character.name, c.name.c_str(), 20);
+						memset(mess.character.slug, 0, 21);
+						memcpy(mess.character.slug, c.slug.c_str(), 20);
 						
 						_peer->Send((char *)&mess, sizeof(mess), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 					}

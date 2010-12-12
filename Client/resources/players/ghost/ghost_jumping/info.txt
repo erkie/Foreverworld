@@ -1,0 +1,4 @@
+file: resources/players/ghost/ghost_jumping/roll.png
+width: 103
+frame time: 0.07
+run once: yes

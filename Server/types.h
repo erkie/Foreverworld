@@ -23,13 +23,14 @@ namespace sql
 		mysqlpp::sql_int, character_id
 	)
 
-	sql_create_6(character, 1, 6,
+	sql_create_7(character, 1, 7,
 		mysqlpp::sql_int, id,
 		mysqlpp::sql_varchar, name,
 		mysqlpp::sql_float, scale,
 		mysqlpp::sql_bool, can_jump,
 		mysqlpp::sql_int, speed,
-		mysqlpp::sql_int, up_speed
+		mysqlpp::sql_int, up_speed,
+		mysqlpp::sql_varchar, slug
 	)
 	
 	sql_create_3(news, 1, 3,
