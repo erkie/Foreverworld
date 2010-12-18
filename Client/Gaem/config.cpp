@@ -36,7 +36,7 @@ namespace Gaem
 			_values["window_width"] = "1000";
 			_values["window_height"] = "700";
 			
-			_values["server_host"] = "localhost";
+			_values["server_host"] = "glonk.se";
 			_values["server_port"] = "6010";
 		}
 		else
