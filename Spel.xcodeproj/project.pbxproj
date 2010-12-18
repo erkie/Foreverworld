@@ -8,12 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		35045BC1129F00BB0085F423 /* dashboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35045BC0129F00BB0085F423 /* dashboard.cpp */; };
+		353939C512AEB7A1003DF5D6 /* chat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 353939C412AEB7A1003DF5D6 /* chat.cpp */; };
+		35393A5012AEBEC5003DF5D6 /* chat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35393A4F12AEBEC5003DF5D6 /* chat.cpp */; };
 		3545F6B9129FB59100ED38D6 /* messages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3545F6B8129FB59100ED38D6 /* messages.cpp */; };
 		3545F6D7129FB78900ED38D6 /* messages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3545F6B8129FB59100ED38D6 /* messages.cpp */; };
-		354702EE1271E04400885A04 /* guichan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354702DC1271E03200885A04 /* guichan.framework */; };
+		355A91A912AD57DB0022C645 /* RakNetFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */; };
 		356418E1129DAB6B00446DBE /* libmysqlpp_d.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 356418E0129DAB6B00446DBE /* libmysqlpp_d.dylib */; };
 		3564193C129DB42B00446DBE /* usermanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3564193B129DB42B00446DBE /* usermanager.cpp */; };
 		356419D3129DBE3C00446DBE /* libmysqlclient.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 356419D2129DBE3C00446DBE /* libmysqlclient.dylib */; };
+		356B46D112BCE62000276482 /* guichan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B46D012BCE62000276482 /* guichan.framework */; };
+		356B46D412BCE62B00276482 /* guichan.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 356B46D012BCE62000276482 /* guichan.framework */; };
+		356E46B812A80B6E0082A4ED /* lazysprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 356E46B712A80B6E0082A4ED /* lazysprite.cpp */; };
 		35729804129E4ADC00778193 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35729803129E4ADC00778193 /* sha1.cpp */; };
 		3573EF49128BC3FF00CA25DB /* RakNetFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */; };
 		357B8D6D12884EFC007A2E03 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3ABAB128456750080187E /* main.cpp */; };
@@ -67,6 +72,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				356B46D412BCE62B00276482 /* guichan.framework in Copy Frameworks */,
+				355A91A912AD57DB0022C645 /* RakNetFramework.framework in Copy Frameworks */,
 				358AE0BA1250BE34007AA254 /* SFML.framework in Copy Frameworks */,
 				358AE0BB1250BE34007AA254 /* sfml-audio.framework in Copy Frameworks */,
 				A0072ADE0F1D0EC500B4A594 /* sfml-system.framework in Copy Frameworks */,
@@ -81,13 +88,20 @@
 /* Begin PBXFileReference section */
 		35045BBF129F00BB0085F423 /* dashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dashboard.h; sourceTree = "<group>"; };
 		35045BC0129F00BB0085F423 /* dashboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dashboard.cpp; sourceTree = "<group>"; };
+		353939C312AEB7A1003DF5D6 /* chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chat.h; sourceTree = "<group>"; };
+		353939C412AEB7A1003DF5D6 /* chat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chat.cpp; sourceTree = "<group>"; };
+		35393A4E12AEBEC5003DF5D6 /* chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chat.h; sourceTree = "<group>"; };
+		35393A4F12AEBEC5003DF5D6 /* chat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chat.cpp; sourceTree = "<group>"; };
 		3545F6B8129FB59100ED38D6 /* messages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = messages.cpp; sourceTree = "<group>"; };
-		354702DC1271E03200885A04 /* guichan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = guichan.framework; path = /Library/Frameworks/guichan.framework; sourceTree = "<absolute>"; };
 		356418E0129DAB6B00446DBE /* libmysqlpp_d.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmysqlpp_d.dylib; path = /usr/local/lib/libmysqlpp_d.dylib; sourceTree = "<absolute>"; };
 		3564193A129DB42B00446DBE /* usermanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usermanager.h; sourceTree = "<group>"; };
 		3564193B129DB42B00446DBE /* usermanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usermanager.cpp; sourceTree = "<group>"; };
 		35641948129DB63C00446DBE /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		356419D2129DBE3C00446DBE /* libmysqlclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmysqlclient.dylib; path = /opt/local/lib/mysql5/mysql/libmysqlclient.dylib; sourceTree = "<absolute>"; };
+		356B46D012BCE62000276482 /* guichan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = guichan.framework; path = /Users/erikandersson/Documents/Programming/Guichan/build/Debug/guichan.framework; sourceTree = "<absolute>"; };
+		356B475812BD23B200276482 /* Foreverworld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Foreverworld.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		356E46B612A80B6E0082A4ED /* lazysprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lazysprite.h; sourceTree = "<group>"; };
+		356E46B712A80B6E0082A4ED /* lazysprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lazysprite.cpp; sourceTree = "<group>"; };
 		35729802129E4ADC00778193 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
 		35729803129E4ADC00778193 /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sha1.cpp; sourceTree = "<group>"; };
 		3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RakNetFramework.framework; path = /Library/Frameworks/RakNetFramework.framework; sourceTree = "<absolute>"; };
@@ -155,7 +169,6 @@
 		35D3ADA61284A5340080187E /* messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
 		35F84A1E12915F4900E42D1C /* connectionstatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connectionstatus.h; sourceTree = "<group>"; };
 		35F84A1F12915F4900E42D1C /* connectionstatus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connectionstatus.cpp; sourceTree = "<group>"; };
-		A01FB6A90F07CF6E000AAC7B /* Spel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01FB6CA0F07CFF2000AAC7B /* sfml-graphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-graphics.framework"; path = "/Library/Frameworks/sfml-graphics.framework"; sourceTree = "<absolute>"; };
 		A01FB6CB0F07CFF2000AAC7B /* sfml-system.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-system.framework"; path = "/Library/Frameworks/sfml-system.framework"; sourceTree = "<absolute>"; };
 		A01FB6CC0F07CFF2000AAC7B /* sfml-window.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-window.framework"; path = "/Library/Frameworks/sfml-window.framework"; sourceTree = "<absolute>"; };
@@ -182,8 +195,8 @@
 				A01FB6CF0F07CFF2000AAC7B /* sfml-system.framework in Frameworks */,
 				A01FB6D00F07CFF2000AAC7B /* sfml-window.framework in Frameworks */,
 				35B6E958120016D1000FB887 /* sfml-audio.framework in Frameworks */,
-				354702EE1271E04400885A04 /* guichan.framework in Frameworks */,
 				35AE09E5128C62B700923BBB /* RakNetFramework.framework in Frameworks */,
+				356B46D112BCE62000276482 /* guichan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +225,8 @@
 				35D3AAFF128454C50080187E /* player.h */,
 				35F84A1E12915F4900E42D1C /* connectionstatus.h */,
 				35F84A1F12915F4900E42D1C /* connectionstatus.cpp */,
+				353939C312AEB7A1003DF5D6 /* chat.h */,
+				353939C412AEB7A1003DF5D6 /* chat.cpp */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -233,8 +248,6 @@
 				35D3AB12128454C50080187E /* menumanager.h */,
 				35D3AB14128454C50080187E /* resourcemanager.cpp */,
 				35D3AB15128454C50080187E /* resourcemanager.h */,
-				35D3AB03128454C50080187E /* animatedsprite.cpp */,
-				35D3AB04128454C50080187E /* animatedsprite.h */,
 				35D3AB05128454C50080187E /* animation.cpp */,
 				35D3AB06128454C50080187E /* animation.h */,
 				35D3AB09128454C50080187E /* entity.cpp */,
@@ -243,6 +256,10 @@
 				35D3AB0E128454C50080187E /* exception.h */,
 				35D3AB16128454C50080187E /* sprite.cpp */,
 				35D3AB17128454C50080187E /* sprite.h */,
+				35D3AB03128454C50080187E /* animatedsprite.cpp */,
+				35D3AB04128454C50080187E /* animatedsprite.h */,
+				356E46B712A80B6E0082A4ED /* lazysprite.cpp */,
+				356E46B612A80B6E0082A4ED /* lazysprite.h */,
 			);
 			path = Gaem;
 			sourceTree = "<group>";
@@ -260,6 +277,8 @@
 				35D3AB1C128454C50080187E /* alert.h */,
 				35D3AB1F128454C50080187E /* loading.cpp */,
 				35D3AB20128454C50080187E /* loading.h */,
+				35393A4E12AEBEC5003DF5D6 /* chat.h */,
+				35393A4F12AEBEC5003DF5D6 /* chat.cpp */,
 			);
 			path = Menus;
 			sourceTree = "<group>";
@@ -333,8 +352,8 @@
 		A01FB6AA0F07CF6E000AAC7B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A01FB6A90F07CF6E000AAC7B /* Spel.app */,
 				35D3ABA4128456380080187E /* Server */,
+				356B475812BD23B200276482 /* Foreverworld.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -348,8 +367,8 @@
 				A01FB6CB0F07CFF2000AAC7B /* sfml-system.framework */,
 				A01FB6CC0F07CFF2000AAC7B /* sfml-window.framework */,
 				A01FB6CA0F07CFF2000AAC7B /* sfml-graphics.framework */,
-				354702DC1271E03200885A04 /* guichan.framework */,
 				3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */,
+				356B46D012BCE62000276482 /* guichan.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -392,9 +411,9 @@
 			productReference = 35D3ABA4128456380080187E /* Server */;
 			productType = "com.apple.product-type.tool";
 		};
-		A01FB6A80F07CF6E000AAC7B /* Spel */ = {
+		A01FB6A80F07CF6E000AAC7B /* Foreverworld */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A01FB6AF0F07CF6F000AAC7B /* Build configuration list for PBXNativeTarget "Spel" */;
+			buildConfigurationList = A01FB6AF0F07CF6F000AAC7B /* Build configuration list for PBXNativeTarget "Foreverworld" */;
 			buildPhases = (
 				A01FB6A50F07CF6E000AAC7B /* Resources */,
 				A01FB6A60F07CF6E000AAC7B /* Sources */,
@@ -405,9 +424,9 @@
 			);
 			dependencies = (
 			);
-			name = Spel;
+			name = Foreverworld;
 			productName = Spel;
-			productReference = A01FB6A90F07CF6E000AAC7B /* Spel.app */;
+			productReference = 356B475812BD23B200276482 /* Foreverworld.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -430,7 +449,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A01FB6A80F07CF6E000AAC7B /* Spel */,
+				A01FB6A80F07CF6E000AAC7B /* Foreverworld */,
 				35D3ABA3128456380080187E /* Server */,
 			);
 		};
@@ -494,6 +513,9 @@
 				35729804129E4ADC00778193 /* sha1.cpp in Sources */,
 				35045BC1129F00BB0085F423 /* dashboard.cpp in Sources */,
 				3545F6B9129FB59100ED38D6 /* messages.cpp in Sources */,
+				356E46B812A80B6E0082A4ED /* lazysprite.cpp in Sources */,
+				353939C512AEB7A1003DF5D6 /* chat.cpp in Sources */,
+				35393A5012AEBEC5003DF5D6 /* chat.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,8 +639,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -630,7 +654,7 @@
 					/opt/local/lib,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Spel;
+				PRODUCT_NAME = Foreverworld;
 			};
 			name = Debug;
 		};
@@ -643,8 +667,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Client/Info.plist;
@@ -654,7 +680,7 @@
 					/opt/local/lib,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = Spel;
+				PRODUCT_NAME = Foreverworld;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -680,7 +706,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A01FB6AF0F07CF6F000AAC7B /* Build configuration list for PBXNativeTarget "Spel" */ = {
+		A01FB6AF0F07CF6F000AAC7B /* Build configuration list for PBXNativeTarget "Foreverworld" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A01FB6AD0F07CF6F000AAC7B /* Debug */,
