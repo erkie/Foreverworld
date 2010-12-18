@@ -29,7 +29,7 @@ namespace Gaem
 		RakNet::RakPeerInterface *_peer;
 		RakNet::SystemAddress _hostaddr;
 		
-		bool _is_connected;
+		bool _is_connected, _has_connected;
 		inet::id_type _id;
 		
 		std::string _latest_news_text;

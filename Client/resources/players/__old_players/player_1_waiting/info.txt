@@ -1,3 +1,0 @@
-file: resources/players/player_1_waiting/wait.png
-width: 11
-frame time: 1
