@@ -62,9 +62,7 @@ namespace Gaem
 		
 		// Get all updates sent to me since the latest frame
 		void getUpdates();
-		
-		
-		
+				
 		void setNews(std::string posted, std::string text);
 		std::string getNewsText();
 		std::string getNewsPosted();
