@@ -49,7 +49,7 @@ namespace Menus
 
 	Error::Error()
 	{
-		_message = "An error has occured. Send a crash report (along with some additional anonymous data about the crash) so we can analyze it? Please?";
+		_message = "An error has occured. Send a crash report (along with some additional data about the crash) so we can analyze it? Please?";
 		_oktext = "Yes";
 		_canceltext = "No";
 	}
