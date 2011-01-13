@@ -231,44 +231,44 @@ namespace Entities
 		{
 			// If any move key is pressed set the running sprite and move the player
 			if (
-				input.IsKeyDown(sf::Key::Left) || input.IsKeyDown(sf::Key::Right)
-				|| input.IsKeyDown(sf::Key::Down) || input.IsKeyDown(sf::Key::Up)
+				input.IsKeyDown(sf::Key::A) || input.IsKeyDown(sf::Key::D)
+				|| input.IsKeyDown(sf::Key::S) || input.IsKeyDown(sf::Key::W)
 			) {
 				// Set left running sprite and move player
-				if ( input.IsKeyDown(sf::Key::Left) && _dir[0] != -1 )
+				if ( input.IsKeyDown(sf::Key::A) && _dir[0] != -1 )
 				{
 					_dir[0] = -1;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
 				// Set right running sprite and move player
-				if ( input.IsKeyDown(sf::Key::Right) && _dir[0] != 1 )
+				if ( input.IsKeyDown(sf::Key::D) && _dir[0] != 1 )
 				{
 					_dir[0] = 1;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
 				// Move up
-				if ( input.IsKeyDown(sf::Key::Up) && _dir[1] != 1 )
+				if ( input.IsKeyDown(sf::Key::W) && _dir[1] != 1 )
 				{
 					_dir[1] = 1;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
 				// Move down
-				if ( input.IsKeyDown(sf::Key::Down) && _dir[1] != -1 )
+				if ( input.IsKeyDown(sf::Key::S) && _dir[1] != -1 )
 				{
 					_dir[1] = -1;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
-				if ( ! input.IsKeyDown(sf::Key::Down) && ! input.IsKeyDown(sf::Key::Up) && _dir[1] != 0 )
+				if ( ! input.IsKeyDown(sf::Key::S) && ! input.IsKeyDown(sf::Key::W) && _dir[1] != 0 )
 				{
 					_dir[1] = 0;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
-				if ( ! input.IsKeyDown(sf::Key::Left) && ! input.IsKeyDown(sf::Key::Right) && _dir[0] != 0 )
+				if ( ! input.IsKeyDown(sf::Key::A) && ! input.IsKeyDown(sf::Key::D) && _dir[0] != 0 )
 				{
 					_dir[0] = 0;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();

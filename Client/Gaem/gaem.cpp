@@ -167,8 +167,8 @@ namespace Gaem
 						_menu_manager->hide();
 				}
 
-				// Open developer menu on [D]
-				if ( ! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::D )
+				// Open developer menu on [Y]
+				if ( ! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Y )
 				{
 					_menu_manager->show("developer");
 				}
@@ -250,13 +250,14 @@ namespace Gaem
 	
 	std::string Gaem::getErrorPost()
 	{
-		std::stringstream ss, s2;
+		std::stringstream ss, s2, s3;
 		s2 << _exception.getLine();
 		
 		std::map<std::string, std::string> params;
 		params["message"] = _exception.getMessage();
 		params["file"] = _exception.getFilename();
 		params["line"] = s2.str();
+		params["user"] = _user->getUsername();
 		
 		for ( std::map<std::string, std::string>::iterator iter = params.begin(); iter != params.end(); ++iter )
 		{
