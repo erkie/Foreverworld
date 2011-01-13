@@ -8,6 +8,8 @@
  */
 
 #include <iostream>
+#include <map>
+#include <sstream>
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -23,12 +25,15 @@
 #include "Gaem/entitymanager.h"
 #include "Gaem/networkmanager.h"
 
+#include "My/myutilities.h"
+
 #include "Menus/main.h"
 #include "Menus/dashboard.h"
 #include "Menus/developer.h"
 #include "Menus/alert.h"
 #include "Menus/loading.h"
 #include "Menus/chat.h"
+#include "Menus/error.h"
 
 namespace Gaem
 {
@@ -109,6 +114,7 @@ namespace Gaem
 		_menu_manager->add("developer", new Menus::Developer());
 		_menu_manager->add("loading", new Menus::Loading());
 		_menu_manager->add("chat", new Menus::Chat());
+		_menu_manager->add("error", new Menus::Error());
 
 		// Show main menu
 		_menu_manager->show("main");
@@ -202,13 +208,17 @@ namespace Gaem
 		}
 	}
 
-	void Gaem::errorMain(const std::string &error)
+	void Gaem::errorMain(const std::string &error, NonFatalException &ex)
 	{
 		// Clear menu queue so the user can't hide the alert and continue everything
 		_menu_manager->hideAll();
-		_menu_manager->alert(error);
+		
+		_menu_manager->show("error");
+		_error_run = true;
 
-		while (_app.IsOpened())
+		_exception = ex;
+
+		while (_app.IsOpened() && _error_run)
 		{
 			sf::Event event;
 			while (_app.GetEvent(event))
@@ -238,9 +248,34 @@ namespace Gaem
 		}
 	}
 	
+	std::string Gaem::getErrorPost()
+	{
+		std::stringstream ss, s2;
+		s2 << _exception.getLine();
+		
+		std::map<std::string, std::string> params;
+		params["message"] = _exception.getMessage();
+		params["file"] = _exception.getFilename();
+		params["line"] = s2.str();
+		
+		for ( std::map<std::string, std::string>::iterator iter = params.begin(); iter != params.end(); ++iter )
+		{
+			ss << urlencode((*iter).first);
+			ss << "=";
+			ss << urlencode((*iter).second);
+			ss << "&";
+		}
+		return ss.str();
+	}
+	
 	void Gaem::quit()
 	{
 		delete _network_manager;
+	}
+	
+	void Gaem::quitError()
+	{
+		_error_run = false;
 	}
 
 	Gaem *Gaem::getInstance()

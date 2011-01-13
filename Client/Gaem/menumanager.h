@@ -61,6 +61,12 @@ namespace Gaem
 		gcn::Widget *getRoot();
 		gcn::Widget *get(const std::string& key);
 		
+		template<typename T>
+		T *get(const std::string &key)
+		{
+			return static_cast<T*>(_table[key]);
+		}
+		
 		void setName(const std::string &);
 		std::string getName();
 		

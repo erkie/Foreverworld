@@ -36,8 +36,11 @@ namespace Gaem
 		EntityManager *_entity_manager;
 		ResourceManager *_resource_manager;
 		NetworkManager *_network_manager;
+		
+		NonFatalException _exception;
 
 		float _tdelta;
+		bool _error_run;
 
 		int _w, _h;
 	public:
@@ -46,8 +49,9 @@ namespace Gaem
 
 		void init();
 		void quit();
+		void quitError();
 		void main();
-		void errorMain(const std::string &msg);
+		void errorMain(const std::string &msg, NonFatalException &);
 
 		void initWindow(int w, int h);
 		void resize(int w, int h);
@@ -55,6 +59,7 @@ namespace Gaem
 		int getHeight();
 
 		float getTDelta();
+		std::string getErrorPost();
 
 		sf::RenderWindow *getWindow();
 		Config *getConfig();

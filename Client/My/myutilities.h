@@ -43,4 +43,7 @@ bool is_valid_email(const std::string &);
 typedef std::vector<std::string> file_list;
 void list_files(const std::string &dir, file_list &res);
 
+std::string urlencode(const std::string &c);
+std::string char2hex( char dec );
+
 #endif

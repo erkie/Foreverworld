@@ -18,7 +18,8 @@ int main(int argc, char **argv)
 	{
 		std::stringstream ss;
 		ss << "(" << e.getFilename() << " " << e.getLine() << ")";
-		game->errorMain(e.getMessage() + " " + ss.str());
+		std::cout << e.getMessage() << " " << ss.str() << std::endl;
+		game->errorMain(e.getMessage() + " " + ss.str(), e);
 	}
 	catch (Gaem::Exception e)
 	{
