@@ -42,7 +42,7 @@ namespace inet
 	{
 		EVENT_RUN,
 		EVENT_JUMP,
-		EVENT_CHANGE_DIR,
+		EVENT_CHANGE_DIR, // REMOVE
 		EVENT_DEFENCE,
 		EVENT_ATTACK1,
 		EVENT_ATTACK2
@@ -55,7 +55,8 @@ namespace inet
 		STATE_JUMPING,
 		STATE_DEFENDING,
 		STATE_ATTACKING1,
-		STATE_ATTACKING2
+		STATE_ATTACKING2,
+		STATE_HURTING
 	};
 	
 #pragma pack(push, 1)
@@ -72,7 +73,7 @@ namespace inet
 	{
 		short major;
 		short minor;
-		char type; // 'b' == beta, 's' == stable
+		char type; // 'a' == alfa, 'b' == beta, 's' == stable
 	};
 	
 	struct PlayerState

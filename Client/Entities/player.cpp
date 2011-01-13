@@ -53,6 +53,9 @@ namespace Entities
 		_sprite->loadAnimation("running", info.get("running"));
 		_sprite->loadAnimation("waiting", info.get("waiting"));
 		_sprite->loadAnimation("jumping", info.get("jumping"));
+		_sprite->loadAnimation("attack1", info.get("attack1"));
+		_sprite->loadAnimation("attack2", info.get("attack2"));
+		_sprite->loadAnimation("defence", info.get("defence"));
 		
 		_scale = info.getFloat("scale", 1.0);
 		_speed = info.getFloat("speed", 250);

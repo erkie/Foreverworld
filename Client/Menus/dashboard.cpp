@@ -12,11 +12,13 @@
 #include "Gaem/menumanager.h"
 #include "Gaem/entitymanager.h"
 #include "Gaem/networkmanager.h"
+#include "Gaem/resourcemanager.h"
 
 #include "Common/messages.h"
 
 #include "Widgets/animationdemo.h"
 #include "Widgets/fixedlabel.h"
+#include "Widgets/superfuntime.h"
 
 #include "Menus/dashboard.h"
 
@@ -212,11 +214,10 @@ namespace Menus
 	{
 		gcn::Container *container = makeContainer();
 		
-		gcn::Label *label = newWidget<gcn::Label>("*chirp chirp*");
+		//int field_width = container->getChildrenArea().width - 10 * 2;
+		gcn::Label *label = newWidget<gcn::Label>("Hello world.");
 		label->setPosition(10, 10);
 		container->add(label);
-		
-		//int field_width = container->getChildrenArea().width - 10 * 2;
 		
 		_tabs->addTab("Settings", container);
 	}
@@ -225,11 +226,23 @@ namespace Menus
 	{
 		gcn::Container *container = makeContainer();
 		
-		gcn::Label *label = newWidget<gcn::Label>("Guess again sweetheart.");
-		label->setPosition(10, 10);
-		container->add(label);
+		int field_width = container->getChildrenArea().width - 10 * 2;
 		
-		//int field_width = container->getChildrenArea().width - 10 * 2;
+		Widgets::SuperFunTime *fun = newWidget<Widgets::SuperFunTime>();
+		fun->setWidth(field_width);
+		fun->setHeight(container->getChildrenArea().height - 10 * 2);
+		fun->setPosition(10, 10);
+		
+		for ( int i = 0; i < 20; i++ )
+		{
+			fun->addImage(new gcn::SFMLImage(*Gaem::Gaem::getInstance()->getResourceManager()->getImage("resources/wow.png")));
+			fun->addImage(new gcn::SFMLImage(*Gaem::Gaem::getInstance()->getResourceManager()->getImage("resources/wow2.png")));
+			fun->addImage(new gcn::SFMLImage(*Gaem::Gaem::getInstance()->getResourceManager()->getImage("resources/wow3.png")));
+			fun->addImage(new gcn::SFMLImage(*Gaem::Gaem::getInstance()->getResourceManager()->getImage("resources/wow4.png")));
+			fun->addImage(new gcn::SFMLImage(*Gaem::Gaem::getInstance()->getResourceManager()->getImage("resources/wow5.png")));
+		}
+		
+		container->add(fun);
 		
 		_tabs->addTab("About", container);
 	}

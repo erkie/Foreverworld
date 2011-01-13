@@ -73,11 +73,15 @@ namespace Gaem
 	
 	void Animation::nextFrame()
 	{
+		// Only move foreward if it's looped
+		// or if it hasn't already been run already
 		if ( ! _run_once || (_run_once && ! _has_run) )
 			_rect.Offset(_width, 0);
 		
+		// Reset animation if looped
 		if ( _rect.Left >= (int)_image->GetWidth() && ! _run_once )
 			reset();
+		// Deactivate animations
 		else if ( _run_once && ! _has_run )
 		{
 			_has_run = true;

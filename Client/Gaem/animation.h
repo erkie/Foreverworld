@@ -39,6 +39,8 @@ namespace Gaem
 		void prevFrame();
 		void reset();
 		
+		void gotoFirst();
+		
 		sf::Image *getImage();
 		sf::IntRect getRect();
 		

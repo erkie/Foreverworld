@@ -23,7 +23,8 @@
 #include "Entities/world.h"
 #include "Entities/player.h"
 
-#define PIECE_SIZE 400
+#define PIECE_SIZE 100
+#define PIECE_OFFSET 20
 
 namespace Entities
 {
@@ -205,7 +206,7 @@ namespace Entities
 					std::vector<int> done(layer->size, 0);
 					
 					// Load five to the right
-					for ( i = current, x = 0; x < 5; x++, i++ )
+					for ( i = current, x = 0; x < PIECE_OFFSET; x++, i++ )
 					{
 						if ( i == layer->size )
 							i = 0;
@@ -214,7 +215,7 @@ namespace Entities
 					}
 					
 					// Load five to the left
-					for ( i = current, x = 0; x < 5; x++, i-- )
+					for ( i = current, x = 0; x < PIECE_OFFSET; x++, i-- )
 					{
 						if ( i < 0 )
 							i = layer->size + i;
@@ -274,20 +275,5 @@ namespace Entities
 				sprite->setX(old_x);
 			}
 		}
-		
-		// Draw last layer repeatedly upwards so the sky never ends
-		/*Layer *last = (*(--_layers.rend()));
-		for ( int i = 0; i < last->size; i++ )
-		{
-			Gaem::LazySprite *sprite = &last->sprites[i];
-			int old_y = sprite->getY();
-			while ( sprite->getY() > 0 )
-			{
-				old_y = sprite->getY();
-				sprite->setY(old_y - sprite->getHeight());
-				window.Draw(*sprite->getSprite());
-			}
-			sprite->setY(old_y);
-		}*/
 	}
 }

@@ -1,0 +1,3 @@
+file: resources/players/emanon/emanon_attack1/roll.png
+width: 78
+frame time: 0.07

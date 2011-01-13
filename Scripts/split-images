@@ -2,14 +2,14 @@
 
 SCRIPT=Scripts/image-split
 THE_PATH=Client/resources/world/
-CHUNK_SIZE=400
+CHUNK_SIZE=100
 
 cd ..;
 
-rm $THE_PATH"sky/sky-*.png";
-rm $THE_PATH"foreground/foreground-*.png";
-rm $THE_PATH"mountains/mountains-*.png";
-rm $THE_PATH"woods/woods-*.png";
+rm ${THE_PATH}sky/sky-*.png;
+rm ${THE_PATH}foreground/foreground-*.png;
+rm ${THE_PATH}mountains/mountains-*.png;
+rm ${THE_PATH}woods/woods-*.png;
 
 $SCRIPT $THE_PATH'sky/sky.png' $CHUNK_SIZE;
 $SCRIPT $THE_PATH'foreground/foreground.png' $CHUNK_SIZE;

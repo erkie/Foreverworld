@@ -21,7 +21,7 @@
 
 namespace Widgets
 {
-	AnimationDemo::AnimationDemo(): _sprite(NULL), _scale(1.0), _offset_x(0), _offset_y(0), _show_frames(true)
+	AnimationDemo::AnimationDemo(): _sprite(NULL), _scale(1.0), _show_frames(true), _offset_x(0), _offset_y(0)
 	{
 		addMouseListener(this);
 	}
