@@ -7,105 +7,123 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin\Debug\Spel" prefix_auto="1" extension_auto="1" />
+				<Option output="bin\Debug\Foreverworld" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj\Debug\" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option projectLinkerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="0" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="resources" />
 				</ResourceCompiler>
-				<Linker>
-					<Add option="-static-libstdc++" />
-					<Add option="-static-libgcc" />
-					<Add option="-static -lGuichan" />
-					<Add option="-static -lsfml-graphics" />
-					<Add option="-static -lsfml-window" />
-					<Add option="-static -lsfml-network" />
-					<Add option="-static -lsfml-system" />
-					<Add option="-static -lsfml-main" />
-					<Add option="-static -lopengl32" />
-					<Add option="-static -lfreetype" />
-					<Add option="-static -lopenal32" />
-					<Add option="-static -lsndfile" />
-					<Add option="-static -lgdi32" />
-					<Add option="-static -lwinmm" />
-				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin\Release\Spel" prefix_auto="1" extension_auto="1" />
+				<Option output="bin\Release\Foreverworldl" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj\Release\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option projectLinkerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="0" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-static-libstdc++" />
-					<Add option="-static-libgcc" />
-					<Add option="-static-lGuichan" />
-					<Add option="-static-lsfml-graphics" />
-					<Add option="-static-lsfml-window" />
-					<Add option="-static-lsfml-system" />
-					<Add option="-static-lsfml-network" />
-					<Add option="-static-lsfml-main" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="C:\Users\Erik\Programming\spel\" />
+			<Add directory="C:\Users\Erik\Programming\spel\Client" />
+			<Add directory="C:\Users\Erik\Programming\Spel\" />
+			<Add directory="C:\Users\Erik\Programming\RakNet\Source" />
 		</Compiler>
-		<Unit filename="Entities\player.cpp" />
-		<Unit filename="Entities\player.h" />
-		<Unit filename="Entities\world.cpp" />
-		<Unit filename="Entities\world.h" />
-		<Unit filename="Gaem\animatedsprite.cpp" />
-		<Unit filename="Gaem\animatedsprite.h" />
-		<Unit filename="Gaem\animation.cpp" />
-		<Unit filename="Gaem\animation.h" />
-		<Unit filename="Gaem\config.cpp" />
-		<Unit filename="Gaem\config.h" />
-		<Unit filename="Gaem\entity.cpp" />
-		<Unit filename="Gaem\entity.h" />
-		<Unit filename="Gaem\entitymanager.cpp" />
-		<Unit filename="Gaem\entitymanager.h" />
-		<Unit filename="Gaem\exception.cpp" />
-		<Unit filename="Gaem\exception.h" />
-		<Unit filename="Gaem\gaem.cpp" />
-		<Unit filename="Gaem\gaem.h" />
-		<Unit filename="Gaem\menumanager.cpp" />
-		<Unit filename="Gaem\menumanager.h" />
-		<Unit filename="Gaem\resourcemanager.cpp" />
-		<Unit filename="Gaem\resourcemanager.h" />
-		<Unit filename="Gaem\sprite.cpp" />
-		<Unit filename="Gaem\sprite.h" />
-		<Unit filename="Menus\alert.cpp" />
-		<Unit filename="Menus\alert.h" />
-		<Unit filename="Menus\developer.cpp" />
-		<Unit filename="Menus\developer.h" />
-		<Unit filename="Menus\loading.cpp" />
-		<Unit filename="Menus\loading.h" />
-		<Unit filename="Menus\main.cpp" />
-		<Unit filename="Menus\main.h" />
-		<Unit filename="My\mydirent.h" />
-		<Unit filename="My\myentitymanager.h" />
-		<Unit filename="My\myutilities.cpp" />
-		<Unit filename="My\myutilities.h" />
-		<Unit filename="Widgets\animationdemo.cpp" />
-		<Unit filename="Widgets\animationdemo.h" />
-		<Unit filename="Widgets\fixedlabel.cpp" />
-		<Unit filename="Widgets\fixedlabel.h" />
-		<Unit filename="Widgets\image.cpp" />
-		<Unit filename="Widgets\image.h" />
-		<Unit filename="Widgets\passwordfield.cpp" />
-		<Unit filename="Widgets\passwordfield.h" />
-		<Unit filename="main.cpp" />
+		<Linker>
+			<Add option="-static -lguichan" />
+			<Add option="-static -lsfml-graphics" />
+			<Add option="-static -lsfml-window" />
+			<Add option="-static -lsfml-network" />
+			<Add option="-static -lsfml-system" />
+			<Add option="-static -lsfml-main" />
+			<Add option="-static -lopengl32" />
+			<Add option="-static -lfreetype" />
+			<Add option="-static -lopenal32" />
+			<Add option="-static -lsndfile" />
+			<Add option="-static -lgdi32" />
+			<Add option="-static -lwinmm" />
+			<Add option="-static -lRakNet" />
+			<Add option="-lws2_32" />
+		</Linker>
+		<Unit filename="Client\Entities\chat.cpp" />
+		<Unit filename="Client\Entities\chat.h" />
+		<Unit filename="Client\Entities\connectionstatus.cpp" />
+		<Unit filename="Client\Entities\connectionstatus.h" />
+		<Unit filename="Client\Entities\player.cpp" />
+		<Unit filename="Client\Entities\player.h" />
+		<Unit filename="Client\Entities\world.cpp" />
+		<Unit filename="Client\Entities\world.h" />
+		<Unit filename="Client\Gaem\animatedsprite.cpp" />
+		<Unit filename="Client\Gaem\animatedsprite.h" />
+		<Unit filename="Client\Gaem\animation.cpp" />
+		<Unit filename="Client\Gaem\animation.h" />
+		<Unit filename="Client\Gaem\config.cpp" />
+		<Unit filename="Client\Gaem\config.h" />
+		<Unit filename="Client\Gaem\entity.cpp" />
+		<Unit filename="Client\Gaem\entity.h" />
+		<Unit filename="Client\Gaem\entitymanager.cpp" />
+		<Unit filename="Client\Gaem\entitymanager.h" />
+		<Unit filename="Client\Gaem\exception.cpp" />
+		<Unit filename="Client\Gaem\exception.h" />
+		<Unit filename="Client\Gaem\gaem.cpp" />
+		<Unit filename="Client\Gaem\gaem.h" />
+		<Unit filename="Client\Gaem\lazysprite.cpp" />
+		<Unit filename="Client\Gaem\lazysprite.h" />
+		<Unit filename="Client\Gaem\menumanager.cpp" />
+		<Unit filename="Client\Gaem\menumanager.h" />
+		<Unit filename="Client\Gaem\networkmanager.cpp" />
+		<Unit filename="Client\Gaem\networkmanager.h" />
+		<Unit filename="Client\Gaem\resourcemanager.cpp" />
+		<Unit filename="Client\Gaem\resourcemanager.h" />
+		<Unit filename="Client\Gaem\sprite.cpp" />
+		<Unit filename="Client\Gaem\sprite.h" />
+		<Unit filename="Client\Gaem\user.cpp" />
+		<Unit filename="Client\Gaem\user.h" />
+		<Unit filename="Client\Menus\alert.cpp" />
+		<Unit filename="Client\Menus\alert.h" />
+		<Unit filename="Client\Menus\chat.cpp" />
+		<Unit filename="Client\Menus\chat.h" />
+		<Unit filename="Client\Menus\dashboard.cpp" />
+		<Unit filename="Client\Menus\dashboard.h" />
+		<Unit filename="Client\Menus\developer.cpp" />
+		<Unit filename="Client\Menus\developer.h" />
+		<Unit filename="Client\Menus\loading.cpp" />
+		<Unit filename="Client\Menus\loading.h" />
+		<Unit filename="Client\Menus\main.cpp" />
+		<Unit filename="Client\Menus\main.h" />
+		<Unit filename="Client\My\mydirent.h" />
+		<Unit filename="Client\My\myutilities.cpp" />
+		<Unit filename="Client\My\myutilities.h" />
+		<Unit filename="Client\My\sha1.cpp" />
+		<Unit filename="Client\My\sha1.h" />
+		<Unit filename="Client\Widgets\animationdemo.cpp" />
+		<Unit filename="Client\Widgets\animationdemo.h" />
+		<Unit filename="Client\Widgets\fixedlabel.cpp" />
+		<Unit filename="Client\Widgets\fixedlabel.h" />
+		<Unit filename="Client\Widgets\image.cpp" />
+		<Unit filename="Client\Widgets\image.h" />
+		<Unit filename="Client\Widgets\informationtable.cpp" />
+		<Unit filename="Client\Widgets\informationtable.h" />
+		<Unit filename="Client\Widgets\passwordfield.cpp" />
+		<Unit filename="Client\Widgets\passwordfield.h" />
+		<Unit filename="Client\main.cpp" />
+		<Unit filename="Common\messages.cpp" />
+		<Unit filename="Common\messages.h" />
+		<Unit filename="Server\charactermanager.h" />
+		<Unit filename="Server\player.h" />
+		<Unit filename="Server\server.h" />
+		<Unit filename="Server\types.h" />
+		<Unit filename="Server\usermanager.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
