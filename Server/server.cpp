@@ -272,6 +272,9 @@ void Server::run()
 						break;
 					}
 					
+					// Log chat message
+					std::cout << _players[id]->getUsername() << ": " << mess->message << '\n';
+					
 					mess->user_id = id;
 					_chat_messages.push(*mess);
 				} break;

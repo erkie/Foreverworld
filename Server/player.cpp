@@ -102,7 +102,7 @@ float *Player::getVelocity()
 
 std::string Player::getUsername()
 {
-	return "USERNAMEFIXME";
+	return _member.username;
 }
 
 inet::PlayerState Player::getState()
