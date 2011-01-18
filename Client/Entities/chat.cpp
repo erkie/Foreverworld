@@ -89,4 +89,9 @@ namespace Entities
 			window.Draw(message);
 		}
 	}
+	
+	int Chat::getZIndex()
+	{
+		return 1000;
+	}
 }

@@ -10,6 +10,7 @@
 #ifndef __GAEM_CONFIG_H__
 #define __GAEM_CONFIG_H__
 
+#include <vector>
 #include <string>
 #include <map>
 
@@ -24,6 +25,7 @@ namespace Gaem
 	public:
 		typedef map<string, string> cfg_values;
 
+		Config();
 		Config(const std::string &);
 		Config(std::istream &);
 
@@ -34,11 +36,14 @@ namespace Gaem
 		float getFloat(string key, float def = 0);
 		int getInt(string key, int def = 0);
 
-		// If the value is either 1 or true
+		// If the value is either 1 or true or yes
 		bool isTrue(string);
 
 		// Anything other then 1 or true is interpreted as false
 		bool isFalse(string);
+		
+		// Get key[]
+		std::vector<string> getVector(string);
 
 		cfg_values parseFile(const std::string &file);
 		cfg_values parseFile(std::istream &);

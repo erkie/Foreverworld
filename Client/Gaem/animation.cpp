@@ -9,6 +9,7 @@
 
 #include <string>
 #include <fstream>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -34,12 +35,12 @@ namespace Gaem
 		{
 			std::string image_name;
 			
-			Config values(file);
+			_config = Config(file);
 
-			_frame_time = values.getFloat("frame time", 1.0);
-			_width = values.getFloat("width", 1.0);
-			image_name = values.get("file");
-			_run_once = values.isTrue("run once");
+			_frame_time = _config.getFloat("frame time", 1.0);
+			_width = _config.getFloat("width", 1.0);
+			image_name = _config.get("file");
+			_run_once = _config.isTrue("run once");
 			
 			_image = Gaem::Gaem::getInstance()->getResourceManager()->getImage(image_name);
 			_image->SetSmooth(true);
@@ -76,15 +77,21 @@ namespace Gaem
 		// Only move foreward if it's looped
 		// or if it hasn't already been run already
 		if ( ! _run_once || (_run_once && ! _has_run) )
+		{
 			_rect.Offset(_width, 0);
+		}
 		
 		// Reset animation if looped
-		if ( _rect.Left >= (int)_image->GetWidth() && ! _run_once )
-			reset();
-		// Deactivate animations
-		else if ( _run_once && ! _has_run )
+		if ( _rect.Left >= (int)_image->GetWidth() )
 		{
-			_has_run = true;
+			if ( ! _run_once )
+				reset();
+			// Deactivate animations
+			else
+			{
+				_has_run = true;
+				prevFrame();
+			}
 		}
 	}
 	
@@ -112,6 +119,12 @@ namespace Gaem
 		return _playing;
 	}
 	
+	bool Animation::isDone()
+	{
+		if ( ! _run_once ) return false;
+		return _has_run;
+	}
+	
 	sf::Image *Animation::getImage()
 	{
 		return _image;
@@ -135,5 +148,10 @@ namespace Gaem
 	int Animation::getFrameNum()
 	{
 		return _image->GetWidth() / _width * _rect.Left / _image->GetWidth() + 1;
+	}
+	
+	Config &Animation::getConfig()
+	{
+		return _config;
 	}
 }

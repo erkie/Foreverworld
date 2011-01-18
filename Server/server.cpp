@@ -92,27 +92,27 @@ void Server::run()
 			switch (packet->data[0]) {
 				case ID_REMOTE_DISCONNECTION_NOTIFICATION:
 					// disconnection
-					std::cout << "Another client has connected\n";
+					std::cout << "Another client has connected. " << numClients() << " clients connected\n";
 					break;
 				
 				case ID_REMOTE_CONNECTION_LOST:
 					// lost client
-					std::cout << "Another client has lost its connection\n";
+					std::cout << "Another client has lost its connection. " << numClients() << " clients connected\n";
 					break;
 				
 				case ID_REMOTE_NEW_INCOMING_CONNECTION:
 					// new incomming connection
-					std::cout << "Another client has connected\n";
+					std::cout << "Another client has connected. " << numClients() << " clients connected\n";
 					break;
 				
 				case ID_CONNECTION_REQUEST_ACCEPTED:
 					// requested a connection
-					std::cout << "Our connection request has been accepted\n";
+					std::cout << "Our connection request has been accepted. " << numClients() << " clients connected\n";
 					break;
 				
 				case ID_NEW_INCOMING_CONNECTION: {
 					// an incoming connection
-					std::cout << "A connection is incoming\n";
+					std::cout << "A connection is incoming. " << numClients() << " clients connected\n";
 					
 					// Send all characters to the client
 					for ( std::vector<sql::character>::iterator iter = _characters.begin(); iter != _characters.end(); ++iter )
@@ -166,13 +166,13 @@ void Server::run()
 				
 				case ID_DISCONNECTION_NOTIFICATION:
 					// a client has disconnected
-					std::cout << "A client has disconnected\n";
+					std::cout << "A client has disconnected. " << numClients() << " clients connected\n";
 					_removed_players.push(packet->guid);
 					break;
 					
 				case ID_CONNECTION_LOST:
 					// a client has lost connection, remove the sorry bastard
-					std::cout << "A client lost connection\n";
+					std::cout << "A client lost connection. " << numClients() << " clients connected\n";
 					_removed_players.push(packet->guid);
 					break;
 				
@@ -187,6 +187,7 @@ void Server::run()
 				case inet::MESS_LOGIN_PLAYER: {
 					inet::LoginPlayer *mess = (inet::LoginPlayer*)packet->data;
 					
+					
 					inet::id_type id = _user_manager->login(mess->login.username, mess->login.password);
 					
 					// Send a message to the user how it went
@@ -194,10 +195,17 @@ void Server::run()
 					response.type = inet::MESS_LOGIN_STATUS;
 					response.id = id;
 					
+					if ( _players[id] )
+					{
+						std::cout << "This player is already logged in: " << id << '\n';
+						response.id = -1;
+						std::cout << response.id << '\n';
+					}
+					
 					_peer->Send((char *)&response, sizeof(response), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 					
 					// If it was successful, send a PlayerAdded-message to everyone
-					if ( id )
+					if ( ! _players[id] && id )
 					{
 						Player *player = addPlayer(id, packet->guid);
 						_new_players.push(player);
@@ -389,4 +397,9 @@ Player *Server::getPlayerByGUID(RakNet::RakNetGUID guid)
 	
 	unsigned long id = _player_id_table[guid];	
 	return _players[id];
+}
+
+int Server::numClients()
+{
+	return _players.size();
 }

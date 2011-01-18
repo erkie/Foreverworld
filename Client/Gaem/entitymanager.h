@@ -30,6 +30,7 @@ namespace Gaem
 	
 	typedef std::map<int32_t, inet::Character> character_map;
 	typedef std::vector<inet::Character> character_vector;
+	typedef std::map<inet::id_type, Entities::Player*> player_map;
 	
 	class EntityManager
 	{
@@ -37,8 +38,6 @@ namespace Gaem
 		typedef std::list<Entity*> entity_list;
 		entity_list _entities;
 		entity_list _remove_list;
-		
-		typedef std::map<inet::id_type, Entities::Player*> player_map;
 		
 		player_map _players;
 		character_map _characters;
@@ -61,6 +60,7 @@ namespace Gaem
 		void addPlayer(inet::id_type id, const inet::PlayerState player, const inet::LoggedInMemberData member);
 		void removePlayer(inet::id_type id);
 		void updatePlayer(inet::id_type, const inet::PlayerState state);
+		
 		void updateCharacter(inet::id_type id, int32_t c_id);
 		std::string getUsernameById(inet::id_type id);
 		
@@ -72,6 +72,7 @@ namespace Gaem
 		
 		void setCurrentPlayer(Entities::Player *);
 		Entities::Player *getCurrentPlayer();
+		player_map &getPlayers();
 		
 		void setWorld(Entities::World *);
 		Entities::World *getWorld();

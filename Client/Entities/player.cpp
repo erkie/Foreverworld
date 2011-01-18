@@ -40,6 +40,9 @@ namespace Entities
 		_dir[1] = 0;
 		_velocity.x = 0;
 		_velocity.y = 0;
+		_defence = false;
+		_hp = 1;
+		_current_attack = NULL;
 		
 		_sprite = new Gaem::AnimatedSprite;
 	}
@@ -56,6 +59,7 @@ namespace Entities
 		_sprite->loadAnimation("attack1", info.get("attack1"));
 		_sprite->loadAnimation("attack2", info.get("attack2"));
 		_sprite->loadAnimation("defence", info.get("defence"));
+		_sprite->loadAnimation("damaged", info.get("damaged"));
 		
 		_scale = info.getFloat("scale", 1.0);
 		_speed = info.getFloat("speed", 250);
@@ -66,6 +70,7 @@ namespace Entities
 		_sprite->setAnimation("waiting");
 		_sprite->setX(Gaem::Gaem::getInstance()->getWidth()/2 - _sprite->getWidth()/2);
 		
+		initAttacks();
 		setDepth(_pos_depth);
 	}
 	
@@ -78,12 +83,29 @@ namespace Entities
 		_sprite->setAnimation("waiting");
 		_sprite->setX(Gaem::Gaem::getInstance()->getWidth()/2 - _sprite->getWidth()/2);
 		
+		initAttacks();
 		setDepth(_pos_depth);
 	}
 	
 	Player::~Player()
 	{
 		delete _sprite;
+		
+		for ( attack_map::iterator iter = _attacks.begin(); iter != _attacks.end(); iter++ )
+		{
+			delete (*iter).second;
+		}
+	}
+	
+	void Player::initAttacks()
+	{
+		Gaem::Attack *attack1 = new Gaem::Attack(_sprite->getAnimtion("attack1")->getConfig().get("attack"), this);
+		attack1->setAnimation("attack1");
+		//Gaem::Attack *attack2 = new Gaem::Attack(_sprite->getAnimtion("attack2")->getConfig().get("attack"), this);
+		//attack2->setAnimation("attack2");
+		
+		_attacks[attack1->getID()] = attack1;
+		//_attacks[attack2->getID()] = attack2;
 	}
 	
 	Gaem::User *Player::getUser()
@@ -124,6 +146,10 @@ namespace Entities
 		_sprite->loadAnimation("running", "resources/players/" + slug + "/" + slug + "_walking/info.txt");
 		_sprite->loadAnimation("waiting", "resources/players/" + slug + "/" + slug + "_waiting/info.txt");
 		_sprite->loadAnimation("jumping", "resources/players/" + slug + "/" + slug + "_jumping/info.txt");
+		_sprite->loadAnimation("attack1", "resources/players/" + slug + "/" + slug + "_attack1/info.txt", false);
+		_sprite->loadAnimation("attack2", "resources/players/" + slug + "/" + slug + "_attack2/info.txt", false);
+		_sprite->loadAnimation("defence", "resources/players/" + slug + "/" + slug + "_defence/info.txt", false);
+		_sprite->loadAnimation("damaged", "resources/players/" + slug + "/" + slug + "_damaged/info.txt", false);
 	}
 	
 	bool Player::isActivePlayer()
@@ -135,6 +161,12 @@ namespace Entities
 	{
 		if ( _elevation == 0 && _can_jump )
 		{
+			if ( _current_attack )
+			{
+				_current_attack->end();
+				setCurrentAttack("");
+			}
+			
 			_velocity.y = 500;
 			_sprite->setAnimation("jumping");
 			_sprite->getAnimation()->reset();
@@ -143,7 +175,7 @@ namespace Entities
 	
 	void Player::runLeft()
 	{
-		if ( _elevation == 0 )
+		if ( _elevation == 0 && ! _current_attack )
 			_sprite->setAnimation("running");
 		_sprite->flip(true);
 		_dir[0] = -1;
@@ -152,7 +184,7 @@ namespace Entities
 	
 	void Player::runRight()
 	{
-		if ( _elevation == 0 )
+		if ( _elevation == 0 && ! _current_attack )
 			_sprite->setAnimation("running");
 		_sprite->flip(false);
 		_dir[0] = 1;
@@ -161,14 +193,14 @@ namespace Entities
 	
 	void Player::moveUp()
 	{
-		if ( _elevation == 0 )
+		if ( _elevation == 0 && ! _current_attack )
 			_sprite->setAnimation("running");
 		_pos_depth -= _speed_up * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
 	void Player::moveDown()
 	{
-		if ( _elevation == 0 )
+		if ( _elevation == 0 && ! _current_attack )
 			_sprite->setAnimation("running");
 		_pos_depth += _speed_up * Gaem::Gaem::getInstance()->getTDelta();
 	}
@@ -209,6 +241,17 @@ namespace Entities
 				{
 					jump();
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+				}
+				
+				if ( _elevation <= 0 )
+				{
+					for ( attack_map::iterator iter = _attacks.begin(); iter != _attacks.end(); iter++ )
+					{
+						if ( (*iter).second->handleAttack(event.Key.Code) )
+						{
+							setCurrentAttack((*iter).second->getID());
+						}
+					}
 				}
 				break;
 			}
@@ -280,8 +323,20 @@ namespace Entities
 				_dir[1] = 0;
 				Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 			}
+			else if ( input.IsKeyDown(sf::Key::K) )
+			{
+				_sprite->setAnimation("defence");
+				_defence = true;
+				Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+			}
+			
+			if ( ! input.IsKeyDown(sf::Key::K) )
+			{
+				_defence = false;
+			}
 		}
 		
+		// If my direction right/left has been set to something else than 0, move me
 		if ( _dir[0] != 0 )
 		{
 			if ( _dir[0] == -1 )
@@ -299,7 +354,7 @@ namespace Entities
 			moveDown();
 		}
 		
-		if ( _dir[0] == 0 && _dir[1] == 0 && _elevation <= 0 && _velocity.y <= 0 )
+		if ( _dir[0] == 0 && _dir[1] == 0 && _elevation <= 0 && _velocity.y <= 0 && ! _defence && ! _current_attack )
 		{
 			_sprite->setAnimation("waiting");
 		}
@@ -309,6 +364,11 @@ namespace Entities
 		// Update velocity
 		if ( _elevation > 0 || _velocity.y > 0 )
 		{
+			if ( _current_attack )
+			{
+				_current_attack->end();
+				setCurrentAttack("");
+			}
 			_sprite->setAnimation("jumping");
 			_velocity.y -= 1000 * tdelta;
 		}
@@ -319,6 +379,23 @@ namespace Entities
 		{
 			_elevation = 0;
 			_velocity.y = 0;
+		}
+		
+		if ( _current_attack )
+		{
+			if ( ! _sprite->getAnimation()->isDone() )
+			{
+				if ( _current_attack->isHit(_sprite->getAnimation()->getFrameNum()) )
+				{
+					// We hit somebody
+					std::cout << "HIT MOTHERFUCKER\n";
+				}
+			}
+			else
+			{
+				_current_attack->end();
+				setCurrentAttack("");
+			}
 		}
 		
 		setDepth(_pos_depth);
@@ -368,6 +445,19 @@ namespace Entities
 		_sprite->setX(real_old_x);
 	}
 	
+	void Player::setCurrentAttack(const std::string &id)
+	{
+		if ( id != "" )
+		{
+			_current_attack = _attacks[id];
+			_sprite->setAnimation(_current_attack->getAnimation());
+		}
+		else
+		{
+			_current_attack = NULL;
+		}
+	}
+	
 	void Player::setDir(int dir_x, int dir_y)
 	{
 		_dir[0] = dir_x;
@@ -415,6 +505,11 @@ namespace Entities
 		return _pos_depth;
 	}
 	
+	bool Player::isOn(sf::Vector2i pos, float depth)
+	{
+		return pos.x > getLeft() && pos.x < getRight() && (getDepth() - depth < 10 && getDepth() - depth > - 10);
+	}
+	
 	inet::PlayerState Player::getPlayerStruct()
 	{
 		inet::PlayerState player;
@@ -434,5 +529,10 @@ namespace Entities
 			player.state = inet::STATE_WAITING;
 		
 		return player;
+	}
+	
+	int Player::getZIndex()
+	{
+		return _pos_depth;
 	}
 }

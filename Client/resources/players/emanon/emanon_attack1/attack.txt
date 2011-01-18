@@ -1,0 +1,11 @@
+id: emanom_attack1
+cooldown: 0.25
+damage: 0.1
+combo: i
+hitpoint[1]: 45x100
+hitpoint[2]: 45x100
+hitpoint[3]: 45x100
+hitpoint[4]: 50x100
+hitpoint[5]: 60x100
+hitpoint[6]: 70x100
+hitpoint[7]: 70x100

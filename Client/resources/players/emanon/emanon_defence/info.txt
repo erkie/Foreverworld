@@ -1,0 +1,3 @@
+file: resources/players/emanon/emanon_defence/1.png
+width: 73
+frame time: 0.07

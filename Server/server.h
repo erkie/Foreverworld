@@ -70,6 +70,8 @@ public:
 	void removePlayer(RakNet::RakNetGUID guid);
 	
 	Player *getPlayerByGUID(RakNet::RakNetGUID guid);
+	
+	int numClients();
 };
 
 #endif

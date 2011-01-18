@@ -276,4 +276,9 @@ namespace Entities
 			}
 		}
 	}
+	
+	int World::getZIndex()
+	{
+		return 0;
+	}
 }

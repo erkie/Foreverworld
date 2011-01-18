@@ -10,10 +10,12 @@
 #ifndef __ENTITIES_GAEM_H__
 #define __ENTITIES_GAEM_H__
 
+#include <map>
 #include <SFML/Graphics.hpp>
 
 #include "Gaem/entity.h"
 #include "Gaem/animatedsprite.h"
+#include "Gaem/attack.h"
 
 #include "Common/messages.h"
 
@@ -27,31 +29,42 @@ namespace Entities
 	class Player: public Gaem::Entity
 	{
 	protected:
+		typedef std::map<std::string, Gaem::Attack*> attack_map;
 		sf::Vector2f _position;
 		
 		Gaem::AnimatedSprite *_sprite;
 		
-		// Player specifc
+		// Character-specifc
 		float _scale;
 		float _speed;
 		float _speed_up;
 		bool _can_jump;
 		std::string _name;
 		
+		// Player user
 		Gaem::User *_user;
 		
+		// Position and movement
 		int _dir[2];
 		int _pos_left;
 		float _pos_depth;
 		float _elevation;
 		sf::Vector2f _velocity;
 		inet::PlayerActionState _state;
+		
+		// Attack related
+		attack_map _attacks;
+		Gaem::Attack *_current_attack;
+		float _defence;
+		float _hp;
 	public:
 		void init();
 	
 		Player(const std::string &);
 		Player(const inet::Character &);
 		~Player();
+		
+		void initAttacks();
 		
 		void setDepth(float);
 		float getDepth();
@@ -70,6 +83,7 @@ namespace Entities
 		void setVelocity(float, float);
 		void setState(inet::PlayerActionState);
 		void setCharacter(const inet::Character &);
+		void setCurrentAttack(const std::string &id);
 		
 		bool isActivePlayer();
 		
@@ -81,11 +95,14 @@ namespace Entities
 		
 		void clampPos();
 		
+		bool isOn(sf::Vector2i pos, float depth);
+		
 		void handleEvent(const sf::Event &);
 		void logic();
 		void draw(sf::RenderWindow &);
 		
 		inet::PlayerState getPlayerStruct();
+		virtual int getZIndex();
 	};
 }
 

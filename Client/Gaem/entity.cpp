@@ -15,4 +15,14 @@ namespace Gaem
 	{
 		
 	}
+	
+	int Entity::getZIndex()
+	{
+		return 0;
+	}
+	
+	bool sortEntities(Entity *one, Entity *two)
+	{
+		return one->getZIndex() < two->getZIndex();
+	}
 }

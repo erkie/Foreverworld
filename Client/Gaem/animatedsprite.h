@@ -30,7 +30,7 @@ namespace Gaem
 		AnimatedSprite();
 		~AnimatedSprite();
 		
-		void loadAnimation(const std::string &key, const std::string &path);
+		void loadAnimation(const std::string &key, const std::string &path, bool throwError = true);
 		void setAnimation(const std::string &key, bool force = false);
 		Animation *getAnimation();
 		Animation *getAnimtion(const std::string &key);

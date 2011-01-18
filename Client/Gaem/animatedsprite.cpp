@@ -6,9 +6,8 @@
  *  Copyright 2010 Åva gymnasium. All rights reserved.
  *
  */
- 
-#include <iostream>
 
+#include "Gaem/exception.h"
 #include "Gaem/animatedsprite.h"
 
 namespace Gaem
@@ -24,7 +23,7 @@ namespace Gaem
 			delete (*iter).second;
 	}
 	
-	void AnimatedSprite::loadAnimation(const std::string &key, const std::string &path)
+	void AnimatedSprite::loadAnimation(const std::string &key, const std::string &path, bool throwError)
 	{
 		bool was_new = true;
 		if ( _animations[key] )
@@ -33,7 +32,17 @@ namespace Gaem
 			_animations[key] = NULL;
 			was_new = false;
 		}
-		_animations[key] = new Gaem::Animation(path);
+		
+		if ( ! throwError )
+		{
+			try {
+				_animations[key] = new Gaem::Animation(path);
+			} catch ( NonFatalException e ) {}
+		}
+		else
+		{
+			_animations[key] = new Gaem::Animation(path);	
+		}
 		
 		// If we updated the current animation, update its pointer
 		if ( ! was_new && _current == key )

@@ -22,6 +22,8 @@ namespace Entities
 		void handleEvent(const sf::Event &);
 		void logic();
 		void draw(sf::RenderWindow &);
+		
+		virtual int getZIndex();
 	};
 }
 

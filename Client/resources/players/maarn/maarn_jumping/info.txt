@@ -1,4 +1,4 @@
 file: resources/players/maarn/maarn_jumping/roll.png
 width: 110
-frame time: 0.07
+frame time: 0.1
 run once: yes

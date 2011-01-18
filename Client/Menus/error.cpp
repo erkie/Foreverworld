@@ -30,8 +30,7 @@ namespace Menus
 			request.SetURI("/crashreport.php");
 			
 			request.SetBody(Gaem::Gaem::getInstance()->getErrorPost());
-			
-			std::cout << "Got: " << conn.SendRequest(request, 15).GetBody();
+			conn.SendRequest(request, 15).GetBody();
 			
 			// Kill application
 			Gaem::Gaem::getInstance()->quitError();

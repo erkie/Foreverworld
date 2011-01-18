@@ -39,6 +39,8 @@ namespace Entities
 		void draw(sf::RenderWindow &window);
 		void handleEvent(const sf::Event &event);
 		void logic();
+		
+		virtual int getZIndex();
 	};
 }
 

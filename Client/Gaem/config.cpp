@@ -19,6 +19,8 @@ namespace Gaem
 {
 	using std::stringstream;
 
+	Config::Config() {}
+
 	Config::Config(const std::string &name)
 	{
 		if ( name == "master" )
@@ -36,7 +38,7 @@ namespace Gaem
 			_values["window_width"] = "1000";
 			_values["window_height"] = "700";
 			
-			_values["server_host"] = "glonk.se";
+			_values["server_host"] = "localhost";
 			_values["server_port"] = "6010";
 		}
 		else
@@ -49,7 +51,7 @@ namespace Gaem
 			}
 			else
 			{
-				throw GAEM_NONFATAL_EXCEPTION("Could not find config file: (not good) " + name);
+				throw GAEM_NONFATAL_EXCEPTION("Could not find config file: (not .good()) " + name);
 			}
 
 		}
@@ -99,10 +101,32 @@ namespace Gaem
 	{
 		return !isTrue(key);
 	}
+	
+	std::vector<string> Config::getVector(string key)
+	{
+		std::vector<std::string> ret(64);
+		for ( cfg_values::iterator iter = _values.begin(); iter != _values.end(); iter++ )
+		{
+			string k = (*iter).first;
+			
+			// Check if k is prefixed with "key[" and ends with "]"
+			if ( k.compare(0, key.length()+1, key + "[") == 0 && k.compare("]") == k.length()  )
+			{
+				std::stringstream ss(k);
+				int i;
+				
+				ss.ignore(100000, '[');
+				
+				ss >> i;
+				ret[i-1] = (*iter).second;
+			}
+		}
+		return ret;
+	}
 
 	Config::cfg_values Config::parseFile(std::istream &file)
 	{
-		map<string, string> ret;
+		Config::cfg_values ret;
 
 		while ( file.good() )
 		{

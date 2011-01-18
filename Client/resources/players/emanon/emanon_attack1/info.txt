@@ -1,3 +1,5 @@
 file: resources/players/emanon/emanon_attack1/roll.png
+attack: resources/players/emanon/emanon_attack1/attack.txt
 width: 78
-frame time: 0.07
+frame time: 0.04
+run once: yes

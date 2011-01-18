@@ -13,6 +13,8 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+#include "Gaem/config.h"
+
 namespace Gaem
 {
 	class Animation
@@ -30,6 +32,8 @@ namespace Gaem
 		
 		float _last_time;
 		bool _has_run;
+		
+		Config _config;
 	public:
 		Animation(const std::string &path);
 		void load();
@@ -46,11 +50,13 @@ namespace Gaem
 		
 		void setPlaying(bool);
 		bool getPlaying();
+		bool isDone();
 		
 		int getWidth();
 		int getHeight();
 		
 		int getFrameNum();
+		Config &getConfig();
 	};
 }
 

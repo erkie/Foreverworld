@@ -51,4 +51,9 @@ namespace Entities
 			window.Draw(ping);
 		}
 	}
+	
+	int ConnectionStatus::getZIndex()
+	{
+		return 100;
+	}
 }

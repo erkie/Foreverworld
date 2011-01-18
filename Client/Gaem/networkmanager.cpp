@@ -193,7 +193,11 @@ namespace Gaem
 					Gaem::Gaem::getInstance()->getMenuManager()->hideLoading();
 					
 					// Successfully logged in
-					if ( data->id )
+					if ( data->id == -1 )
+					{
+						Gaem::Gaem::getInstance()->getMenuManager()->alert("This account is already signed on somewhere else.");
+					}
+					else if ( data->id )
 					{
 						Gaem::Gaem::getInstance()->getMenuManager()->hideAll();
 						_id = data->id;

@@ -22,7 +22,13 @@ namespace Gaem
 		virtual void handleEvent(const sf::Event &) = 0;
 		virtual void logic() = 0;
 		virtual void draw(sf::RenderWindow &) = 0;
+		
+		virtual int getZIndex();
+		
+		friend bool sortEntities(Entity*, Entity*);
 	};
+	
+	bool sortEntities(Entity*, Entity*);
 }
 
 #endif

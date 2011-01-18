@@ -76,6 +76,8 @@ namespace Gaem
 	
 	void EntityManager::draw(sf::RenderWindow &window)
 	{
+		_entities.sort(sortEntities);
+		
 		for ( entity_list::iterator iter = _entities.begin(); iter != _entities.end(); iter++ )
 		{
 			(*iter)->draw(window);
@@ -200,6 +202,11 @@ namespace Gaem
 	Entities::Player *EntityManager::getCurrentPlayer()
 	{
 		return _current_player;
+	}
+	
+	player_map &EntityManager::getPlayers()
+	{
+		return _players;
 	}
 	
 	void EntityManager::setWorld(Entities::World *world)
