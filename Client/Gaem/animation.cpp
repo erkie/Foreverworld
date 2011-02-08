@@ -20,6 +20,8 @@
 
 #include "Gaem/animation.h"
 
+#include "Common/messages.h"
+
 namespace Gaem
 {
 	Animation::Animation(const std::string &path): _path(path), _run_once(false), _playing(true), _last_time(0), _has_run(false)
@@ -123,6 +125,11 @@ namespace Gaem
 	{
 		if ( ! _run_once ) return false;
 		return _has_run;
+	}
+	
+	void Animation::setElapsedTime(RakNet::Time t)
+	{
+		std::cout << "Setting: " << t << '\n';
 	}
 	
 	sf::Image *Animation::getImage()

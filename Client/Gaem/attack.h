@@ -15,6 +15,7 @@
 #include <list>
 
 #include <SFML/Graphics.hpp>
+#include "GetTime.h"
 
 namespace Entities
 {
@@ -39,21 +40,24 @@ namespace Gaem
 		bool _did_hit;
 		std::list<char> _current_combo;
 		sf::Clock _current_timer;
+		RakNet::Time _started_time;
 		
 		Entities::Player *_me;
 	public:
 		Attack(const std::string &, Entities::Player *me);
 		
-		bool isHit(int frame);
+		Entities::Player *isHit(int frame);
 		void end();
 		bool handleAttack(sf::Key::Code);
 		
 		void setAnimation(const std::string &);
+		void setElapsedTime(RakNet::Time);
 		
 		std::string getID();
 		std::string getAnimation();
 		float getCooldown();
 		float getDamage();
+		RakNet::Time getStartTime();
 	};
 }
 

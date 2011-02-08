@@ -19,7 +19,7 @@
 
 namespace Gaem
 {
-	Attack::Attack(const std::string &file, Entities::Player *me): _me(me), _id("undefined"), _cooldown(0), _damage(0), _in_attack(false), _did_hit(false)
+	Attack::Attack(const std::string &file, Entities::Player *me): _id("undefined"), _cooldown(0), _damage(0), _in_attack(false), _did_hit(false), _me(me)
 	{
 		Config config(file);
 		
@@ -56,7 +56,7 @@ namespace Gaem
 		_current_timer.Reset();
 	}
 	
-	bool Attack::isHit(int frame)
+	Entities::Player* Attack::isHit(int frame)
 	{
 		if ( _did_hit )
 			return false;
@@ -78,11 +78,11 @@ namespace Gaem
 			if ( player->isOn(hitpoint, _me->getDepth()) )
 			{
 				_did_hit = true;
-				return true;
+				return player;
 			}
 		}
 		
-		return false;
+		return NULL;
 	}
 	
 	void Attack::end()
@@ -90,6 +90,7 @@ namespace Gaem
 		_current_timer.Reset();
 		_in_attack = false;
 		_did_hit = false;
+		_started_time = 0;
 		_current_combo.erase(_current_combo.begin(), _current_combo.end());
 	}
 	
@@ -116,6 +117,7 @@ namespace Gaem
 		if ( _current_combo.size() == _combo.size() )
 		{
 			_in_attack = true;
+			_started_time = RakNet::GetTime();
 			return true;
 		}
 		return false;
@@ -124,6 +126,11 @@ namespace Gaem
 	void Attack::setAnimation(const std::string &a)
 	{
 		_animation = a;
+	}
+	
+	void Attack::setElapsedTime(RakNet::Time t)
+	{
+		
 	}
 	
 	std::string Attack::getID()
@@ -144,5 +151,10 @@ namespace Gaem
 	float Attack::getDamage()
 	{
 		return _damage;
+	}
+	
+	RakNet::Time Attack::getStartTime()
+	{
+		return _started_time;
 	}
 }

@@ -11,13 +11,18 @@
 #define __COMMON_MESSAGES_H__
 
 #include <stdint.h>
+
+#include "GetTime.h"
 #include "MessageIdentifiers.h"
+#include "BitStream.h"
 
 namespace inet
 {
 	typedef uint32_t id_type;
 
 #define STR2USERNAME(x, y) memset(x, 0, 21); memcpy(x, std::string(y).c_str(), 20);
+#define PRINTSTRUCT(s, x, t) for ( int OO = 0; OO < sizeof(t); OO++ ) s << (int)(((unsigned char*)x)[OO]) << ' '; s << '\n';
+#define FIXTIMESTAMP(a) if (RakNet::BitStream::DoEndianSwap()) RakNet::BitStream::ReverseBytesInPlace((unsigned char*)&a, sizeof(RakNet::Time));
 
 	enum Message
 	{
@@ -79,11 +84,15 @@ namespace inet
 	struct PlayerState
 	{
 		int32_t dir[2];
+		int32_t flyingdir;
 		int32_t left;
 		float depth;
 		float elevation;
 		float velocity[2];
+		float hp;
 		PlayerActionState state;
+		char attackid[20];
+		int ping;
 	};
 	
 	struct Character
@@ -118,6 +127,13 @@ namespace inet
 	
 	struct Packet
 	{
+		unsigned char type;
+	};
+	
+	struct TimedPacket
+	{
+		unsigned char timetype;
+		RakNet::Time timeStamp;
 		unsigned char type;
 	};
 	
@@ -168,7 +184,7 @@ namespace inet
 		id_type id;
 	};
 	
-	struct EventBasic: Packet
+	struct EventBasic: TimedPacket
 	{
 		PlayerState state;
 	};
@@ -214,6 +230,8 @@ namespace inet
 	
 	inet::Version getVersion();
 	std::string getVersionString(const inet::Version &);
+	
+	unsigned char getPacketIdentifier(RakNet::Packet *p);
 }
 
 #endif

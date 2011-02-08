@@ -28,6 +28,7 @@ Server::Server(unsigned short port, unsigned int max_players): _port(port), _max
 	_peer = RakNet::RakPeerInterface::GetInstance();
 	_peer->Startup(max_players, &socket, 1);
 	_peer->SetMaximumIncomingConnections(max_players);
+	_peer->SetOccasionalPing(true);
 	
 	std::cout << "... Connecting to database\n";
 	
@@ -89,7 +90,7 @@ void Server::run()
 		
 		for ( packet = _peer->Receive(); packet; _peer->DeallocatePacket(packet), packet = _peer->Receive())
 		{
-			switch (packet->data[0]) {
+			switch (inet::getPacketIdentifier(packet)) {
 				case ID_REMOTE_DISCONNECTION_NOTIFICATION:
 					// disconnection
 					std::cout << "Another client has connected. " << numClients() << " clients connected\n";
@@ -161,7 +162,7 @@ void Server::run()
 				
 				case ID_NO_FREE_INCOMING_CONNECTIONS:
 					// full as hell
-					std::cout << "The server is full, hoorah!\n";
+					std::cout << "The server is full, hoorah! " << numClients() << "\n";
 					break;
 				
 				case ID_DISCONNECTION_NOTIFICATION:
@@ -240,15 +241,20 @@ void Server::run()
 						break;
 					}
 					
+					FIXTIMESTAMP(event->timeStamp);
+					
 					Player *player = _players[id];
 					
 					// Update my definition of the player
 					player->setDir(event->state.dir[0], event->state.dir[1]);
+					player->setFlyingDir(event->state.flyingdir);
 					player->setLeft(event->state.left);
 					player->setElevation(event->state.elevation);
 					player->setDepth(event->state.depth);
 					player->setState(event->state.state);
 					player->setVelocity(event->state.velocity[0], event->state.velocity[1]);
+					player->setAttackId(std::string(event->state.attackid));
+					player->setHP(event->state.hp);
 					
 					// Send out my definition of the players stats to other players
 					_updated_players.push(packet->guid);
@@ -288,7 +294,7 @@ void Server::run()
 				} break;
 				
 				default:
-					std::cout << "Wat? " << (char)packet->data[0] << "\n";
+					std::cout << "Wat? '" << (int)(inet::getPacketIdentifier(packet)) << "'\n";
 				break;
 			}
 		}
@@ -345,9 +351,14 @@ void Server::run()
 				continue;
 			
 			inet::EventUpdate ev;
+			ev.timetype = ID_TIMESTAMP;
+			ev.timeStamp = RakNet::GetTime();
 			ev.type = inet::MESS_EVENT;
 			ev.state = player->getState();
 			ev.id = player->getId();
+			ev.state.ping = _peer->GetAveragePing(guid);
+			
+			FIXTIMESTAMP(ev.timeStamp);
 			
 			_peer->Send((char *)&ev, sizeof(ev), MEDIUM_PRIORITY, UNRELIABLE, 0, guid, true);
 		}

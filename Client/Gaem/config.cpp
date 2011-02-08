@@ -110,7 +110,7 @@ namespace Gaem
 			string k = (*iter).first;
 			
 			// Check if k is prefixed with "key[" and ends with "]"
-			if ( k.compare(0, key.length()+1, key + "[") == 0 && k.compare("]") == k.length()  )
+			if ( k.compare(0, key.length()+1, key + "[") == 0 && k.compare("]") == (int)k.length()  )
 			{
 				std::stringstream ss(k);
 				int i;

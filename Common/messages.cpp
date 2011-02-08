@@ -9,6 +9,8 @@
 
 #include <string>
 #include <sstream>
+#include <iostream>
+
 #include "Common/messages.h"
 
 namespace inet
@@ -24,5 +26,13 @@ namespace inet
 		std::stringstream ss;
 		ss << v.major << '.' << v.minor << v.type;
 		return ss.str();
+	}
+	
+	unsigned char getPacketIdentifier(RakNet::Packet *p)
+	{
+		if ((unsigned char)p->data[0] == ID_TIMESTAMP)
+			return (unsigned char) p->data[sizeof(unsigned char) + sizeof(RakNet::Time)];
+		else
+			return (unsigned char) p->data[0];
 	}
 }

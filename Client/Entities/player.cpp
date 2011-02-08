@@ -10,6 +10,8 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <cmath>
+
 #include <SFML/Graphics.hpp>
 
 #include "Gaem/gaem.h"
@@ -20,6 +22,7 @@
 #include "Gaem/resourcemanager.h"
 
 #include "Common/messages.h"
+#include "GetTime.h"
 
 #include "Entities/world.h"
 #include "Entities/player.h"
@@ -38,6 +41,7 @@ namespace Entities
 		_state = inet::STATE_WAITING;
 		_dir[0] = 1;
 		_dir[1] = 0;
+		_flyingdir = 0;
 		_velocity.x = 0;
 		_velocity.y = 0;
 		_defence = false;
@@ -205,6 +209,29 @@ namespace Entities
 		_pos_depth += _speed_up * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
+	void Player::hitBy(Player *player, Gaem::Attack *attack)
+	{
+		_flyingdir = (player->getFacingDir() > 0 ? -1 : 1);
+		_velocity.x = 300 * _flyingdir;
+		_velocity.y = 400;
+		
+		// Get length away from player to determine how hard he hit
+		float deltaPosition = fabs(player->getLeft() - this->getLeft());
+		float strength = 1;
+		
+		// 10 pixels away
+		if ( deltaPosition < 20 )
+		{
+			strength = 0.75;
+		}
+		
+		_hp -= attack->getDamage() * strength;
+		if ( _hp < 0 )
+		{
+			std::cout << "Died, bitch\n";
+		}
+	}
+	
 	void Player::clampPos()
 	{
 		bool did_enter_new_world = false, was_left = false;
@@ -361,34 +388,55 @@ namespace Entities
 		
 		clampPos();
 		
-		// Update velocity
+		// Update elevation and velocity based on gravity
 		if ( _elevation > 0 || _velocity.y > 0 )
 		{
+			// == What is this doing here? ==
 			if ( _current_attack )
 			{
 				_current_attack->end();
 				setCurrentAttack("");
 			}
-			_sprite->setAnimation("jumping");
+			if ( _flyingdir == 0 )
+				_sprite->setAnimation("jumping");
 			_velocity.y -= 1000 * tdelta;
 		}
 		
-		// Update position based on velocity
+		// Update hit flying
+		if ( _flyingdir != 0 )
+		{
+			_velocity.x += 0;
+			_sprite->setAnimation("damaged");
+		}
+		
+		// Update position up based on velocity
 		_elevation += _velocity.y * tdelta;
 		if ( _elevation <= 0 )
 		{
 			_elevation = 0;
 			_velocity.y = 0;
+			
+			if ( _flyingdir != 0 )
+			{
+				_flyingdir = 0;
+				_velocity.x = 0;
+			}
 		}
 		
+		// Update position left/right based on velocity
+		_pos_left += _velocity.x * tdelta;
+		
+		// Handle attacking
 		if ( _current_attack )
 		{
 			if ( ! _sprite->getAnimation()->isDone() )
 			{
-				if ( _current_attack->isHit(_sprite->getAnimation()->getFrameNum()) )
+				Player *hit_player = _current_attack->isHit(_sprite->getAnimation()->getFrameNum());
+				if ( hit_player )
 				{
 					// We hit somebody
-					std::cout << "HIT MOTHERFUCKER\n";
+					hit_player->hitBy(this, _current_attack);
+					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 			}
 			else
@@ -396,6 +444,14 @@ namespace Entities
 				_current_attack->end();
 				setCurrentAttack("");
 			}
+		}
+		
+		// Increase HP
+		if ( _hp < 1 )
+		{
+			_hp += 0.1 * tdelta;
+			if ( _hp > 1 )
+				_hp = 1;
 		}
 		
 		setDepth(_pos_depth);
@@ -409,20 +465,8 @@ namespace Entities
 	
 	void Player::draw(sf::RenderWindow &window)
 	{
-		float real_old_x = _sprite->getX(), x;
-		x = real_old_x - _sprite->getWidth() / 2;
-		_sprite->setX(x);
-		window.Draw(*_sprite->getSprite());
-		
-		// Draw name string
-		if ( _user )
-		{
-			sf::String name(_user->getUsername(), *Gaem::Gaem::getInstance()->getResourceManager()->getFont("resources/main_font.ttf", 15), 15);
-			name.SetX(_sprite->getX() - name.GetRect().GetWidth()/2 + _sprite->getWidth()/2);
-			name.SetY(_sprite->getY() - name.GetRect().GetHeight());
-			
-			window.Draw(name);
-		}
+		float real_old_x = _sprite->getX();
+		float x = real_old_x - _sprite->getWidth() / 2;
 		
 		// Draw two more versions of the player, one outside the field to the left
 		// and one outside to the right, this so it does not disappear when the position
@@ -430,19 +474,43 @@ namespace Entities
 		int scroll = Gaem::Gaem::getInstance()->getEntityManager()->getWorld()->getScrollLeft();
 		int width = Gaem::Gaem::getInstance()->getEntityManager()->getWorld()->getWidth();
 		
-		float old_x = _sprite->getX();
-		// Offset to the left
-		_sprite->setX(_pos_left - width - scroll);
-		window.Draw(*_sprite->getSprite());
-		_sprite->setX(old_x);
+		float current_x = x - width - scroll;
 		
-		old_x = _sprite->getX();
-		// Offset to the right
-		_sprite->setX(_pos_left + width - scroll);
-		window.Draw(*_sprite->getSprite());
-		_sprite->setX(old_x);
+		for ( int i = 0; i < 3; i++ )
+		{
+			_sprite->setX(current_x + scroll);
+			window.Draw(*_sprite->getSprite());
+			
+			if ( _user )
+			{
+				sf::String name(_user->getUsername(), *Gaem::Gaem::getInstance()->getResourceManager()->getFont("resources/main_font.ttf", 15), 15);
+				name.SetX(_sprite->getX() + _sprite->getWidth()/2 - name.GetRect().GetWidth()/2);
+				name.SetY(_sprite->getY() - name.GetRect().GetHeight());
+				
+				window.Draw(name);
+			}
+			
+			current_x += width;
+		}
 		
 		_sprite->setX(real_old_x);
+	}
+	
+	void Player::setAttack(std::string id, int RTT)
+	{
+		if ( id != "" )
+		{
+			bool is_current = _current_attack && _current_attack->getID() == id;
+			
+			_current_attack = _attacks[id];
+			_sprite->setAnimation(_current_attack->getAnimation());
+
+			if ( ! is_current )
+			{
+				_sprite->getAnimation()->setElapsedTime(RTT);
+				_current_attack->setElapsedTime(RTT);
+			}
+		}
 	}
 	
 	void Player::setCurrentAttack(const std::string &id)
@@ -456,12 +524,19 @@ namespace Entities
 		{
 			_current_attack = NULL;
 		}
+		
+		Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 	}
 	
 	void Player::setDir(int dir_x, int dir_y)
 	{
 		_dir[0] = dir_x;
 		_dir[1] = dir_y;
+	}
+	
+	void Player::setFlyingDir(int dir)
+	{
+		_flyingdir = dir;
 	}
 	
 	void Player::setLeft(int left)
@@ -485,6 +560,11 @@ namespace Entities
 		_state = state;
 	}
 	
+	void Player::setHP(float hp)
+	{
+		_hp = hp;
+	}
+	
 	float Player::getElevation()
 	{
 		return _elevation;
@@ -505,6 +585,31 @@ namespace Entities
 		return _pos_depth;
 	}
 	
+	float Player::getWidth()
+	{
+		return _sprite->getWidth();
+	}
+	
+	int Player::getDirX()
+	{
+		return _dir[0];
+	}
+	
+	int Player::getDirY()
+	{
+		return _dir[1];
+	}
+	
+	float Player::getHP()
+	{
+		return _hp;
+	}
+	
+	int Player::getFacingDir()
+	{
+		return _sprite->isFlipped();
+	}
+	
 	bool Player::isOn(sf::Vector2i pos, float depth)
 	{
 		return pos.x > getLeft() && pos.x < getRight() && (getDepth() - depth < 10 && getDepth() - depth > - 10);
@@ -515,11 +620,14 @@ namespace Entities
 		inet::PlayerState player;
 		player.dir[0] = _dir[0];
 		player.dir[1] = _dir[1];
+		player.flyingdir = _flyingdir;
 		player.left = _pos_left;
 		player.depth = _pos_depth;
 		player.elevation = _elevation;
 		player.velocity[0] = _velocity.x;
 		player.velocity[1] = _velocity.y;
+		player.hp = _hp;
+		strcpy(player.attackid, _current_attack ? _current_attack->getID().c_str() : "");
 		
 		if ( player.elevation > 0 || _velocity.y > 0 )
 			player.state = inet::STATE_JUMPING;
@@ -534,5 +642,10 @@ namespace Entities
 	int Player::getZIndex()
 	{
 		return _pos_depth;
+	}
+	
+	Gaem::AnimatedSprite *Player::getSprite()
+	{
+		return _sprite;
 	}
 }

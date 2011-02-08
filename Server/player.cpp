@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <cstring>
 
+#include "GetTime.h"
+
 #include "player.h"
 #include "usermanager.h"
 
@@ -27,8 +29,10 @@ Player::Player(inet::id_type id)
 	_state.elevation = 0;
 	_state.dir[0] = 1;
 	_state.dir[1] = 0;
+	_state.flyingdir = 0;
 	_state.velocity[0] = 0;
 	_state.velocity[1] = 0;
+	_state.hp = 1;
 	
 	// Get my character's specs
 }
@@ -47,6 +51,11 @@ void Player::setLeft(int left)
 void Player::setElevation(float el)
 {
 	_state.elevation = el;
+}
+
+void Player::setFlyingDir(int dir)
+{
+	_state.flyingdir = dir;
 }
 
 void Player::setDepth(float depth)
@@ -68,6 +77,16 @@ void Player::setState(inet::PlayerActionState state)
 void Player::setCharacter(int32_t id)
 {
 	_member.character_id = id;
+}
+
+void Player::setAttackId(std::string id)
+{
+	strcpy(_state.attackid, id.c_str());
+}
+
+void Player::setHP(float hp)
+{
+	_state.hp = hp;
 }
 
 inet::id_type Player::getId()
@@ -100,6 +119,11 @@ float *Player::getVelocity()
 	return _state.velocity;
 }
 
+float Player::getHP()
+{
+	return _state.hp;
+}
+
 std::string Player::getUsername()
 {
 	return _member.username;
@@ -110,12 +134,15 @@ inet::PlayerState Player::getState()
 	inet::PlayerState p;
 	p.dir[0] = *(getDir());
 	p.dir[1] = *(getDir()+1);
+	p.flyingdir = _state.flyingdir;
 	p.left = getLeft();
 	p.depth = getDepth();
 	p.elevation = getElevation();
 	p.velocity[0] = *(getVelocity());
 	p.velocity[1] = *(getVelocity()+1);
+	p.hp = getHP();
 	p.state = _state.state;
+	strcpy(p.attackid, _state.attackid);
 	return p;
 }
 

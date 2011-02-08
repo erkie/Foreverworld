@@ -46,6 +46,7 @@ namespace Entities
 		
 		// Position and movement
 		int _dir[2];
+		int _flyingdir;
 		int _pos_left;
 		float _pos_depth;
 		float _elevation;
@@ -70,20 +71,26 @@ namespace Entities
 		float getDepth();
 		
 		int getLeft();
-		
-		// Not really right
-		int getRight();
+		float getWidth();
+		int getRight(); // Not really right, right now
 		float getElevation();
+		int getDirX();
+		int getDirY();
+		int getFacingDir();
+		float getHP();
 		Gaem::User *getUser();
 		
 		void setUser(Gaem::User *);
 		void setDir(int, int);
+		void setFlyingDir(int);
 		void setLeft(int);
 		void setElevation(float);
 		void setVelocity(float, float);
 		void setState(inet::PlayerActionState);
 		void setCharacter(const inet::Character &);
+		void setAttack(std::string id, int RTT);
 		void setCurrentAttack(const std::string &id);
+		void setHP(float);
 		
 		bool isActivePlayer();
 		
@@ -92,6 +99,7 @@ namespace Entities
 		void runRight();
 		void moveUp();
 		void moveDown();
+		void hitBy(Player *player, Gaem::Attack *attack);
 		
 		void clampPos();
 		
@@ -103,6 +111,8 @@ namespace Entities
 		
 		inet::PlayerState getPlayerStruct();
 		virtual int getZIndex();
+		
+		Gaem::AnimatedSprite *getSprite();
 	};
 }
 

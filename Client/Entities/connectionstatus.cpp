@@ -54,6 +54,6 @@ namespace Entities
 	
 	int ConnectionStatus::getZIndex()
 	{
-		return 100;
+		return 750;
 	}
 }

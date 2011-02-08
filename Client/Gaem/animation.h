@@ -14,6 +14,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Gaem/config.h"
+#include "GetTime.h"
 
 namespace Gaem
 {
@@ -51,6 +52,7 @@ namespace Gaem
 		void setPlaying(bool);
 		bool getPlaying();
 		bool isDone();
+		void setElapsedTime(RakNet::Time);
 		
 		int getWidth();
 		int getHeight();

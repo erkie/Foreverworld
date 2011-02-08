@@ -111,12 +111,15 @@ namespace Gaem
 	
 	void NetworkManager::event(Entities::Player *player)
 	{
-		// They be trollin'?
 		if ( ! player ) return;
 		
 		inet::EventBasic ev;
+		ev.timetype = ID_TIMESTAMP;
+		ev.timeStamp = RakNet::GetTime();
 		ev.type = inet::MESS_EVENT;
 		ev.state = player->getPlayerStruct();
+		
+		FIXTIMESTAMP(ev.timeStamp);
 		
 		_peer->Send((char*)&ev, sizeof(ev), HIGH_PRIORITY, UNRELIABLE, 0, _hostaddr, false);
 	}
@@ -129,6 +132,9 @@ namespace Gaem
 		}
 		else
 		{
+			FIXTIMESTAMP(event->timeStamp);
+			event->state.ping += getPing();
+			
 			Gaem::Gaem::getInstance()->getEntityManager()->updatePlayer(event->id, event->state);
 		}
 	}
@@ -154,13 +160,13 @@ namespace Gaem
 		
 		for ( packet = _peer->Receive(); packet; _peer->DeallocatePacket(packet), packet = _peer->Receive() )
 		{
-			switch (packet->data[0])
+			switch (inet::getPacketIdentifier(packet))
 			{
 				case ID_CONNECTION_REQUEST_ACCEPTED: {
 					if ( _has_connected )
 						break;
 					
-					std::cout << "We are connected to " << packet->systemAddress.ToString() << "\n";
+					//std::cout << "We are connected to " << packet->systemAddress.ToString() << "\n";
 					_is_connected = true;
 					_has_connected = true;
 					
@@ -193,7 +199,7 @@ namespace Gaem
 					Gaem::Gaem::getInstance()->getMenuManager()->hideLoading();
 					
 					// Successfully logged in
-					if ( data->id == -1 )
+					if ( data->id == UINT_MAX ) // -1 meaning UNSIGNED_INTMAX
 					{
 						Gaem::Gaem::getInstance()->getMenuManager()->alert("This account is already signed on somewhere else.");
 					}
@@ -313,7 +319,7 @@ namespace Gaem
 	
 	int NetworkManager::getPing()
 	{
-		return _peer->GetLastPing(_hostaddr);
+		return _peer->GetAveragePing(_hostaddr);
 	}
 	
 	inet::id_type NetworkManager::getId()

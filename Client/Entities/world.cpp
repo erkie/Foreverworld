@@ -163,6 +163,9 @@ namespace Entities
 		
 		if ( player )
 		{
+			// Uncomment for world following player
+			//_scroll_left += player->getRight() - _scroll_left - (viewport_w/2) - player->getWidth()/2;
+			
 			// Goes outside the screen to the right
 			if ( player->getRight() - _scroll_left > viewport_w - 100 )
 			{

@@ -22,6 +22,7 @@
 #include "Entities/player.h"
 #include "Entities/connectionstatus.h"
 #include "Entities/chat.h"
+#include "Entities/damaged.h"
 
 namespace Gaem
 {
@@ -38,6 +39,7 @@ namespace Gaem
 		setWorld(world);
 		
 		add(new Entities::ConnectionStatus);
+		add(new Entities::Damaged);
 		
 		_chat = new Entities::Chat();
 		add(_chat);
@@ -143,11 +145,14 @@ namespace Gaem
 		}
 		
 		player->setDir(state.dir[0], state.dir[1]);
+		player->setFlyingDir(state.flyingdir);
 		player->setLeft(state.left);
 		player->setElevation(state.elevation);
 		player->setDepth(state.depth);
 		player->setVelocity(state.velocity[0], state.velocity[1]);
 		player->setState(state.state);
+		player->setAttack(std::string(state.attackid), state.ping);
+		player->setHP(state.hp);
 	}
 	
 	void EntityManager::updateCharacter(inet::id_type id, int32_t c_id)

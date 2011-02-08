@@ -34,12 +34,15 @@ public:
 	void loadSpecs();
 	
 	void setDir(int, int);
+	void setFlyingDir(int);
 	void setLeft(int);
 	void setDepth(float);
 	void setElevation(float);
 	void setVelocity(float, float);
 	void setState(inet::PlayerActionState);
 	void setCharacter(int32_t);
+	void setAttackId(std::string);
+	void setHP(float);
 	
 	inet::id_type getId();
 	int *getDir();
@@ -47,6 +50,7 @@ public:
 	float getDepth();
 	float getElevation();
 	float *getVelocity();
+	float getHP();
 	std::string getUsername();
 	
 	inet::PlayerState getState();
