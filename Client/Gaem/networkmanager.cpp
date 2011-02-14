@@ -166,7 +166,6 @@ namespace Gaem
 					if ( _has_connected )
 						break;
 					
-					//std::cout << "We are connected to " << packet->systemAddress.ToString() << "\n";
 					_is_connected = true;
 					_has_connected = true;
 					

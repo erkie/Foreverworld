@@ -40,40 +40,51 @@ namespace Menus
 	 ===
 		Animation Tab
 	 ===
-	*/
-
+	 */
+	
 	// Fetch all available animations
 	class DevAnimationModel: public gcn::ListModel
 	{
 	public:
 		file_list _files;
 		std::vector<std::string> _info_txts;
-
+		
 		bool operator()(const std::string &name)
 		{
 			return !file_exists("resources/players/" + name + "/info.txt");
 		}
-
+		
+		void searchDir(const std::string &dir)
+		{
+            file_list files;
+            list_files(dir, files);
+			
+            for ( file_list::iterator i = files.begin(); i != files.end(); ++i )
+            {
+                std::string name = dir + (*i);
+                if ( file_exists(name + "/info.txt") )
+                {
+                    str_replace(name, "resources/players/", "");
+                    _info_txts.push_back(name);
+                }
+                else
+                {
+                    searchDir(name + "/");
+                }
+            }
+		}
+		
 		void reload()
 		{
-			// Get all animations
-			Gaem::character_vector characters = Gaem::Gaem::getInstance()->getEntityManager()->getCharacters();
-			for ( Gaem::character_vector::iterator iter = characters.begin(); iter != characters.end(); ++iter )
-			{
-				// List animtions in character-folder
-				file_list files;
-				list_files("resources/players/" + std::string((*iter).slug) + "/", files);
-				
-				for ( file_list::iterator i = files.begin(); i != files.end(); ++i )
-					_info_txts.push_back(std::string((*iter).slug) + "/" + (*i));
-			}
+            _info_txts.erase(_info_txts.begin(), _info_txts.end());
+			searchDir("resources/players/");
 		}
-
+		
 		DevAnimationModel(): gcn::ListModel()
 		{
 			reload();
 		}
-
+		
 		std::string getElementAt(int i)
 		{
 			if ( i < 0 || i >= (int)_info_txts.size() )
@@ -83,34 +94,34 @@ namespace Menus
 		
 		int getNumberOfElements() { return _info_txts.size(); }
 	};
-
+	
 	// Change the animation demo when clicked the list
 	class DevAnimationSelection: public gcn::SelectionListener, public Gaem::Listener
 	{
 	public:
 		Widgets::AnimationDemo *_demo;
-
+		
 		void valueChanged(const gcn::SelectionEvent &event)
 		{
 			gcn::ListBox *list = static_cast<gcn::ListBox*>(event.getSource());
 			int index = list->getSelected();
-
+			
 			std::string selected = list->getListModel()->getElementAt(index);
 			std::string name = "resources/players/" + selected + "/info.txt";
-
+			
 			if ( selected == "" || ! file_exists(name) )
 				return;
-
+			
 			_demo->setAnimation(name);
 		}
-
+		
 		void setDemo(Widgets::AnimationDemo *demo)
 		{
 			_demo = demo;
 		}
 	};
-
-	// Change the scale of the animationdemo
+	
+		// Change the scale of the animationdemo
 	class DevScaleSlider: public gcn::ActionListener, public Gaem::Listener
 	{
 	public:
@@ -360,7 +371,7 @@ namespace Menus
 		gcn::ScrollArea *scroll = newWidget<gcn::ScrollArea>();
 		scroll->setX(10);
 		scroll->setY(paragraph1->getBottom() + 10);
-		scroll->setWidth(150);
+		scroll->setWidth(200);
 		scroll->setHeight(225);
 		scroll->setVerticalScrollPolicy(gcn::ScrollArea::SHOW_ALWAYS);
 

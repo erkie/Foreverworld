@@ -125,6 +125,9 @@ namespace Gaem
 	void Gaem::main()
 	{
 		sf::Event event;
+		
+		const sf::Input &input = getWindow()->GetInput();
+		
 		while (_app.IsOpened())
 		{
 			_tdelta = _app.GetFrameTime();
@@ -136,7 +139,6 @@ namespace Gaem
 			while (_app.GetEvent(event))
 			{
 				// Global events
-				
 				// Quit
 				if ( event.Type == sf::Event::Closed )
 					return quit();
@@ -166,9 +168,9 @@ namespace Gaem
 					else
 						_menu_manager->hide();
 				}
-
-				// Open developer menu on [Y]
-				if ( ! _menu_manager->hasMenus() && event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Y )
+				
+				// Open developer menu on [ctrl+Y]
+				if ( event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Y && input.IsKeyDown(sf::Key::LControl)  )
 				{
 					_menu_manager->show("developer");
 				}
