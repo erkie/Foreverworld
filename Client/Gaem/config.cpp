@@ -102,15 +102,18 @@ namespace Gaem
 		return !isTrue(key);
 	}
 	
-	std::vector<string> Config::getVector(string key)
+	cfg_strings Config::getVector(string key)
 	{
 		std::vector<std::string> ret(64);
+		
+		// Check all keys for <key> with [] at end
 		for ( cfg_values::iterator iter = _values.begin(); iter != _values.end(); iter++ )
 		{
 			string k = (*iter).first;
 			
-			// Check if k is prefixed with "key[" and ends with "]"
-			if ( k.compare(0, key.length()+1, key + "[") == 0 && k.compare("]") == (int)k.length()  )
+			// Check if k is postfixed with "key[" and ends with "]"
+			
+			if ( k.compare(0, key.length()+1, key + "[") == 0 && k.find_first_of("]", 0) == (int)k.length()-1  )
 			{
 				std::stringstream ss(k);
 				int i;
@@ -122,6 +125,20 @@ namespace Gaem
 			}
 		}
 		return ret;
+	}
+	
+	bool Config::isVector(string key)
+	{
+		// Check all keys for <key> with [] at end
+		for ( cfg_values::iterator iter = _values.begin(); iter != _values.end(); iter++ )
+		{
+			string k = (*iter).first;
+			
+			// Check if k is postfixed with "key[" and ends with "]"
+			if ( k.compare(0, key.length()+1, key + "[") == 0 && k.find_first_of("]", 0) == (int)k.length()-1  )
+				return true;
+		}
+		return false;
 	}
 
 	Config::cfg_values Config::parseFile(std::istream &file)

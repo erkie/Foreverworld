@@ -1,3 +1,4 @@
-file: resources/players/emanon/emanon_walking/roll.png
+file[1]: resources/players/emanon/emanon_walking/roll1.png
+file[2]: resources/players/emanon/emanon_walking/roll2.png
 width: 73
 frame time: 0.07

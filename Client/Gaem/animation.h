@@ -11,6 +11,7 @@
 #define __GAEM_ANIMATION_H__
 
 #include <string>
+#include <vector>
 #include <SFML/Graphics.hpp>
 
 #include "Gaem/config.h"
@@ -18,14 +19,18 @@
 
 namespace Gaem
 {
+	typedef std::vector<sf::Image*> image_vector;
+	
 	class Animation
 	{
 		int _width;
 		int _height;
+		int _total_width;
 		
 		std::string _path;
 		
-		sf::Image *_image;
+		int _current_image;
+		image_vector _images;
 		sf::IntRect _rect;
 		float _frame_time;
 		bool _run_once;
@@ -35,6 +40,10 @@ namespace Gaem
 		bool _has_run;
 		
 		Config _config;
+		
+		bool isAtEnd();
+		void setOffset(int offset_with);
+		void gotoLast();
 	public:
 		Animation(const std::string &path);
 		void load();

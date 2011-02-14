@@ -19,6 +19,8 @@ namespace Gaem
 	using std::map;
 	using std::string;
 
+	typedef std::vector<std::string> cfg_strings;
+
 	class Config
 	{
 		map<string, string> _values;
@@ -42,8 +44,11 @@ namespace Gaem
 		// Anything other then 1 or true is interpreted as false
 		bool isFalse(string);
 		
+		// If key is of vector type
+		bool isVector(string);
+		
 		// Get key[]
-		std::vector<string> getVector(string);
+		cfg_strings getVector(string);
 
 		cfg_values parseFile(const std::string &file);
 		cfg_values parseFile(std::istream &);

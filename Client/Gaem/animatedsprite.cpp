@@ -79,6 +79,7 @@ namespace Gaem
 	void AnimatedSprite::step()
 	{
 		_current_animation->step();
+		_sprite.SetImage(*_current_animation->getImage());
 		_sprite.SetSubRect(_current_animation->getRect());
 	}
 	

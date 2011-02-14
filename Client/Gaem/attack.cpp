@@ -36,11 +36,10 @@ namespace Gaem
 		}
 		
 		// Get hitpoints
-		typedef std::vector<std::string> strings;
-		strings hitpoints = config.getVector("hitpoint");
+		cfg_strings hitpoints = config.getVector("hitpoint");
 		
 		int i = 0;
-		for ( strings::iterator iter = hitpoints.begin(); iter != hitpoints.end(); iter++ )
+		for ( cfg_strings::iterator iter = hitpoints.begin(); iter != hitpoints.end(); iter++ )
 		{
 			if ( *iter == "" ) continue;
 			
