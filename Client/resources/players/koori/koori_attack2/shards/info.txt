@@ -1,0 +1,4 @@
+file: resources/players/koori/koori_attack2/shards/roll.png
+width: 460
+frame time: 0.07
+run once: yes

@@ -1,0 +1,7 @@
+Hello programmer.
+
+
+
+Emanons attack_2 är lite speciell. Först ska roll1 spelas. Sen efter det ska "roll" som ligger i "hit" mappen spelas.
+Det ska vara så att efter att roll1 spelas, ska roll spelas, sen roll igen sen igen osv...men efter varje roll ska han "teleporteras"
+till en ny fiende. Så han skadar flera fiender. Kanske 5 st? Om du inte förstår vad jag snackar om tar vi det i skolan.

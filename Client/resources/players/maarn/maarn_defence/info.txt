@@ -1,0 +1,4 @@
+file: resources/players/maarn/maarn_defence/block.png
+width: 65
+frame time: 0.07
+run once: yes

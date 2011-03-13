@@ -55,10 +55,10 @@ namespace Gaem
 		_current_timer.Reset();
 	}
 	
-	Entities::Player* Attack::isHit(int frame)
+	player_hitlist Attack::isHit(int frame)
 	{
 		if ( _did_hit )
-			return false;
+			return player_hitlist();
 		
 		// Get hitpoint
 		sf::Vector2i hitpoint = _hitpoints[frame];
@@ -66,6 +66,8 @@ namespace Gaem
 		
 		// Get all players
 		player_map players = Gaem::Gaem::getInstance()->getEntityManager()->getPlayers();
+		
+		player_hitlist res;
 		
 		// Return whether it hit anybody
 		for ( player_map::iterator iter = players.begin(); iter != players.end(); iter++ )
@@ -77,11 +79,12 @@ namespace Gaem
 			if ( player->isOn(hitpoint, _me->getDepth()) )
 			{
 				_did_hit = true;
-				return player;
+				res.push_back(player);
+				return res;
 			}
 		}
 		
-		return NULL;
+		return res;
 	}
 	
 	void Attack::end()
@@ -102,7 +105,7 @@ namespace Gaem
 		
 		if ( _combo[_current_combo.size()] == (char)code )
 		{
-			if ( is_first || _current_timer.GetElapsedTime() < 0.1 )
+			if ( is_first || _current_timer.GetElapsedTime() < 0.5 )
 			{
 				_current_combo.push_back((char)code);
 				_current_timer.Reset();
@@ -117,6 +120,7 @@ namespace Gaem
 		{
 			_in_attack = true;
 			_started_time = RakNet::GetTime();
+			
 			return true;
 		}
 		return false;
@@ -156,4 +160,28 @@ namespace Gaem
 	{
 		return _started_time;
 	}
+	
+	bool Attack::isDone()
+	{
+		return false;
+	}
+	
+	bool Attack::abortByJump()
+	{
+		return true;
+	}
+	
+	bool Attack::hasOwnAnimation()
+	{
+		return false;
+	}
+	
+	void Attack::drawAttackAtAfter(sf::FloatRect pos, sf::RenderWindow &window)
+	{}
+	
+	void Attack::drawAttackAtBefore(sf::FloatRect pos, sf::RenderWindow &window)
+	{}
+	
+	void Attack::step()
+	{}
 }

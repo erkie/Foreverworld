@@ -99,6 +99,7 @@ namespace Entities
 		void runRight();
 		void moveUp();
 		void moveDown();
+		void iDied();
 		void hitBy(Player *player, Gaem::Attack *attack);
 		
 		void clampPos();

@@ -59,6 +59,7 @@ namespace Gaem
 		_current_animation = _animations[key];
 		_current = key;
 		_current_animation->reset();
+		_current_animation->reallyReset();
 		_sprite.SetImage(*_current_animation->getImage());
 		_sprite.SetSubRect(_current_animation->getRect());
 		

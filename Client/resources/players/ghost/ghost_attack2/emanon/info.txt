@@ -1,0 +1,4 @@
+file: resources/players/ghost/ghost_attack2/emanon/roll.png
+width: 180
+frame time: 0.07
+run once: yes

@@ -24,8 +24,11 @@ namespace Entities
 
 namespace Gaem
 {
+	typedef std::list<Entities::Player*> player_hitlist;
+	
 	class Attack
 	{
+	protected:
 		typedef std::map<int, sf::Vector2<int> > hitpoint_t;
 		
 		std::string _id;
@@ -46,18 +49,30 @@ namespace Gaem
 	public:
 		Attack(const std::string &, Entities::Player *me);
 		
-		Entities::Player *isHit(int frame);
-		void end();
+		// Check whether attack has hit anyone
+		virtual player_hitlist isHit(int frame);
+		
+		// Reset everything after we are done
+		virtual void end();
+		
+		// Check whether enough keys have been hit in the combo
 		bool handleAttack(sf::Key::Code);
 		
 		void setAnimation(const std::string &);
 		void setElapsedTime(RakNet::Time);
 		
 		std::string getID();
-		std::string getAnimation();
+		virtual std::string getAnimation();
 		float getCooldown();
 		float getDamage();
 		RakNet::Time getStartTime();
+		
+		virtual void drawAttackAtBefore(sf::FloatRect pos, sf::RenderWindow &window);
+		virtual void drawAttackAtAfter(sf::FloatRect pos, sf::RenderWindow &window);
+		virtual bool isDone();
+		virtual bool hasOwnAnimation();
+		virtual bool abortByJump();
+		virtual void step();
 	};
 }
 

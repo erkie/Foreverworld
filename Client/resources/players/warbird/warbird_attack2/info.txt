@@ -1,0 +1,7 @@
+file: resources/players/warbird/warbird_attack2/roll.png
+attack: resources/players/warbird/warbird_attack2/attack.txt
+attack id: warbird_attack2
+width: 214
+frame time: 0.07
+run once: no
+duration: 10

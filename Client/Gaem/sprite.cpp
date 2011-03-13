@@ -82,6 +82,11 @@ namespace Gaem
 		return _sprite.GetSize().y;
 	}
 	
+	sf::FloatRect Sprite::getRect()
+	{
+		return sf::FloatRect(getX(), getY(), getX()+getWidth(), getY()+getHeight());
+	}
+	
 	bool Sprite::isFlipped()
 	{
 		return _is_flipped;

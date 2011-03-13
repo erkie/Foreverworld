@@ -1,0 +1,4 @@
+file: resources/players/koori/koori_defence/block.png
+width: 69
+frame time: 0.07
+run once: yes

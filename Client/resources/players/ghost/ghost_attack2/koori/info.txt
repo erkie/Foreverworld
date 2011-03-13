@@ -1,0 +1,4 @@
+file: resources/players/ghost/ghost_attack2/koori/roll.png
+width: 160
+frame time: 0.07
+run once: yes

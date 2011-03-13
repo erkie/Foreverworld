@@ -27,6 +27,12 @@
 #include "Entities/world.h"
 #include "Entities/player.h"
 
+#include "Entities/Attacks/EmanonAttack.h"
+#include "Entities/Attacks/WarbirdAttack.h"
+#include "Entities/Attacks/GhostAttack.h"
+#include "Entities/Attacks/KooriAttack.h"
+#include "Entities/Attacks/MaarnAttack.h"
+
 namespace Entities
 {
 	void Player::init()
@@ -105,11 +111,40 @@ namespace Entities
 	{
 		Gaem::Attack *attack1 = new Gaem::Attack(_sprite->getAnimtion("attack1")->getConfig().get("attack"), this);
 		attack1->setAnimation("attack1");
-		//Gaem::Attack *attack2 = new Gaem::Attack(_sprite->getAnimtion("attack2")->getConfig().get("attack"), this);
-		//attack2->setAnimation("attack2");
+		
+		
+		std::string spec_attack_id = _sprite->getAnimtion("attack2")->getConfig().get("attack id");
+		Gaem::Attack *attack2;
+		
+		if (spec_attack_id == "warbird_attack2")
+		{
+			attack2 = new Attacks::Warbird(_sprite->getAnimtion("attack2")->getConfig().get("attack"), this);
+		}
+		else if (spec_attack_id == "koori_attack2")
+		{
+			attack2 = new Attacks::Koori(_sprite->getAnimtion("attack2")->getConfig().get("attack"), this);
+		}
+		else if (spec_attack_id == "emanon_attack2")
+		{
+			attack2 = new Attacks::Emanon(_sprite->getAnimtion("attack2")->getConfig().get("attack"), this);
+		}
+		else if (spec_attack_id == "maarn_attack2")
+		{
+			attack2 = new Attacks::Maarn(_sprite->getAnimtion("attack2")->getConfig().get("attack"), this);
+		}
+		else if (spec_attack_id == "ghost_attack2")
+		{
+			attack2 = new Attacks::Ghost(_sprite->getAnimtion("attack2")->getConfig().get("attack"), this);
+		}
+		else
+		{
+			throw GAEM_NONFATAL_EXCEPTION("Could not find special attack id");
+		}
+		
+		attack2->setAnimation("attack2");
 		
 		_attacks[attack1->getID()] = attack1;
-		//_attacks[attack2->getID()] = attack2;
+		_attacks[attack2->getID()] = attack2;
 	}
 	
 	Gaem::User *Player::getUser()
@@ -165,7 +200,7 @@ namespace Entities
 	{
 		if ( _elevation == 0 && _can_jump )
 		{
-			if ( _current_attack )
+			if ( _current_attack && _current_attack->abortByJump() )
 			{
 				_current_attack->end();
 				setCurrentAttack("");
@@ -179,7 +214,7 @@ namespace Entities
 	
 	void Player::runLeft()
 	{
-		if ( _elevation == 0 && ! _current_attack )
+		if ( _elevation == 0 && (! _current_attack || _current_attack->hasOwnAnimation()) )
 			_sprite->setAnimation("running");
 		_sprite->flip(true);
 		_dir[0] = -1;
@@ -188,7 +223,7 @@ namespace Entities
 	
 	void Player::runRight()
 	{
-		if ( _elevation == 0 && ! _current_attack )
+		if ( _elevation == 0 && (! _current_attack || _current_attack->hasOwnAnimation()) )
 			_sprite->setAnimation("running");
 		_sprite->flip(false);
 		_dir[0] = 1;
@@ -197,23 +232,28 @@ namespace Entities
 	
 	void Player::moveUp()
 	{
-		if ( _elevation == 0 && ! _current_attack )
+		if ( _elevation == 0 && (! _current_attack || _current_attack->hasOwnAnimation()) )
 			_sprite->setAnimation("running");
 		_pos_depth -= _speed_up * Gaem::Gaem::getInstance()->getTDelta();
 	}
 	
 	void Player::moveDown()
 	{
-		if ( _elevation == 0 && ! _current_attack )
+		if ( _elevation == 0 && (! _current_attack || _current_attack->hasOwnAnimation()) )
 			_sprite->setAnimation("running");
 		_pos_depth += _speed_up * Gaem::Gaem::getInstance()->getTDelta();
+	}
+	
+	void Player::iDied()
+	{
+		
 	}
 	
 	void Player::hitBy(Player *player, Gaem::Attack *attack)
 	{
 		_flyingdir = (player->getFacingDir() > 0 ? -1 : 1);
 		_velocity.x = 300 * _flyingdir;
-		_velocity.y = 400;
+		_velocity.y = 200;
 		
 		// Get length away from player to determine how hard he hit
 		float deltaPosition = fabs(player->getLeft() - this->getLeft());
@@ -228,7 +268,7 @@ namespace Entities
 		_hp -= attack->getDamage() * strength;
 		if ( _hp < 0 )
 		{
-			std::cout << "Died, bitch\n";
+			iDied();
 		}
 	}
 	
@@ -381,7 +421,7 @@ namespace Entities
 			moveDown();
 		}
 		
-		if ( _dir[0] == 0 && _dir[1] == 0 && _elevation <= 0 && _velocity.y <= 0 && ! _defence && ! _current_attack )
+		if ( _dir[0] == 0 && _dir[1] == 0 && _elevation <= 0 && _velocity.y <= 0 && ! _defence && (! _current_attack || _current_attack->hasOwnAnimation()) )
 		{
 			_sprite->setAnimation("waiting");
 		}
@@ -392,7 +432,9 @@ namespace Entities
 		if ( _elevation > 0 || _velocity.y > 0 )
 		{
 			// == What is this doing here? ==
-			if ( _current_attack )
+			// == why not???? ==
+			// == because it is in jump()? ==
+			if ( _current_attack && _current_attack->abortByJump()  )
 			{
 				_current_attack->end();
 				setCurrentAttack("");
@@ -429,14 +471,20 @@ namespace Entities
 		// Handle attacking
 		if ( _current_attack )
 		{
-			if ( ! _sprite->getAnimation()->isDone() )
+			_current_attack->step();
+			
+			// If the attack is still ongoing
+			if ( ! _sprite->getAnimation()->isDone() && ! _current_attack->isDone() )
 			{
-				Player *hit_player = _current_attack->isHit(_sprite->getAnimation()->getFrameNum());
-				if ( hit_player )
+				Gaem::player_hitlist hit_player = _current_attack->isHit(_sprite->getAnimation()->getFrameNum());
+				if ( hit_player.size() )
 				{
 					// We hit somebody
-					hit_player->hitBy(this, _current_attack);
-					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+					for ( Gaem::player_hitlist::iterator iter = hit_player.begin(); iter != hit_player.end(); iter++ )
+					{
+						(*iter)->hitBy(this, _current_attack);
+						Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
+					}
 				}
 			}
 			else
@@ -479,7 +527,12 @@ namespace Entities
 		for ( int i = 0; i < 3; i++ )
 		{
 			_sprite->setX(current_x + scroll);
+			
+			if ( _current_attack )
+				_current_attack->drawAttackAtBefore(_sprite->getRect(), window);
 			window.Draw(*_sprite->getSprite());
+			if ( _current_attack )
+				_current_attack->drawAttackAtAfter(_sprite->getRect(), window);
 			
 			if ( _user )
 			{
@@ -501,9 +554,13 @@ namespace Entities
 		if ( id != "" )
 		{
 			bool is_current = _current_attack && _current_attack->getID() == id;
+			if ( is_current ) return;
 			
 			_current_attack = _attacks[id];
-			_sprite->setAnimation(_current_attack->getAnimation());
+			
+			// UPDATE setAttack 2()
+			if ( _current_attack->getID() != "warbird_attack2" )
+				_sprite->setAnimation(_current_attack->getAnimation());
 
 			if ( ! is_current )
 			{
@@ -517,8 +574,14 @@ namespace Entities
 	{
 		if ( id != "" )
 		{
+			if ( _current_attack )
+				_current_attack->end();
+			
 			_current_attack = _attacks[id];
-			_sprite->setAnimation(_current_attack->getAnimation());
+			
+			// UPDATE setAttack()
+			if ( id != "warbird_attack2" )
+				_sprite->setAnimation(_current_attack->getAnimation());
 		}
 		else
 		{

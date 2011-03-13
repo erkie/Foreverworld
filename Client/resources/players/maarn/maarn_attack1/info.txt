@@ -1,0 +1,5 @@
+file: resources/players/maarn/maarn_attack1/roll.png
+attack: resources/players/maarn/maarn_attack1/attack.txt
+width: 100
+frame time: 0.07
+run once: yes

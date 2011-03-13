@@ -31,6 +31,7 @@ namespace Gaem
 		void setX(float);
 		void setY(float);
 		sf::Vector2f getPosition();
+		sf::FloatRect getRect();
 		
 		sf::Sprite *getSprite();
 		float getX();

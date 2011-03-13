@@ -1,0 +1,6 @@
+file: resources/players/ghost/ghost_attack2/roll1.png
+attack: resources/players/ghost/ghost_attack2/attack.txt
+attack id: ghost_attack2
+width: 67
+frame time: 0.07
+run once: yes

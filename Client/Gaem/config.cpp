@@ -51,7 +51,7 @@ namespace Gaem
 			}
 			else
 			{
-				throw GAEM_NONFATAL_EXCEPTION("Could not find config file: (not .good()) " + name);
+				throw GAEM_NONFATAL_EXCEPTION("Could not find config file: (not .good()) '" + name + "'");
 			}
 
 		}

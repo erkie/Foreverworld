@@ -1,0 +1,4 @@
+file: resources/players/ghost/ghost_attack2/maarn/roll.png
+width: 190
+frame time: 0.07
+run once: yes

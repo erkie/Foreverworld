@@ -1,0 +1,4 @@
+file: resources/players/koori/koori_damaged/damaged.png
+width: 61
+frame time: 0.07
+run once: yes

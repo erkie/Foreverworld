@@ -1,0 +1,4 @@
+file: resources/players/maarn/maarn_damaged/damaged.png
+width: 75
+frame time: 0.07
+run once: yes

@@ -1,0 +1,4 @@
+Hello Programmer.
+
+Roll animationen ska spelas "åvanför" warbird, den är 80% transparent så warbird borde synas.
+Om man med warbird går åt typ höger, ska tornadon följa med. Den ska kanske vara i 7 sec?

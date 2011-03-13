@@ -1,0 +1,4 @@
+file: resources/players/ghost/ghost_attack2/warbird/roll.png
+width: 290
+frame time: 0.07
+run once: yes

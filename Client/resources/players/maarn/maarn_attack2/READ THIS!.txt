@@ -1,0 +1,4 @@
+Hello programmer.
+
+Maarns attack_2 är precis som attack 1 (dvs samma animation), med den lilla skillnaden att i attack_2 skjuter han ut
+en tiger. Du har tiger bilden.

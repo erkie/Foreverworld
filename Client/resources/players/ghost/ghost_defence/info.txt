@@ -1,0 +1,4 @@
+file: resources/players/ghost/ghost_defence/roll.png
+width: 146
+frame time: 0.07
+run once: no

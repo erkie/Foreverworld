@@ -1,0 +1,5 @@
+file: resources/players/warbird/warbird_attack1/roll.png
+attack: resources/players/warbird/warbird_attack1/attack.txt
+width: 185
+frame time: 0.07
+run once: yes

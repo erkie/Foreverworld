@@ -1,0 +1,4 @@
+file: resources/players/ghost/ghost_attack2/ghost/roll.png
+width: 170
+frame time: 0.07
+run once: yes

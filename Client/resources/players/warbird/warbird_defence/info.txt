@@ -1,0 +1,4 @@
+file: resources/players/warbird/warbird_defence/block.png
+width: 97
+frame time: 0.07
+run once: yes

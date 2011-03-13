@@ -1,0 +1,4 @@
+Hello programmer.
+
+Först ska roll1 spelas. Sen ska roll spelas som finns i de olika mapparna beroende på vem som man använder
+attack 2 på. Om ghost använder sin attack2 på koori ska attack_2/koori/roll spelas.

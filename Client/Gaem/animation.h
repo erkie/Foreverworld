@@ -35,6 +35,8 @@ namespace Gaem
 		float _frame_time;
 		bool _run_once;
 		bool _playing;
+		float _duration;
+		float _played_time;
 		
 		float _last_time;
 		bool _has_run;
@@ -52,6 +54,8 @@ namespace Gaem
 		void nextFrame();
 		void prevFrame();
 		void reset();
+		// Reset stuff that should only be reset once per run
+		void reallyReset();
 		
 		void gotoFirst();
 		

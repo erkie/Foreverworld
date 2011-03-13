@@ -1,0 +1,5 @@
+file: resources/players/koori/koori_attack1/roll.png
+attack: resources/players/koori/koori_attack1/attack.txt
+width: 146
+frame time: 0.05
+run once: yes

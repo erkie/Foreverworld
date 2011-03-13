@@ -1,0 +1,6 @@
+file: resources/players/emanon/emanon_attack2/roll1.png
+attack: resources/players/emanon/emanon_attack2/attack.txt
+attack id: emanon_attack2
+width: 120
+frame time: 0.07
+run once: yes

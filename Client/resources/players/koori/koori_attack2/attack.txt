@@ -1,0 +1,5 @@
+id: koori_attack2
+cooldown: 5.0
+damage: 0.5
+combo: j l
+shards animation: resources/players/koori/koori_attack2/shards/info.txt

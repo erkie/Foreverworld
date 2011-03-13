@@ -24,7 +24,7 @@
 
 namespace Gaem
 {
-	Animation::Animation(const std::string &path): _total_width(0), _path(path), _run_once(false), _playing(true), _last_time(0), _has_run(false)
+	Animation::Animation(const std::string &path): _total_width(0), _path(path), _run_once(false), _playing(true), _duration(-1), _played_time(0), _last_time(0), _has_run(false)
 	{
 		load();
 	}
@@ -40,6 +40,7 @@ namespace Gaem
 			_frame_time = _config.getFloat("frame time", 1.0);
 			_width = _config.getFloat("width", 1.0);
 			_run_once = _config.isTrue("run once");
+			_duration = _config.getFloat("duration", -1);
 			
 			bool do_smooth = ! _config.isTrue("no smooth");
 			
@@ -90,6 +91,8 @@ namespace Gaem
 			return;
 		
 		float tdelta = Gaem::Gaem::getInstance()->getTDelta();
+		_played_time += tdelta;
+		
 		if ( tdelta + _last_time > _frame_time )
 		{
 			nextFrame();
@@ -113,11 +116,14 @@ namespace Gaem
 		// Reset animation if looped
 		if ( isAtEnd() )
 		{
-			if ( ! _run_once )
+			if ( _duration > -1 && _played_time < _duration )
+				reset();
+			else if ( ! _run_once && _duration == -1 )
 				reset();
 			// Deactivate animations
 			else
 			{
+				
 				_has_run = true;
 				prevFrame();
 			}
@@ -137,6 +143,11 @@ namespace Gaem
 		_rect = sf::IntRect(0, 0, _width, _height);
 		_has_run = false;
 		_last_time = 0;
+	}
+	
+	void Animation::reallyReset()
+	{
+		_played_time = 0;
 	}
 	
 	void Animation::setOffset(int offset_with)
@@ -177,6 +188,7 @@ namespace Gaem
 	
 	bool Animation::isDone()
 	{
+		if ( _duration != -1 ) return _played_time >= _duration;
 		if ( ! _run_once ) return false;
 		return _has_run;
 	}
