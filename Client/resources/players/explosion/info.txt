@@ -1,0 +1,4 @@
+file: resources/players/explosion/boom.png
+width: 71
+run once: yes
+frame time: 0.07

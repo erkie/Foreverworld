@@ -4,4 +4,4 @@ attack id: warbird_attack2
 width: 214
 frame time: 0.07
 run once: no
-duration: 10
+duration: 5

@@ -23,6 +23,7 @@ namespace Gaem
 	class MenuManager;
 	class EntityManager;
 	class NetworkManager;
+	class SoundManager;
 	
 	class Gaem
 	{
@@ -36,6 +37,7 @@ namespace Gaem
 		EntityManager *_entity_manager;
 		ResourceManager *_resource_manager;
 		NetworkManager *_network_manager;
+		SoundManager *_sound_manager;
 		
 		NonFatalException _exception;
 
@@ -68,6 +70,7 @@ namespace Gaem
 		EntityManager *getEntityManager();
 		ResourceManager *getResourceManager();
 		NetworkManager *getNetworkManager();
+		SoundManager *getSoundManager();
 
 		static Gaem *getInstance();
 	};

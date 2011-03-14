@@ -24,6 +24,7 @@
 #include "Gaem/menumanager.h"
 #include "Gaem/entitymanager.h"
 #include "Gaem/networkmanager.h"
+#include "Gaem/soundmanager.h"
 
 #include "My/myutilities.h"
 
@@ -69,6 +70,9 @@ namespace Gaem
 		
 		// Network manager, connect to server, send/receive updates
 		_network_manager = new NetworkManager();
+		
+		// Sound manager, play music and sounds
+		_sound_manager = new SoundManager();
 		
 		// Information about me
 		_user = new User();

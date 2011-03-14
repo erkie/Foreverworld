@@ -39,6 +39,7 @@ bool file_exists(const std::string &f);
 std::string trim(const std::string &str, const std::string &chars = " \n\r\t");
 
 bool is_valid_email(const std::string &);
+bool has_unicode_chars(const std::string &);
 
 typedef std::vector<std::string> file_list;
 void list_files(const std::string &dir, file_list &res);

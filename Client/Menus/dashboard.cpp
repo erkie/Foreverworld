@@ -233,7 +233,7 @@ namespace Menus
 		fun->setHeight(container->getChildrenArea().height - 10 * 2);
 		fun->setPosition(10, 10);
 		
-		for ( int i = 0; i < 20; i++ )
+		for ( int i = 0; i < 5; i++ )
 		{
 			fun->addImage(new gcn::SFMLImage(*Gaem::Gaem::getInstance()->getResourceManager()->getImage("resources/wow.png")));
 			fun->addImage(new gcn::SFMLImage(*Gaem::Gaem::getInstance()->getResourceManager()->getImage("resources/wow2.png")));

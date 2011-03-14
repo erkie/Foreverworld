@@ -26,6 +26,7 @@ namespace Gaem
 		_id = config.get("id");
 		_cooldown = config.getFloat("cooldown", 0);
 		_damage = config.getFloat("damage", 0);
+		_required_mana = config.getFloat("required mana", 0);
 		
 		// Get keyboard combo
 		std::stringstream ss(config.get("combo"));
@@ -74,7 +75,7 @@ namespace Gaem
 		{
 			Entities::Player *player = (*iter).second;
 			
-			if ( player == _me ) continue;
+			if ( player == _me || player->getDead() ) continue;
 			
 			if ( player->isOn(hitpoint, _me->getDepth()) )
 			{
@@ -99,9 +100,9 @@ namespace Gaem
 		_current_combo.erase(_current_combo.begin(), _current_combo.end());
 	}
 	
-	bool Attack::handleAttack(sf::Key::Code code)
+	bool Attack::handleAttack(sf::Key::Code code, float mana)
 	{
-		if ( _in_attack )
+		if ( _in_attack || mana < _required_mana )
 			return false;
 	
 		bool is_first = _current_combo.size() == 0;
@@ -159,6 +160,11 @@ namespace Gaem
 	float Attack::getDamage()
 	{
 		return _damage;
+	}
+	
+	float Attack::getRequiredMana()
+	{
+		return _required_mana;
 	}
 	
 	RakNet::Time Attack::getStartTime()

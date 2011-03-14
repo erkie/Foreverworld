@@ -23,6 +23,7 @@
 #include "Entities/connectionstatus.h"
 #include "Entities/chat.h"
 #include "Entities/damaged.h"
+#include "Entities/statusmessage.h"
 
 namespace Gaem
 {
@@ -43,6 +44,9 @@ namespace Gaem
 		
 		_chat = new Entities::Chat();
 		add(_chat);
+		
+		_status_message = new Entities::StatusMessage;
+		add(_status_message);
 	}
 	
 	void EntityManager::add(Entity *entity)
@@ -153,6 +157,9 @@ namespace Gaem
 		player->setState(state.state);
 		player->setAttack(std::string(state.attackid), state.ping);
 		player->setHP(state.hp);
+		player->setMana(state.mana);
+		player->setDefence(state.defence);
+		player->setDead(state.dead);
 	}
 	
 	void EntityManager::updateCharacter(inet::id_type id, int32_t c_id)
@@ -227,5 +234,10 @@ namespace Gaem
 	Entities::Chat *EntityManager::getChat()
 	{
 		return _chat;
+	}
+	
+	Entities::StatusMessage *EntityManager::getStatusMessage()
+	{
+		return _status_message;
 	}
 }

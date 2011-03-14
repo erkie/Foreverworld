@@ -22,6 +22,7 @@ namespace Entities
 	class Player;
 	class World;
 	class Chat;
+	class StatusMessage;
 }
 
 namespace Gaem
@@ -46,6 +47,7 @@ namespace Gaem
 		Entities::Player *_current_player;
 		Entities::World *_world;
 		Entities::Chat *_chat;
+		Entities::StatusMessage *_status_message;
 	public:
 		EntityManager();
 		void init();
@@ -78,6 +80,7 @@ namespace Gaem
 		Entities::World *getWorld();
 		
 		Entities::Chat *getChat();
+		Entities::StatusMessage *getStatusMessage();
 	};
 }
 

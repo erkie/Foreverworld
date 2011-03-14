@@ -26,6 +26,7 @@
 
 #include "Entities/world.h"
 #include "Entities/player.h"
+#include "Entities/statusmessage.h"
 
 #include "Entities/Attacks/EmanonAttack.h"
 #include "Entities/Attacks/WarbirdAttack.h"
@@ -52,8 +53,10 @@ namespace Entities
 		_velocity.y = 0;
 		_defence = false;
 		_hp = 1;
+		_mana = 1;
 		_current_attack = NULL;
 		_ghost_hit = false;
+		_is_dead = false;
 		
 		_sprite = new Gaem::AnimatedSprite;
 	}
@@ -71,6 +74,7 @@ namespace Entities
 		_sprite->loadAnimation("attack2", info.get("attack2"));
 		_sprite->loadAnimation("defence", info.get("defence"));
 		_sprite->loadAnimation("damaged", info.get("damaged"));
+		_sprite->loadAnimation("dead", "resources/players/explosion/info.txt");
 		
 		_scale = info.getFloat("scale", 1.0);
 		_speed = info.getFloat("speed", 250);
@@ -195,6 +199,7 @@ namespace Entities
 		_sprite->loadAnimation("defence", "resources/players/" + slug + "/" + slug + "_defence/info.txt");
 		_sprite->loadAnimation("damaged", "resources/players/" + slug + "/" + slug + "_damaged/info.txt");
 		_sprite->loadAnimation("ghost_hit", "resources/players/ghost/ghost_attack2/" + slug + "/info.txt");
+		_sprite->loadAnimation("dead", "resources/players/explosion/info.txt");
 		
 		initAttacks();
 	}
@@ -254,7 +259,8 @@ namespace Entities
 	
 	void Player::iDied()
 	{
-		
+		_sprite->setAnimation("dead");
+		setDead(true);
 	}
 	
 	void Player::hitBy(Player *player, Gaem::Attack *attack)
@@ -262,6 +268,7 @@ namespace Entities
 		// Get length away from player to determine how hard he hit
 		float deltaPosition = fabs(player->getLeft() - this->getLeft());
 		float strength = 1;
+		float defence_quantifier = _defence ? 0.1 : 1;
 		
 		// 10 pixels away
 		if ( deltaPosition < 20 )
@@ -269,7 +276,7 @@ namespace Entities
 			strength = 0.75;
 		}
 		
-		_hp -= attack->getDamage() * strength;
+		_hp -= attack->getDamage() * strength * defence_quantifier;
 		if ( _hp < 0 )
 		{
 			iDied();
@@ -285,6 +292,19 @@ namespace Entities
 		_flyingdir = (player->getFacingDir() > 0 ? -1 : 1);
 		_velocity.x = 300 * _flyingdir;
 		_velocity.y = 200;
+	}
+	
+	void Player::respawn()
+	{
+		// Get good spot
+		int left_pos = 0;
+		
+		// Set left and reset everything
+		_pos_left = left_pos;
+		_is_dead = false;
+		
+		// Send updates
+		Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 	}
 	
 	void Player::clampPos()
@@ -329,7 +349,7 @@ namespace Entities
 				{
 					for ( attack_map::iterator iter = _attacks.begin(); iter != _attacks.end(); iter++ )
 					{
-						if ( (*iter).second->handleAttack(event.Key.Code) )
+						if ( (*iter).second->handleAttack(event.Key.Code, _mana) )
 						{
 							setCurrentAttack((*iter).second->getID());
 						}
@@ -344,6 +364,30 @@ namespace Entities
 	
 	void Player::logic()
 	{
+		if ( _is_dead )
+		{
+			_sprite->setAnimation("dead");
+			
+			if ( isActivePlayer() )
+			{
+				// wait 5 seconds and then respawn
+				int time_left = 5 - _died_time.GetElapsedTime();
+				
+				std::stringstream mess;
+				mess << "You died... Respawning in ";
+				mess << time_left << " seconds";
+				
+				Gaem::Gaem::getInstance()->getEntityManager()->getStatusMessage()->setMessage(mess.str());
+				
+				if ( time_left < 0 )
+				{
+					respawn();
+				}
+			}
+			_sprite->step();
+			return;
+		}
+	
 		Gaem::Gaem *game = Gaem::Gaem::getInstance();
 		const sf::Input &input = game->getWindow()->GetInput();
 		
@@ -356,44 +400,44 @@ namespace Entities
 		{
 			// If any move key is pressed set the running sprite and move the player
 			if (
-				input.IsKeyDown(sf::Key::A) || input.IsKeyDown(sf::Key::D)
-				|| input.IsKeyDown(sf::Key::S) || input.IsKeyDown(sf::Key::W)
+				input.IsKeyDown(sf::Key::Left) || input.IsKeyDown(sf::Key::Right)
+				|| input.IsKeyDown(sf::Key::Down) || input.IsKeyDown(sf::Key::Up)
 			) {
 				// Set left running sprite and move player
-				if ( input.IsKeyDown(sf::Key::A) && _dir[0] != -1 )
+				if ( input.IsKeyDown(sf::Key::Left) && _dir[0] != -1 )
 				{
 					_dir[0] = -1;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
 				// Set right running sprite and move player
-				if ( input.IsKeyDown(sf::Key::D) && _dir[0] != 1 )
+				if ( input.IsKeyDown(sf::Key::Right) && _dir[0] != 1 )
 				{
 					_dir[0] = 1;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
 				// Move up
-				if ( input.IsKeyDown(sf::Key::W) && _dir[1] != 1 )
+				if ( input.IsKeyDown(sf::Key::Up) && _dir[1] != 1 )
 				{
 					_dir[1] = 1;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
 				// Move down
-				if ( input.IsKeyDown(sf::Key::S) && _dir[1] != -1 )
+				if ( input.IsKeyDown(sf::Key::Down) && _dir[1] != -1 )
 				{
 					_dir[1] = -1;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
-				if ( ! input.IsKeyDown(sf::Key::S) && ! input.IsKeyDown(sf::Key::W) && _dir[1] != 0 )
+				if ( ! input.IsKeyDown(sf::Key::Down) && ! input.IsKeyDown(sf::Key::Up) && _dir[1] != 0 )
 				{
 					_dir[1] = 0;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 				}
 				
-				if ( ! input.IsKeyDown(sf::Key::A) && ! input.IsKeyDown(sf::Key::D) && _dir[0] != 0 )
+				if ( ! input.IsKeyDown(sf::Key::Left) && ! input.IsKeyDown(sf::Key::Right) && _dir[0] != 0 )
 				{
 					_dir[0] = 0;
 					Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
@@ -405,16 +449,15 @@ namespace Entities
 				_dir[1] = 0;
 				Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 			}
-			else if ( input.IsKeyDown(sf::Key::K) )
+			else if ( input.IsKeyDown(sf::Key::D) && ! _current_attack )
 			{
-				_sprite->setAnimation("defence");
 				_defence = true;
 				Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 			}
-			
-			if ( ! input.IsKeyDown(sf::Key::K) )
+			else if ( ! input.IsKeyDown(sf::Key::D) && _defence && ! _current_attack )
 			{
 				_defence = false;
+				Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
 			}
 		}
 		
@@ -439,6 +482,11 @@ namespace Entities
 		if ( _dir[0] == 0 && _dir[1] == 0 && _elevation <= 0 && _velocity.y <= 0 && ! _ghost_hit && ! _defence && (! _current_attack || _current_attack->hasOwnAnimation()) )
 		{
 			_sprite->setAnimation("waiting");
+		}
+		
+		if ( _defence )
+		{
+			_sprite->setAnimation("defence");
 		}
 		
 		clampPos();
@@ -498,7 +546,8 @@ namespace Entities
 			_current_attack->step();
 			
 			// If the attack is still ongoing
-			if ( ! _sprite->getAnimation()->isDone() || ! _current_attack->isDone() )
+			bool is_finished = !_current_attack->hasOwnAnimation() ? _sprite->getAnimation()->isDone() : _current_attack->isDone();
+			if ( ! is_finished )
 			{
 				Gaem::player_hitlist hit_player = _current_attack->isHit(_sprite->getAnimation()->getFrameNum());
 				if ( hit_player.size() )
@@ -526,6 +575,13 @@ namespace Entities
 				_hp = 1;
 		}
 		
+		if ( _mana < 1 )
+		{
+			_mana += 0.1 * tdelta;
+			if ( _mana > 1 )
+				_mana = 1;
+		}
+		
 		setDepth(_pos_depth);
 		
 		_sprite->setY(game->getHeight() - world_height + _pos_depth - _sprite->getHeight() - _elevation);
@@ -537,6 +593,12 @@ namespace Entities
 	
 	void Player::draw(sf::RenderWindow &window)
 	{
+		// If we're dead don't draw anything
+		if ( _is_dead && _sprite->getAnimation()->isDone() )
+		{
+			return;
+		}
+		
 		float real_old_x = _sprite->getX();
 		float x = real_old_x - _sprite->getWidth() / 2;
 		
@@ -558,13 +620,21 @@ namespace Entities
 			if ( _current_attack )
 				_current_attack->drawAttackAtAfter(_sprite->getRect(), window);
 			
+			// Draw name and mana
 			if ( _user )
 			{
 				sf::String name(_user->getUsername(), *Gaem::Gaem::getInstance()->getResourceManager()->getFont("resources/main_font.ttf", 15), 15);
 				name.SetX(_sprite->getX() + _sprite->getWidth()/2 - name.GetRect().GetWidth()/2);
-				name.SetY(_sprite->getY() - name.GetRect().GetHeight());
+				name.SetY(_sprite->getY() - name.GetRect().GetHeight() - 10);
 				
 				window.Draw(name);
+				
+				int mana_width = 50;
+				int px = _sprite->getX() + _sprite->getWidth()/2 - mana_width/2;
+				int py = name.GetPosition().y + name.GetRect().GetHeight() + 2;
+				
+				sf::Shape manabar = sf::Shape::Rectangle(px, py, px + mana_width*_mana, py + 2, sf::Color(255, 255, 255*_mana, 255));
+				window.Draw(manabar);
 			}
 			
 			current_x += width;
@@ -606,6 +676,10 @@ namespace Entities
 			// UPDATE setAttack()
 			if ( id != "warbird_attack2" )
 				_sprite->setAnimation(_current_attack->getAnimation());
+			
+			_mana -= 0.2;
+			if ( _mana < 0 )
+				_mana = 0;
 		}
 		else
 		{
@@ -642,6 +716,20 @@ namespace Entities
 		_velocity.y = y;
 	}
 	
+	void Player::setDefence(bool d)
+	{
+		_defence = d;
+	}
+	
+	void Player::setDead(bool d)
+	{
+		if ( ! _is_dead )
+		{
+			_died_time.Reset();
+		}
+		_is_dead = d;
+	}
+	
 	void Player::setState(inet::PlayerActionState state)
 	{
 		_state = state;
@@ -650,6 +738,11 @@ namespace Entities
 	void Player::setHP(float hp)
 	{
 		_hp = hp;
+	}
+	
+	void Player::setMana(float mana)
+	{
+		_mana = mana;
 	}
 	
 	float Player::getElevation()
@@ -677,6 +770,11 @@ namespace Entities
 		return _sprite->getWidth();
 	}
 	
+	bool Player::getDefence()
+	{
+		return _defence;
+	}
+	
 	int Player::getDirX()
 	{
 		return _dir[0];
@@ -692,9 +790,19 @@ namespace Entities
 		return _hp;
 	}
 	
+	float Player::getMana()
+	{
+		return _mana;
+	}
+	
 	int Player::getFacingDir()
 	{
 		return _sprite->isFlipped();
+	}
+	
+	bool Player::getDead()
+	{
+		return _is_dead;
 	}
 	
 	bool Player::isOn(sf::Vector2i pos, float depth)
@@ -714,12 +822,17 @@ namespace Entities
 		player.velocity[0] = _velocity.x;
 		player.velocity[1] = _velocity.y;
 		player.hp = _hp;
+		player.mana = _mana;
+		player.defence = _defence;
+		player.dead = _is_dead;
 		strcpy(player.attackid, _current_attack ? _current_attack->getID().c_str() : "");
 		
 		if ( player.elevation > 0 || _velocity.y > 0 )
 			player.state = inet::STATE_JUMPING;
 		else if ( _dir[0] != 0 || _dir[1] != 0 )
 			player.state = inet::STATE_RUNNING;
+		else if ( _defence )
+			player.state = inet::STATE_DEFENDING;
 		else
 			player.state = inet::STATE_WAITING;
 		

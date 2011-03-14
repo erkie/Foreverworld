@@ -55,12 +55,16 @@ namespace Entities
 		
 		// Hit by ghost
 		bool _ghost_hit;
+		bool _is_dead;
+		sf::Clock _died_time;
 		
 		// Attack related
 		attack_map _attacks;
 		Gaem::Attack *_current_attack;
-		float _defence;
+		bool _defence;
 		float _hp;
+		float _mana;
+		
 	public:
 		void init();
 	
@@ -80,7 +84,10 @@ namespace Entities
 		int getDirX();
 		int getDirY();
 		int getFacingDir();
+		bool getDefence();
+		bool getDead();
 		float getHP();
+		float getMana();
 		Gaem::User *getUser();
 		
 		void setUser(Gaem::User *);
@@ -93,7 +100,10 @@ namespace Entities
 		void setCharacter(const inet::Character &);
 		void setAttack(std::string id, int RTT);
 		void setCurrentAttack(const std::string &id);
+		void setDefence(bool);
+		void setDead(bool);
 		void setHP(float);
+		void setMana(float);
 		
 		bool isActivePlayer();
 		
@@ -104,6 +114,7 @@ namespace Entities
 		void moveDown();
 		void iDied();
 		void hitBy(Player *player, Gaem::Attack *attack);
+		void respawn();
 		
 		void clampPos();
 		

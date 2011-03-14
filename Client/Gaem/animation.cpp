@@ -195,7 +195,7 @@ namespace Gaem
 	
 	void Animation::setElapsedTime(RakNet::Time t)
 	{
-		std::cout << "Setting: " << t << '\n';
+		//std::cout << "Setting: " << t << '\n';
 	}
 	
 	sf::Image *Animation::getImage()

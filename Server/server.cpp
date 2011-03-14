@@ -253,6 +253,9 @@ void Server::run()
 					player->setVelocity(event->state.velocity[0], event->state.velocity[1]);
 					player->setAttackId(std::string(event->state.attackid));
 					player->setHP(event->state.hp);
+					player->setMana(event->state.mana);
+					player->setDefence(event->state.defence);
+					player->setDead(event->state.dead);
 					
 					// Send out my definition of the players stats to other players
 					_updated_players.push(packet->guid);

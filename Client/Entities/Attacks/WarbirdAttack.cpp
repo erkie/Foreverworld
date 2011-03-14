@@ -7,6 +7,7 @@
  *
  */
 
+#include <iostream>
 #include "Gaem/entitymanager.h"
 #include "WarbirdAttack.h"
 
@@ -28,7 +29,7 @@ namespace Attacks
 	
 	Gaem::player_hitlist Warbird::isHit(int frame)
 	{
-		if ( _did_hit )
+		if ( _did_hit || _last_check.GetElapsedTime() < 0.2 )
 			return Gaem::player_hitlist();
 		
 		// Get all players
@@ -41,7 +42,7 @@ namespace Attacks
 		{
 			Entities::Player *player = (*iter).second;
 			
-			if ( player == _me ) continue;
+			if ( player == _me || player->getDead() ) continue;
 			
 			int left = player->getLeft();
 			
@@ -53,6 +54,8 @@ namespace Attacks
 				res.push_back(player);
 			}
 		}
+		
+		_last_check.Reset();
 		
 		return res;
 	}
@@ -74,7 +77,6 @@ namespace Attacks
 	void Warbird::end()
 	{
 		Gaem::Attack::end();
-		
 		_tornado->getAnimation()->reallyReset();
 	}
 	

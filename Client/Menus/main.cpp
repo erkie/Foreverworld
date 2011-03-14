@@ -91,6 +91,12 @@ namespace Menus
 				return;
 			}
 			
+			if ( has_unicode_chars(username) )
+			{
+				Gaem::Gaem::getInstance()->getMenuManager()->alert("Your username is not valid. It may only contain A-Z and some other punctuation");
+				return;
+			}
+			
 			Gaem::Gaem::getInstance()->getMenuManager()->showLoading("Welcome, you douche!");
 			Gaem::Gaem::getInstance()->getUser()->signup(username, password, email);
 		}
@@ -284,7 +290,7 @@ namespace Menus
 		paragraph3->setWidth(field_width);
 		paragraph3->adjustHeight();
 		
-		gcn::Button *stupid = newWidget<gcn::Button>("Fuck you");
+		gcn::Button *stupid = newWidget<gcn::Button>("Fork you");
 		stupid->adjustSize();
 		stupid->setX(about_container->getWidth() - stupid->getWidth() - 10);
 		stupid->setY(about_container->getHeight() - stupid->getHeight() - 10);

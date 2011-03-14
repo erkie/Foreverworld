@@ -36,6 +36,7 @@ namespace Gaem
 		float _damage;
 		std::vector<char> _combo;
 		hitpoint_t _hitpoints;
+		float _required_mana;
 		
 		std::string _animation;
 		
@@ -59,7 +60,7 @@ namespace Gaem
 		virtual void end();
 		
 		// Check whether enough keys have been hit in the combo
-		bool handleAttack(sf::Key::Code);
+		bool handleAttack(sf::Key::Code, float mana);
 		
 		void setAnimation(const std::string &);
 		void setElapsedTime(RakNet::Time);
@@ -68,6 +69,7 @@ namespace Gaem
 		virtual std::string getAnimation();
 		float getCooldown();
 		float getDamage();
+		float getRequiredMana();
 		RakNet::Time getStartTime();
 		
 		virtual void drawAttackAtBefore(sf::FloatRect pos, sf::RenderWindow &window);

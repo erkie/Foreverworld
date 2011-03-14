@@ -1,5 +1,6 @@
 id: maarn_attack2
 cooldown: 5.0
 damage: 0.5
-combo: j l
+combo: a s d
 tiger: resources/players/maarn/maarn_attack2/tiger.png
+required mana: 0.3

@@ -33,6 +33,9 @@ Player::Player(inet::id_type id)
 	_state.velocity[0] = 0;
 	_state.velocity[1] = 0;
 	_state.hp = 1;
+	_state.mana = 1;
+	_state.defence = 0;
+	_state.dead = 0;
 	
 	// Get my character's specs
 }
@@ -89,6 +92,21 @@ void Player::setHP(float hp)
 	_state.hp = hp;
 }
 
+void Player::setMana(float mana)
+{
+	_state.mana = mana;
+}
+
+void Player::setDefence(char defence)
+{
+	_state.defence = defence;
+}
+
+void Player::setDead(char dead)
+{
+	_state.dead = dead;
+}
+
 inet::id_type Player::getId()
 {
 	return _id;
@@ -119,9 +137,24 @@ float *Player::getVelocity()
 	return _state.velocity;
 }
 
+char Player::getDefence()
+{
+	return _state.defence;
+}
+
+char Player::getDead()
+{
+	return _state.dead;
+}
+
 float Player::getHP()
 {
 	return _state.hp;
+}
+
+float Player::getMana()
+{
+	return _state.mana;
 }
 
 std::string Player::getUsername()
@@ -141,7 +174,10 @@ inet::PlayerState Player::getState()
 	p.velocity[0] = *(getVelocity());
 	p.velocity[1] = *(getVelocity()+1);
 	p.hp = getHP();
+	p.mana = getMana();
 	p.state = _state.state;
+	p.defence = getDefence();
+	p.dead = getDead();
 	strcpy(p.attackid, _state.attackid);
 	return p;
 }

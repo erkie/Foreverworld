@@ -1,4 +1,5 @@
 id: ghost_attack2
 cooldown: 5.0
-damage: 0.5
-combo: j l
+damage: 0.25
+combo: a s d
+required mana: 0.3

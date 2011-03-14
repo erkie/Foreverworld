@@ -46,7 +46,7 @@ namespace Attacks
 		{
 			Entities::Player *player = (*iter).second;
 			
-			if ( player == _me ) continue;
+			if ( player == _me || player->getDead() ) continue;
 			
 			int left = player->getLeft();
 			

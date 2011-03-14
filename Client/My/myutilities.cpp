@@ -125,6 +125,20 @@ std::string urlencode(const std::string &c)
     return escaped;
 }
 
+bool has_unicode_chars(const std::string &str)
+{
+	for ( unsigned int i = 0; i < str.length(); i++ )
+	{
+		char c = str[i];
+		
+		if ( c < 33 || c > 125 )
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 std::string char2hex( char dec )
 {
     char dig1 = (dec&0xF0)>>4;

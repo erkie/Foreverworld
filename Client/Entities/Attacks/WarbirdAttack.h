@@ -20,6 +20,8 @@ namespace Attacks
 	class Warbird: public Gaem::Attack
 	{
 		Gaem::AnimatedSprite *_tornado;
+		sf::Clock _last_check;
+		
 	public:
 		Warbird(const std::string &cfg, Entities::Player *me);
 		~Warbird();

@@ -26,6 +26,7 @@ namespace Attacks
 		Gaem::Config config(cfg);
 		
 		me->getSprite()->loadAnimation("attack2_appear", config.get("appear animation"));
+		_current_kill = NULL;
 	}
 	
 	void Emanon::start()
@@ -48,7 +49,7 @@ namespace Attacks
 			Gaem::player_map players = Gaem::Gaem::getInstance()->getEntityManager()->getPlayers();
 			for ( Gaem::player_map::iterator iter = players.begin(); iter != players.end(); iter++ )
 			{
-				if ( (*iter).second == _me ) continue;
+				if ( (*iter).second == _me || (*iter).second->getDead() ) continue;
 				
 				if ( isPlayerNearMe((*iter).second) )
 				{
@@ -72,12 +73,13 @@ namespace Attacks
 			
 			_in_killing = true;
 			_current_kill = _to_kill.front();
+			std::cout << _current_kill << "\n";
 			
 			// Move me to the current player and show appear animation
 			_me->setLeft(_to_kill.front()->getLeft());
 			_me->setDepth(_to_kill.front()->getDepth());
 			
-			_me->getSprite()->setAnimation("attack2_appear");
+			_me->getSprite()->setAnimation("attack2_appear", true);
 			
 			_to_kill.pop();
 			
@@ -91,6 +93,7 @@ namespace Attacks
 			
 			_is_done = true;
 			_in_killing = false;
+			_current_kill = NULL;
 		}
 	}
 	
@@ -102,7 +105,6 @@ namespace Attacks
 		if ( _in_killing && frame == 4 && _current_kill )
 		{
 			//std::cout << "Current kill is not null! And we are on frame number 4.\n";
-			
 			res.push_back(_current_kill);
 			_current_kill = NULL;
 		}

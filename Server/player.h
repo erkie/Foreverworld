@@ -43,6 +43,9 @@ public:
 	void setCharacter(int32_t);
 	void setAttackId(std::string);
 	void setHP(float);
+	void setMana(float);
+	void setDefence(char);
+	void setDead(char);
 	
 	inet::id_type getId();
 	int *getDir();
@@ -51,6 +54,9 @@ public:
 	float getElevation();
 	float *getVelocity();
 	float getHP();
+	float getMana();
+	char getDefence();
+	char getDead();
 	std::string getUsername();
 	
 	inet::PlayerState getState();

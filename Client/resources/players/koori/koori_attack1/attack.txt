@@ -1,7 +1,7 @@
 id: koori_attack1
 cooldown: 0.25
 damage: 0.1
-combo: i
+combo: a
 hitpoint[1]: 45x100
 hitpoint[2]: 45x100
 hitpoint[3]: 45x100

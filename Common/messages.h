@@ -92,9 +92,12 @@ namespace inet
 		float elevation;
 		float velocity[2];
 		float hp;
+		float mana;
 		PlayerActionState state;
 		char attackid[20];
-		int ping;
+		char defence;
+		char dead;
+		int32_t ping;
 	};
 	
 	struct Character
