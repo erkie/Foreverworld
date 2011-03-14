@@ -109,9 +109,13 @@ namespace Entities
 	
 	void Player::initAttacks()
 	{
+		// Remove old attacks
+		for ( attack_map::iterator iter = _attacks.begin(); iter != _attacks.end(); iter++ )
+			delete (*iter).second;
+		_attacks.erase(_attacks.begin(), _attacks.end());
+	
 		Gaem::Attack *attack1 = new Gaem::Attack(_sprite->getAnimtion("attack1")->getConfig().get("attack"), this);
 		attack1->setAnimation("attack1");
-		
 		
 		std::string spec_attack_id = _sprite->getAnimtion("attack2")->getConfig().get("attack id");
 		Gaem::Attack *attack2;
@@ -189,6 +193,8 @@ namespace Entities
 		_sprite->loadAnimation("attack2", "resources/players/" + slug + "/" + slug + "_attack2/info.txt", false);
 		_sprite->loadAnimation("defence", "resources/players/" + slug + "/" + slug + "_defence/info.txt", false);
 		_sprite->loadAnimation("damaged", "resources/players/" + slug + "/" + slug + "_damaged/info.txt", false);
+		
+		initAttacks();
 	}
 	
 	bool Player::isActivePlayer()
@@ -474,7 +480,7 @@ namespace Entities
 			_current_attack->step();
 			
 			// If the attack is still ongoing
-			if ( ! _sprite->getAnimation()->isDone() && ! _current_attack->isDone() )
+			if ( ! _sprite->getAnimation()->isDone() || ! _current_attack->isDone() )
 			{
 				Gaem::player_hitlist hit_player = _current_attack->isHit(_sprite->getAnimation()->getFrameNum());
 				if ( hit_player.size() )

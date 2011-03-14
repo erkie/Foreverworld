@@ -9,10 +9,11 @@ using namespace std;
 int main(int argc, char **argv)
 {
 	Gaem::Gaem *game;
-	try {
+	//try {
 		game = new Gaem::Gaem;
 		game->init();
 		game->main();
+	try {
 	}
 	catch (Gaem::NonFatalException e)
 	{

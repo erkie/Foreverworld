@@ -87,6 +87,9 @@ namespace Gaem
 		return res;
 	}
 	
+	void Attack::start()
+	{}
+	
 	void Attack::end()
 	{
 		_current_timer.Reset();
@@ -120,6 +123,8 @@ namespace Gaem
 		{
 			_in_attack = true;
 			_started_time = RakNet::GetTime();
+			
+			start();
 			
 			return true;
 		}
@@ -163,7 +168,7 @@ namespace Gaem
 	
 	bool Attack::isDone()
 	{
-		return false;
+		return true;
 	}
 	
 	bool Attack::abortByJump()

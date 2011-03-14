@@ -20,9 +20,18 @@ namespace Attacks
 {
 	class Maarn: public Gaem::Attack
 	{
-		Gaem::AnimatedSprite *_shards;
+		sf::Image *_tiger;
+		int _x, _dir;
 	public:
-		Maarn(const std::string &cfg, Entities::Player *me): Gaem::Attack(cfg, me) {}
+		Maarn(const std::string &cfg, Entities::Player *me);
+		~Maarn();
+		
+		Gaem::player_hitlist isHit(int frame);
+		
+		void start();
+		void step();
+		
+		void drawAttackAtAfter(sf::FloatRect pos, sf::RenderWindow &window);
 	};
 }
 

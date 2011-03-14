@@ -1,4 +1,4 @@
-file: resources/players/emanon/attack_1/roll.png
+file: resources/players/emanon/emanon_attack2/hit/roll.png
 width: 90
 frame time: 0.07
 run once: yes

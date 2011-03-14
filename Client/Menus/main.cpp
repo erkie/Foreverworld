@@ -301,7 +301,9 @@ namespace Menus
 	
 	void Main::show()
 	{
-		get("login_username")->requestFocus();
+		try {
+			get("login_username")->requestFocus();
+		} catch ( gcn::Exception ) {}
 	}
 	
 	gcn::Container *Main::makeContainer()

@@ -52,6 +52,9 @@ namespace Gaem
 		// Check whether attack has hit anyone
 		virtual player_hitlist isHit(int frame);
 		
+		// Called when the attack is commenced
+		virtual void start();
+		
 		// Reset everything after we are done
 		virtual void end();
 		

@@ -46,7 +46,7 @@ namespace Attacks
 			int left = player->getLeft();
 			
 			int distanceX = abs(_me->getLeft() - left);
-			float distanceY = fabs(_me->getElevation() - player->getElevation());
+			float distanceY = fabs(_me->getDepth() - player->getDepth());
 			
 			if ( distanceX < 50 && distanceY < 20 )
 			{
@@ -61,7 +61,7 @@ namespace Attacks
 	{
 		// Draw tornado behind warbird
 		_tornado->setX(pos.Left + (pos.Right-pos.Left)/2 - _tornado->getWidth()/2);
-		_tornado->setY(pos.Bottom - _tornado->getHeight());
+		_tornado->setY(pos.Bottom - _tornado->getHeight() + _me->getElevation());
 		
 		window.Draw(*_tornado->getSprite());
 	}

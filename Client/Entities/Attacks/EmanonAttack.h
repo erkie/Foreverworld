@@ -11,15 +11,34 @@
 #ifndef __EMANON_ATTACK_H__
 #define __EMANON_ATTACK_H__
 
+#include <queue>
+
 #include "Gaem/gaem.h"
 #include "Gaem/attack.h"
 
+#include "Entities/player.h"
+
 namespace Attacks
 {
+	typedef std::queue<Entities::Player*> player_queue;
+	
 	class Emanon: public Gaem::Attack
 	{
+		player_queue _to_kill;
+		bool _is_done;
+		bool _in_killing;
+		
+		Entities::Player *_current_kill;
 	public:
-		Emanon(const std::string &cfg, Entities::Player *me): Gaem::Attack(cfg, me) {}
+		Emanon(const std::string &cfg, Entities::Player *me);
+		
+		Gaem::player_hitlist isHit(int frame);
+		
+		void start();
+		void step();
+		bool isDone();
+		
+		bool isPlayerNearMe(Entities::Player*);
 	};
 }
 

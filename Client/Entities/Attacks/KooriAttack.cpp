@@ -51,7 +51,7 @@ namespace Attacks
 			int left = player->getLeft();
 			
 			int distanceX = abs(_me->getLeft() - left);
-			float distanceY = fabs(_me->getElevation() - player->getElevation());
+			float distanceY = fabs(_me->getDepth() - player->getDepth());
 			
 			if ( distanceX < 50 && distanceY < 20 )
 			{
