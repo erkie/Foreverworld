@@ -16,7 +16,13 @@
 
 int main(int argc, char *argv[])
 {
-	Server server(6010, 1000);
+	int port = 6010;
+	if ( argc > 1 )
+	{
+		port = atoi(argv[1]);
+	}
+
+	Server server(port, 1000);
 	server.run();
 	
 	return 0;

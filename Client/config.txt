@@ -1,0 +1,2 @@
+server_port: 6010
+server_host: localhost

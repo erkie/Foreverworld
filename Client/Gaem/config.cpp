@@ -29,6 +29,17 @@ namespace Gaem
 			// Change to read from file?
 			// --
 			
+			try {
+				Config test("config.txt");
+				_values["server_host"] = test.get("server_host");
+				_values["server_port"] = test.get("server_port");
+			}
+			catch (Exception e)
+			{
+				_values["server_host"] = "localhost";
+				_values["server_port"] = "6010";
+			}
+			
 			_values["use_vsync"] = "true";
 			_values["max_framerate"] = "60";
 
@@ -37,9 +48,6 @@ namespace Gaem
 			// Ignored if using fullscreen
 			_values["window_width"] = "1000";
 			_values["window_height"] = "700";
-			
-			_values["server_host"] = "localhost";
-			_values["server_port"] = "6010";
 		}
 		else
 		{
