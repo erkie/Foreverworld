@@ -24,9 +24,11 @@ namespace inet
 #define PRINTSTRUCT(s, x, t) for ( int OO = 0; OO < sizeof(t); OO++ ) s << (int)(((unsigned char*)x)[OO]) << ' '; s << '\n';
 #define FIXTIMESTAMP(a) if (RakNet::BitStream::DoEndianSwap()) RakNet::BitStream::ReverseBytesInPlace((unsigned char*)&a, sizeof(RakNet::Time));
 
+	const int MY_START = 200;
+
 	enum Message
 	{
-		MESS_START_GAME = ID_USER_PACKET_ENUM+1,
+		MESS_START_GAME = MY_START,//ID_USER_PACKET_ENUM+1,
 		MESS_SUCCESSFULLY_ADDED,
 		MESS_NEW_PLAYER,
 		MESS_REMOVED_PLAYER,

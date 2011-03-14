@@ -17,7 +17,7 @@ namespace inet
 {
 	inet::Version getVersion()
 	{
-		inet::Version version = {0, 7, 'a'};
+		inet::Version version = {0, 8, 'a'};
 		return version;
 	}
 	

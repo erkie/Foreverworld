@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	{
 		port = atoi(argv[1]);
 	}
-
+std::cout << ID_USER_PACKET_ENUM << '\n';
 	Server server(port, 1000);
 	server.run();
 	
