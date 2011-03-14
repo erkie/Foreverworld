@@ -188,7 +188,6 @@ void Server::run()
 				case inet::MESS_LOGIN_PLAYER: {
 					inet::LoginPlayer *mess = (inet::LoginPlayer*)packet->data;
 					
-					
 					inet::id_type id = _user_manager->login(mess->login.username, mess->login.password);
 					
 					// Send a message to the user how it went
@@ -196,9 +195,8 @@ void Server::run()
 					response.type = inet::MESS_LOGIN_STATUS;
 					response.id = id;
 					
-					if ( _players[id] )
+					if ( _players.count(id) )
 					{
-						std::cout << "This player is already logged in: " << id << '\n';
 						response.id = -1;
 						std::cout << response.id << '\n';
 					}
@@ -206,7 +204,7 @@ void Server::run()
 					_peer->Send((char *)&response, sizeof(response), HIGH_PRIORITY, RELIABLE_ORDERED, 0, packet->systemAddress, false);
 					
 					// If it was successful, send a PlayerAdded-message to everyone
-					if ( ! _players[id] && id )
+					if ( ! _players.count(id) && id )
 					{
 						Player *player = addPlayer(id, packet->guid);
 						_new_players.push(player);
