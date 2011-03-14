@@ -101,7 +101,7 @@ namespace Attacks
 		// Frame 4 is the hit frame
 		if ( _in_killing && frame == 4 && _current_kill )
 		{
-			std::cout << "Current kill is not null! And we are on frame number 4.\n";
+			//std::cout << "Current kill is not null! And we are on frame number 4.\n";
 			
 			res.push_back(_current_kill);
 			_current_kill = NULL;

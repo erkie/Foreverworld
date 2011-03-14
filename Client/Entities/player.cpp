@@ -53,6 +53,7 @@ namespace Entities
 		_defence = false;
 		_hp = 1;
 		_current_attack = NULL;
+		_ghost_hit = false;
 		
 		_sprite = new Gaem::AnimatedSprite;
 	}
@@ -189,10 +190,11 @@ namespace Entities
 		_sprite->loadAnimation("running", "resources/players/" + slug + "/" + slug + "_walking/info.txt");
 		_sprite->loadAnimation("waiting", "resources/players/" + slug + "/" + slug + "_waiting/info.txt");
 		_sprite->loadAnimation("jumping", "resources/players/" + slug + "/" + slug + "_jumping/info.txt");
-		_sprite->loadAnimation("attack1", "resources/players/" + slug + "/" + slug + "_attack1/info.txt", false);
-		_sprite->loadAnimation("attack2", "resources/players/" + slug + "/" + slug + "_attack2/info.txt", false);
-		_sprite->loadAnimation("defence", "resources/players/" + slug + "/" + slug + "_defence/info.txt", false);
-		_sprite->loadAnimation("damaged", "resources/players/" + slug + "/" + slug + "_damaged/info.txt", false);
+		_sprite->loadAnimation("attack1", "resources/players/" + slug + "/" + slug + "_attack1/info.txt");
+		_sprite->loadAnimation("attack2", "resources/players/" + slug + "/" + slug + "_attack2/info.txt");
+		_sprite->loadAnimation("defence", "resources/players/" + slug + "/" + slug + "_defence/info.txt");
+		_sprite->loadAnimation("damaged", "resources/players/" + slug + "/" + slug + "_damaged/info.txt");
+		_sprite->loadAnimation("ghost_hit", "resources/players/ghost/ghost_attack2/" + slug + "/info.txt");
 		
 		initAttacks();
 	}
@@ -257,10 +259,6 @@ namespace Entities
 	
 	void Player::hitBy(Player *player, Gaem::Attack *attack)
 	{
-		_flyingdir = (player->getFacingDir() > 0 ? -1 : 1);
-		_velocity.x = 300 * _flyingdir;
-		_velocity.y = 200;
-		
 		// Get length away from player to determine how hard he hit
 		float deltaPosition = fabs(player->getLeft() - this->getLeft());
 		float strength = 1;
@@ -276,6 +274,17 @@ namespace Entities
 		{
 			iDied();
 		}
+		
+		// Ghost has speciell hit characteristics
+		if ( attack->getID() == "ghost_attack2" )
+		{
+			_ghost_hit = true;
+			return;
+		}
+		
+		_flyingdir = (player->getFacingDir() > 0 ? -1 : 1);
+		_velocity.x = 300 * _flyingdir;
+		_velocity.y = 200;
 	}
 	
 	void Player::clampPos()
@@ -427,7 +436,7 @@ namespace Entities
 			moveDown();
 		}
 		
-		if ( _dir[0] == 0 && _dir[1] == 0 && _elevation <= 0 && _velocity.y <= 0 && ! _defence && (! _current_attack || _current_attack->hasOwnAnimation()) )
+		if ( _dir[0] == 0 && _dir[1] == 0 && _elevation <= 0 && _velocity.y <= 0 && ! _ghost_hit && ! _defence && (! _current_attack || _current_attack->hasOwnAnimation()) )
 		{
 			_sprite->setAnimation("waiting");
 		}
@@ -451,10 +460,19 @@ namespace Entities
 		}
 		
 		// Update hit flying
-		if ( _flyingdir != 0 )
+		if ( _flyingdir != 0 && ! _ghost_hit)
 		{
 			_velocity.x += 0;
 			_sprite->setAnimation("damaged");
+		}
+		else if ( _ghost_hit )
+		{
+			_sprite->setAnimation("ghost_hit");
+			
+			if ( _sprite->getAnimation()->isDone() )
+			{
+				_ghost_hit = false;
+			}
 		}
 		
 		// Update position up based on velocity

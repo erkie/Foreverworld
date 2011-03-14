@@ -53,6 +53,9 @@ namespace Entities
 		sf::Vector2f _velocity;
 		inet::PlayerActionState _state;
 		
+		// Hit by ghost
+		bool _ghost_hit;
+		
 		// Attack related
 		attack_map _attacks;
 		Gaem::Attack *_current_attack;

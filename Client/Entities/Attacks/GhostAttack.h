@@ -19,6 +19,8 @@ namespace Attacks
 	{
 	public:
 		Ghost(const std::string &cfg, Entities::Player *me): Gaem::Attack(cfg, me) {}
+		
+		Gaem::player_hitlist isHit(int frame);
 	};
 }
 
