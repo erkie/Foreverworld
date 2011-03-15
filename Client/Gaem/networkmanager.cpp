@@ -34,6 +34,8 @@ namespace Gaem
 	{
 		RakNet::SocketDescriptor socket;
 		
+		std::cout << ID_USER_PACKET_ENUM << '\n';
+		
 		_peer = RakNet::RakPeerInterface::GetInstance();
 		_peer->Startup(1, &socket, 1);
 		_peer->SetMaximumIncomingConnections(1);
@@ -128,7 +130,7 @@ namespace Gaem
 	{
 		if ( event->id == _id )
 		{
-			std::cout << "This is me\n";
+			//std::cout << "This is me\n";
 		}
 		else
 		{
