@@ -302,6 +302,8 @@ namespace Entities
 		// Set left and reset everything
 		_pos_left = left_pos;
 		_is_dead = false;
+		_hp = 1;
+		_mana = 1;
 		
 		// Send updates
 		Gaem::Gaem::getInstance()->getEntityManager()->sendUpdates();
