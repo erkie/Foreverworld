@@ -12,20 +12,34 @@
 		35393A5012AEBEC5003DF5D6 /* chat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35393A4F12AEBEC5003DF5D6 /* chat.cpp */; };
 		3545F6B9129FB59100ED38D6 /* messages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3545F6B8129FB59100ED38D6 /* messages.cpp */; };
 		3545F6D7129FB78900ED38D6 /* messages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3545F6B8129FB59100ED38D6 /* messages.cpp */; };
-		355A91A912AD57DB0022C645 /* RakNetFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */; };
+		35583862132E64CA00B0E49B /* config.txt in Resources */ = {isa = PBXBuildFile; fileRef = 35583861132E64CA00B0E49B /* config.txt */; };
+		3563F76C12E3000200330DEC /* attack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3563F76B12E3000200330DEC /* attack.cpp */; };
 		356418E1129DAB6B00446DBE /* libmysqlpp_d.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 356418E0129DAB6B00446DBE /* libmysqlpp_d.dylib */; };
 		3564193C129DB42B00446DBE /* usermanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3564193B129DB42B00446DBE /* usermanager.cpp */; };
 		356419D3129DBE3C00446DBE /* libmysqlclient.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 356419D2129DBE3C00446DBE /* libmysqlclient.dylib */; };
+		3569336512DF52A0004B9ED9 /* error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3569336412DF52A0004B9ED9 /* error.cpp */; };
+		3569336812DF52B6004B9ED9 /* confirm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3569336712DF52B6004B9ED9 /* confirm.cpp */; };
+		3569340312DF5C51004B9ED9 /* sfml-network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3569340212DF5C51004B9ED9 /* sfml-network.framework */; };
 		356B46D112BCE62000276482 /* guichan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356B46D012BCE62000276482 /* guichan.framework */; };
 		356B46D412BCE62B00276482 /* guichan.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 356B46D012BCE62000276482 /* guichan.framework */; };
 		356E46B812A80B6E0082A4ED /* lazysprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 356E46B712A80B6E0082A4ED /* lazysprite.cpp */; };
+		3571FBA61301B63E003A4E14 /* damaged.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3571FBA51301B63E003A4E14 /* damaged.cpp */; };
 		35729804129E4ADC00778193 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35729803129E4ADC00778193 /* sha1.cpp */; };
-		3573EF49128BC3FF00CA25DB /* RakNetFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */; };
 		357B8D6D12884EFC007A2E03 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35D3ABAB128456750080187E /* main.cpp */; };
+		357EE150132D183D00B2B1D2 /* EmanonAttack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 357EE146132D183D00B2B1D2 /* EmanonAttack.cpp */; };
+		357EE151132D183D00B2B1D2 /* GhostAttack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 357EE148132D183D00B2B1D2 /* GhostAttack.cpp */; };
+		357EE152132D183D00B2B1D2 /* KooriAttack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 357EE14A132D183D00B2B1D2 /* KooriAttack.cpp */; };
+		357EE153132D183D00B2B1D2 /* MaarnAttack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 357EE14C132D183D00B2B1D2 /* MaarnAttack.cpp */; };
+		357EE154132D183D00B2B1D2 /* WarbirdAttack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 357EE14E132D183D00B2B1D2 /* WarbirdAttack.cpp */; };
+		3585E57D12E9ADA000AB9549 /* RakNetFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3585E57C12E9ADA000AB9549 /* RakNetFramework.framework */; };
+		3585E59B12E9AEA800AB9549 /* RakNetFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3585E57C12E9ADA000AB9549 /* RakNetFramework.framework */; };
 		358AE0BA1250BE34007AA254 /* SFML.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A01FB6CD0F07CFF2000AAC7B /* SFML.framework */; };
 		358AE0BB1250BE34007AA254 /* sfml-audio.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E956120016D1000FB887 /* sfml-audio.framework */; };
+		359CF19E12DDE3C000A1BCF0 /* superfuntime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 359CF19D12DDE3C000A1BCF0 /* superfuntime.cpp */; };
+		35A42CB2132EA6C500AB8C76 /* statusmessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35A42CB1132EA6C500AB8C76 /* statusmessage.cpp */; };
+		35A42CF9132EAB1A00AB8C76 /* Foreverworld.icns in Resources */ = {isa = PBXBuildFile; fileRef = 35A42CF8132EAB1A00AB8C76 /* Foreverworld.icns */; };
+		35A43032132EC4D300AB8C76 /* soundmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35A43031132EC4D300AB8C76 /* soundmanager.cpp */; };
 		35AE0983128C487000923BBB /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 35AE095A128C486F00923BBB /* resources */; };
-		35AE09E5128C62B700923BBB /* RakNetFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */; };
 		35B217D112A0096C00065C51 /* charactermanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B217CF12A0096100065C51 /* charactermanager.cpp */; };
 		35B4240812927BE8003ECA3C /* user.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35B423F81292799E003ECA3C /* user.cpp */; };
 		35B6E958120016D1000FB887 /* sfml-audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B6E956120016D1000FB887 /* sfml-audio.framework */; };
@@ -73,7 +87,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				356B46D412BCE62B00276482 /* guichan.framework in Copy Frameworks */,
-				355A91A912AD57DB0022C645 /* RakNetFramework.framework in Copy Frameworks */,
 				358AE0BA1250BE34007AA254 /* SFML.framework in Copy Frameworks */,
 				358AE0BB1250BE34007AA254 /* sfml-audio.framework in Copy Frameworks */,
 				A0072ADE0F1D0EC500B4A594 /* sfml-system.framework in Copy Frameworks */,
@@ -93,18 +106,45 @@
 		35393A4E12AEBEC5003DF5D6 /* chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chat.h; sourceTree = "<group>"; };
 		35393A4F12AEBEC5003DF5D6 /* chat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chat.cpp; sourceTree = "<group>"; };
 		3545F6B8129FB59100ED38D6 /* messages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = messages.cpp; sourceTree = "<group>"; };
+		35583861132E64CA00B0E49B /* config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.txt; sourceTree = "<group>"; };
+		3563F76A12E3000200330DEC /* attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attack.h; sourceTree = "<group>"; };
+		3563F76B12E3000200330DEC /* attack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attack.cpp; sourceTree = "<group>"; };
 		356418E0129DAB6B00446DBE /* libmysqlpp_d.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmysqlpp_d.dylib; path = /usr/local/lib/libmysqlpp_d.dylib; sourceTree = "<absolute>"; };
 		3564193A129DB42B00446DBE /* usermanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usermanager.h; sourceTree = "<group>"; };
 		3564193B129DB42B00446DBE /* usermanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = usermanager.cpp; sourceTree = "<group>"; };
 		35641948129DB63C00446DBE /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		356419D2129DBE3C00446DBE /* libmysqlclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmysqlclient.dylib; path = /opt/local/lib/mysql5/mysql/libmysqlclient.dylib; sourceTree = "<absolute>"; };
+		3569336312DF52A0004B9ED9 /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
+		3569336412DF52A0004B9ED9 /* error.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = error.cpp; sourceTree = "<group>"; };
+		3569336612DF52B6004B9ED9 /* confirm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = confirm.h; sourceTree = "<group>"; };
+		3569336712DF52B6004B9ED9 /* confirm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = confirm.cpp; sourceTree = "<group>"; };
+		3569340212DF5C51004B9ED9 /* sfml-network.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-network.framework"; path = "/Library/Frameworks/sfml-network.framework"; sourceTree = "<absolute>"; };
 		356B46D012BCE62000276482 /* guichan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = guichan.framework; path = /Users/erikandersson/Documents/Programming/Guichan/build/Debug/guichan.framework; sourceTree = "<absolute>"; };
 		356B475812BD23B200276482 /* Foreverworld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Foreverworld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		356E46B612A80B6E0082A4ED /* lazysprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lazysprite.h; sourceTree = "<group>"; };
 		356E46B712A80B6E0082A4ED /* lazysprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lazysprite.cpp; sourceTree = "<group>"; };
+		3571FBA41301B63E003A4E14 /* damaged.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = damaged.h; sourceTree = "<group>"; };
+		3571FBA51301B63E003A4E14 /* damaged.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = damaged.cpp; sourceTree = "<group>"; };
 		35729802129E4ADC00778193 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
 		35729803129E4ADC00778193 /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sha1.cpp; sourceTree = "<group>"; };
-		3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RakNetFramework.framework; path = /Library/Frameworks/RakNetFramework.framework; sourceTree = "<absolute>"; };
+		357EE146132D183D00B2B1D2 /* EmanonAttack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EmanonAttack.cpp; path = Client/Entities/Attacks/EmanonAttack.cpp; sourceTree = SOURCE_ROOT; };
+		357EE147132D183D00B2B1D2 /* EmanonAttack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmanonAttack.h; path = Client/Entities/Attacks/EmanonAttack.h; sourceTree = SOURCE_ROOT; };
+		357EE148132D183D00B2B1D2 /* GhostAttack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GhostAttack.cpp; path = Client/Entities/Attacks/GhostAttack.cpp; sourceTree = SOURCE_ROOT; };
+		357EE149132D183D00B2B1D2 /* GhostAttack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GhostAttack.h; path = Client/Entities/Attacks/GhostAttack.h; sourceTree = SOURCE_ROOT; };
+		357EE14A132D183D00B2B1D2 /* KooriAttack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = KooriAttack.cpp; path = Client/Entities/Attacks/KooriAttack.cpp; sourceTree = SOURCE_ROOT; };
+		357EE14B132D183D00B2B1D2 /* KooriAttack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KooriAttack.h; path = Client/Entities/Attacks/KooriAttack.h; sourceTree = SOURCE_ROOT; };
+		357EE14C132D183D00B2B1D2 /* MaarnAttack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaarnAttack.cpp; path = Client/Entities/Attacks/MaarnAttack.cpp; sourceTree = SOURCE_ROOT; };
+		357EE14D132D183D00B2B1D2 /* MaarnAttack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaarnAttack.h; path = Client/Entities/Attacks/MaarnAttack.h; sourceTree = SOURCE_ROOT; };
+		357EE14E132D183D00B2B1D2 /* WarbirdAttack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WarbirdAttack.cpp; path = Client/Entities/Attacks/WarbirdAttack.cpp; sourceTree = SOURCE_ROOT; };
+		357EE14F132D183D00B2B1D2 /* WarbirdAttack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WarbirdAttack.h; path = Client/Entities/Attacks/WarbirdAttack.h; sourceTree = SOURCE_ROOT; };
+		3585E57C12E9ADA000AB9549 /* RakNetFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RakNetFramework.framework; path = /Users/erikandersson/Documents/Programming/RakNetFramework/build/Debug/RakNetFramework.framework; sourceTree = "<absolute>"; };
+		359CF19C12DDE3C000A1BCF0 /* superfuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = superfuntime.h; sourceTree = "<group>"; };
+		359CF19D12DDE3C000A1BCF0 /* superfuntime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = superfuntime.cpp; sourceTree = "<group>"; };
+		35A42CB0132EA6C500AB8C76 /* statusmessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statusmessage.h; sourceTree = "<group>"; };
+		35A42CB1132EA6C500AB8C76 /* statusmessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statusmessage.cpp; sourceTree = "<group>"; };
+		35A42CF8132EAB1A00AB8C76 /* Foreverworld.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Foreverworld.icns; path = Client/Foreverworld.icns; sourceTree = "<group>"; };
+		35A43030132EC4D300AB8C76 /* soundmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundmanager.h; sourceTree = "<group>"; };
+		35A43031132EC4D300AB8C76 /* soundmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = soundmanager.cpp; sourceTree = "<group>"; };
 		35AE095A128C486F00923BBB /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = resources; path = Client/resources; sourceTree = "<group>"; };
 		35B217CE12A0096100065C51 /* charactermanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = charactermanager.h; sourceTree = "<group>"; };
 		35B217CF12A0096100065C51 /* charactermanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = charactermanager.cpp; sourceTree = "<group>"; };
@@ -181,9 +221,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				35D3ABBD128459430080187E /* sfml-system.framework in Frameworks */,
-				3573EF49128BC3FF00CA25DB /* RakNetFramework.framework in Frameworks */,
 				356418E1129DAB6B00446DBE /* libmysqlpp_d.dylib in Frameworks */,
 				356419D3129DBE3C00446DBE /* libmysqlclient.dylib in Frameworks */,
+				3585E59B12E9AEA800AB9549 /* RakNetFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,18 +235,38 @@
 				A01FB6CF0F07CFF2000AAC7B /* sfml-system.framework in Frameworks */,
 				A01FB6D00F07CFF2000AAC7B /* sfml-window.framework in Frameworks */,
 				35B6E958120016D1000FB887 /* sfml-audio.framework in Frameworks */,
-				35AE09E5128C62B700923BBB /* RakNetFramework.framework in Frameworks */,
 				356B46D112BCE62000276482 /* guichan.framework in Frameworks */,
+				3569340312DF5C51004B9ED9 /* sfml-network.framework in Frameworks */,
+				3585E57D12E9ADA000AB9549 /* RakNetFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		357EE110132CCF7B00B2B1D2 /* Attacks */ = {
+			isa = PBXGroup;
+			children = (
+				357EE146132D183D00B2B1D2 /* EmanonAttack.cpp */,
+				357EE147132D183D00B2B1D2 /* EmanonAttack.h */,
+				357EE148132D183D00B2B1D2 /* GhostAttack.cpp */,
+				357EE149132D183D00B2B1D2 /* GhostAttack.h */,
+				357EE14C132D183D00B2B1D2 /* MaarnAttack.cpp */,
+				357EE14D132D183D00B2B1D2 /* MaarnAttack.h */,
+				357EE14A132D183D00B2B1D2 /* KooriAttack.cpp */,
+				357EE14B132D183D00B2B1D2 /* KooriAttack.h */,
+				357EE14E132D183D00B2B1D2 /* WarbirdAttack.cpp */,
+				357EE14F132D183D00B2B1D2 /* WarbirdAttack.h */,
+			);
+			name = Attacks;
+			path = ../Gaem;
+			sourceTree = "<group>";
+		};
 		35D3AAFC128454C50080187E /* Client */ = {
 			isa = PBXGroup;
 			children = (
 				35D3AB19128454C50080187E /* main.cpp */,
+				35583861132E64CA00B0E49B /* config.txt */,
 				35D3AB02128454C50080187E /* Gaem */,
 				35D3AAFD128454C50080187E /* Entities */,
 				35D3AB1A128454C50080187E /* Menus */,
@@ -227,6 +287,11 @@
 				35F84A1F12915F4900E42D1C /* connectionstatus.cpp */,
 				353939C312AEB7A1003DF5D6 /* chat.h */,
 				353939C412AEB7A1003DF5D6 /* chat.cpp */,
+				3571FBA41301B63E003A4E14 /* damaged.h */,
+				3571FBA51301B63E003A4E14 /* damaged.cpp */,
+				35A42CB0132EA6C500AB8C76 /* statusmessage.h */,
+				35A42CB1132EA6C500AB8C76 /* statusmessage.cpp */,
+				357EE110132CCF7B00B2B1D2 /* Attacks */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -248,18 +313,22 @@
 				35D3AB12128454C50080187E /* menumanager.h */,
 				35D3AB14128454C50080187E /* resourcemanager.cpp */,
 				35D3AB15128454C50080187E /* resourcemanager.h */,
-				35D3AB05128454C50080187E /* animation.cpp */,
-				35D3AB06128454C50080187E /* animation.h */,
+				35A43031132EC4D300AB8C76 /* soundmanager.cpp */,
+				35A43030132EC4D300AB8C76 /* soundmanager.h */,
 				35D3AB09128454C50080187E /* entity.cpp */,
 				35D3AB0A128454C50080187E /* entity.h */,
 				35D3AB0D128454C50080187E /* exception.cpp */,
 				35D3AB0E128454C50080187E /* exception.h */,
 				35D3AB16128454C50080187E /* sprite.cpp */,
 				35D3AB17128454C50080187E /* sprite.h */,
+				35D3AB05128454C50080187E /* animation.cpp */,
+				35D3AB06128454C50080187E /* animation.h */,
 				35D3AB03128454C50080187E /* animatedsprite.cpp */,
 				35D3AB04128454C50080187E /* animatedsprite.h */,
 				356E46B712A80B6E0082A4ED /* lazysprite.cpp */,
 				356E46B612A80B6E0082A4ED /* lazysprite.h */,
+				3563F76A12E3000200330DEC /* attack.h */,
+				3563F76B12E3000200330DEC /* attack.cpp */,
 			);
 			path = Gaem;
 			sourceTree = "<group>";
@@ -279,6 +348,10 @@
 				35D3AB20128454C50080187E /* loading.h */,
 				35393A4E12AEBEC5003DF5D6 /* chat.h */,
 				35393A4F12AEBEC5003DF5D6 /* chat.cpp */,
+				3569336612DF52B6004B9ED9 /* confirm.h */,
+				3569336712DF52B6004B9ED9 /* confirm.cpp */,
+				3569336312DF52A0004B9ED9 /* error.h */,
+				3569336412DF52A0004B9ED9 /* error.cpp */,
 			);
 			path = Menus;
 			sourceTree = "<group>";
@@ -308,6 +381,8 @@
 				35D3AB4F128454C50080187E /* informationtable.h */,
 				35D3AB50128454C50080187E /* passwordfield.cpp */,
 				35D3AB51128454C50080187E /* passwordfield.h */,
+				359CF19D12DDE3C000A1BCF0 /* superfuntime.cpp */,
+				359CF19C12DDE3C000A1BCF0 /* superfuntime.h */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -363,12 +438,13 @@
 			children = (
 				356418E0129DAB6B00446DBE /* libmysqlpp_d.dylib */,
 				A01FB6CD0F07CFF2000AAC7B /* SFML.framework */,
+				3569340212DF5C51004B9ED9 /* sfml-network.framework */,
 				35B6E956120016D1000FB887 /* sfml-audio.framework */,
 				A01FB6CB0F07CFF2000AAC7B /* sfml-system.framework */,
 				A01FB6CC0F07CFF2000AAC7B /* sfml-window.framework */,
 				A01FB6CA0F07CFF2000AAC7B /* sfml-graphics.framework */,
-				3573EF48128BC3FF00CA25DB /* RakNetFramework.framework */,
 				356B46D012BCE62000276482 /* guichan.framework */,
+				3585E57C12E9ADA000AB9549 /* RakNetFramework.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -376,6 +452,7 @@
 		A01FB6B10F07CF7C000AAC7B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				35A42CF8132EAB1A00AB8C76 /* Foreverworld.icns */,
 				35D3AB18128454C50080187E /* Info.plist */,
 				35AE095A128C486F00923BBB /* resources */,
 			);
@@ -461,6 +538,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				35AE0983128C487000923BBB /* resources in Resources */,
+				35583862132E64CA00B0E49B /* config.txt in Resources */,
+				35A42CF9132EAB1A00AB8C76 /* Foreverworld.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +595,18 @@
 				356E46B812A80B6E0082A4ED /* lazysprite.cpp in Sources */,
 				353939C512AEB7A1003DF5D6 /* chat.cpp in Sources */,
 				35393A5012AEBEC5003DF5D6 /* chat.cpp in Sources */,
+				359CF19E12DDE3C000A1BCF0 /* superfuntime.cpp in Sources */,
+				3569336512DF52A0004B9ED9 /* error.cpp in Sources */,
+				3569336812DF52B6004B9ED9 /* confirm.cpp in Sources */,
+				3563F76C12E3000200330DEC /* attack.cpp in Sources */,
+				3571FBA61301B63E003A4E14 /* damaged.cpp in Sources */,
+				357EE150132D183D00B2B1D2 /* EmanonAttack.cpp in Sources */,
+				357EE151132D183D00B2B1D2 /* GhostAttack.cpp in Sources */,
+				357EE152132D183D00B2B1D2 /* KooriAttack.cpp in Sources */,
+				357EE153132D183D00B2B1D2 /* MaarnAttack.cpp in Sources */,
+				357EE154132D183D00B2B1D2 /* WarbirdAttack.cpp in Sources */,
+				35A42CB2132EA6C500AB8C76 /* statusmessage.cpp in Sources */,
+				35A43032132EC4D300AB8C76 /* soundmanager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,8 +621,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../RakNetFramework/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../RakNetFramework/build/Debug\"";
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -567,8 +660,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../RakNetFramework/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../RakNetFramework/build/Debug\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -606,7 +701,7 @@
 				HEADER_SEARCH_PATHS = (
 					"/usr/local/mysql/include//**",
 					"/Users/erikandersson/Documents/Programming/mysql++/lib//**",
-					"/Users/erikandersson/Documents/Programming/RakNet/Source//**",
+					"/Users/erikandersson/Documents/Programming/RakNetFramework//**",
 					"./**",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
@@ -640,9 +735,11 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../RakNetFramework/build/Debug\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -668,9 +765,11 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../Guichan/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../RakNetFramework/build/Debug\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Client/Info.plist;
